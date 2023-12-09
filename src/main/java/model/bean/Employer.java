@@ -13,11 +13,12 @@ public class Employer {
     private String businessLicenseCode;
     private String website;
     private String description;
+    private String logo;
 
     public Employer() {
     }
 
-    public Employer(int id, String username, String password, String companyName, int companySize, String contactName, String contactNumber, int cityId, String address, String businessLicenseCode, String website, String description) {
+    public Employer(int id, String username, String password, String companyName, int companySize, String contactName, String contactNumber, int cityId, String address, String businessLicenseCode, String website, String description, String logo) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -30,6 +31,7 @@ public class Employer {
         this.businessLicenseCode = businessLicenseCode;
         this.website = website;
         this.description = description;
+        this.logo = logo;
     }
 
     public int getId() {
@@ -126,5 +128,13 @@ public class Employer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }
