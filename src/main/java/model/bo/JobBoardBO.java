@@ -4,9 +4,11 @@ import DTO.CVComboboxItem;
 import DTO.CVDataItem;
 import DTO.CVInfoItem;
 import DTO.JobListInfoItem;
+import DTO.JobBoardItem;
 import model.dao.JobBoardDAO;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobBoardBO {
@@ -25,5 +27,17 @@ public class JobBoardBO {
     }
     public List<JobListInfoItem> pagingJob(int index) {
         return jobBoardDAO.pagingJob(index);
+    }
+
+    public ArrayList<JobBoardItem> getAllJobBoard(int noOfRecords, int offset, String search) {
+        return jobBoardDAO.getAllJobBoard(noOfRecords, offset, search);
+    }
+
+    public ArrayList<JobBoardItem> getAllJobBoard(int offset, String search) {
+        return jobBoardDAO.getAllJobBoard(10, offset, search);
+    }
+
+    public ArrayList<JobBoardItem> getAllJobBoard(int offset) {
+        return jobBoardDAO.getAllJobBoard(10, offset, "");
     }
 }

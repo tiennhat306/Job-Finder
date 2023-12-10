@@ -3,45 +3,48 @@ package model.bean;
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class Candidate {
+public class Admin {
     private int id;
+    private String username;
+    private String password;
     private String name;
     private String email;
-    private String password;
     private String phoneNumber;
-    private int gender;
+    private boolean gender;
     private Date birthday;
-    private String address;
+    private boolean status;
     private String avatar;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Candidate() {
+    public Admin() {
     }
 
-    public Candidate(int id, String name, String email, String password, String phoneNumber, int gender, Date birthday, String address, String avatar, Timestamp createdAt, Timestamp updatedAt) {
+    public Admin(int id, String username, String password, String name, String email, String phoneNumber, boolean gender, Date birthday, boolean status, String avatar, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
+        this.username = username;
+        this.password = password;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.birthday = birthday;
-        this.address = address;
+        this.status = status;
         this.avatar = avatar;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public Candidate(int id, String name, String email, String password, String phoneNumber, int gender, Date birthday, String address, String avatar) {
+    public Admin(int id, String username, String password, String name, String email, String phoneNumber, boolean gender, Date birthday, boolean status, String avatar) {
         this.id = id;
+        this.username = username;
+        this.password = password;
         this.name = name;
         this.email = email;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.birthday = birthday;
-        this.address = address;
+        this.status = status;
         this.avatar = avatar;
     }
 
@@ -51,6 +54,22 @@ public class Candidate {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -69,14 +88,6 @@ public class Candidate {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -85,11 +96,11 @@ public class Candidate {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getGender() {
+    public boolean isGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
 
@@ -101,12 +112,12 @@ public class Candidate {
         this.birthday = birthday;
     }
 
-    public String getAddress() {
-        return address;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getAvatar() {

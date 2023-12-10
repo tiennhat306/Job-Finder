@@ -35,12 +35,12 @@ public class JobBoard {
     private Date expirationDate;
     private int status;
     private int views;
-    private int employer_id;
+    private int employerId;
 
     public JobBoard() {
     }
 
-    public JobBoard(int id, String title, String code, String companyName, int companySize, String companyDescription, String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom, double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity, int qualification, int yearsOfExperience, String requirements, String benefits, String contactName, String contactNumber, String contactEmail, String contactAddress, Date postingDate, Date expirationDate, int status, int views, int employer_id) {
+    public JobBoard(int id, String title, String code, String companyName, int companySize, String companyDescription, String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom, double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity, int qualification, int yearsOfExperience, String requirements, String benefits, String contactName, String contactNumber, String contactEmail, String contactAddress, Date postingDate, Date expirationDate, int status, int views, int employerId) {
         this.id = id;
         this.title = title;
         this.code = code;
@@ -73,7 +73,7 @@ public class JobBoard {
         this.expirationDate = expirationDate;
         this.status = status;
         this.views = views;
-        this.employer_id = employer_id;
+        this.employerId = employerId;
     }
 
     public int getId() {
@@ -332,11 +332,11 @@ public class JobBoard {
         this.views = views;
     }
 
-    public int getEmployer_id() {
-        return employer_id;
+    public int getEmployerId() {
+        return employerId;
     }
 
-    public void setEmployer_id(int employer_id) {
-        this.employer_id = employer_id;
+    public void setEmployerId(int employerId) {
+        this.employerId = employerId;
     }
 }
