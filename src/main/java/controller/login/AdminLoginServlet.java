@@ -26,17 +26,10 @@ public class AdminLoginServlet extends HttpServlet {
         AdminSessionItem adminSessionItem = new AdminBO().validateAdmin(username, password);
         if(adminSessionItem != null){
             HttpSession session = request.getSession();
-//            session.setAttribute("candidateSession", adminSessionItem);
+            session.setAttribute("adminSession", adminSessionItem);
 
-            // return to before login page by using referer
-            String referer = request.getHeader("Referer");
-            if(referer != null && !referer.contains("LoginServlet")){
-                response.sendRedirect(referer);
-                return;
-            }
 
-            // call homepage servlet
-            response.sendRedirect(request.getContextPath() + "/CandidateHomepageServlet");
+            response.sendRedirect(request.getContextPath() + "/AdminHomepageServlet");
         } else {
             request.setAttribute("errorMessage", "Invalid email or password");
             RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/candidate/another-login.jsp");
