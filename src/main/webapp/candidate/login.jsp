@@ -72,7 +72,7 @@
                         <div class="row mt-3">
                             <div class="col-12 text-center">
                                 <p> <a href="pages-recoverpw.html" class="text-danger ml-1"><i class="fa fa-lock mr-1"></i>Quên mật khẩu?</a></p>
-                                <p class="text-white">Chưa có tài khoản? <a href="register.jsp" class="text-dark ml-1"><b>Đăng ký</b></a></p>
+                                <p class="text-white">Chưa có tài khoản? <a href="candidate/signUpCandidate.jsp" class="text-dark ml-1"><b>Đăng ký</b></a></p>
                             </div> <!-- end col -->
                         </div>
                         <!-- end row -->
