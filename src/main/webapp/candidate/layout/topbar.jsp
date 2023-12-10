@@ -1,77 +1,88 @@
-<%@ page import="DTO.CandidateSessionItem" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="DTO.CandidateSessionItem"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!-- header-start -->
 <header>
-  <div class="header-area ">
-    <div id="sticky-header" class="main-header-area">
-      <div class="container-fluid ">
-        <div class="header_bottom_border">
-          <div class="row align-items-center">
-            <div class="col-xl-3 col-lg-2">
-              <div class="logo">
-                <a href="CandidateHomepageServlet">
-                  <img src="candidate/img/logo.png" alt="" style="max-height: 80px">
-                </a>
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-7">
-              <div class="main-menu  d-none d-lg-block">
-                <nav>
-                  <ul id="navigation">
-                    <li><a href="CandidateHomepageServlet">Trang chủ</a></li>
-                    <li><a href="jobs.html">Tìm việc làm</a></li>
-                    <li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
-                      <ul class="submenu">
-                        <li><a href="#">Quản lý CV </a></li>
-                        <li><a href="#">Mẫu CV </a></li>
-                        <li><a href="#">Hướng dẫn viết CV theo ngành nghề</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Công ty <i class="ti-angle-down"></i></a>
-                      <ul class="submenu">
-                        <li><a href="#">Danh sách công ty</a></li>
-                        <li><a href="#">Top nhà tuyển dụng</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Hỗ trợ</a></li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-              <div class="Appointment">
-                <%
-                  CandidateSessionItem candidateSession = (CandidateSessionItem) session.getAttribute("candidateSession");
-                  if (candidateSession == null) {
-                %>
-                <div class="phone_num d-none d-xl-block">
-                  <a href="CandidateLoginServlet">Log in</a>
-                </div>
-                <%} else {%>
-                <div class="d-flex align-items-center">
-                  <span style="color: white">Welcome,</span>
-                  <div class="thumb" style="margin-left: 10px; margin-right: 5px">
-                    <img src="<%=candidateSession.getAvatar()%>" alt="" width="40px" height="40px">
-                  </div>
-                  <span style="font-weight: bold; font-size: 20px; margin-right: 15px; color: white"><%=candidateSession.getName()%></span>
-                </div>
-                <%
-                  }
-                %>
-                <div class="d-none d-lg-block">
-                  <a class="boxed-btn3" href="AnotherLoginServlet">Người dùng khác</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="mobile_menu d-block d-lg-none"></div>
-            </div>
-          </div>
-        </div>
+	<div class="header-area ">
+		<div id="sticky-header" class="main-header-area">
+			<div class="container-fluid ">
+				<div class="header_bottom_border">
+					<div class="row align-items-center">
+						<div class="col-xl-3 col-lg-2">
+							<div class="logo">
+								<a href="CandidateHomepageServlet"> <img
+									src="candidate/img/logo.png" alt="" style="max-height: 80px">
+								</a>
+							</div>
+						</div>
+						<div class="col-xl-6 col-lg-7">
+							<div class="main-menu  d-none d-lg-block">
+								<nav>
+									<ul id="navigation">
+										<li><a href="CandidateHomepageServlet">Trang chủ</a></li>
+										<li><a href="jobs.html">Tìm việc làm</a></li>
+										<li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
+											<ul class="submenu">
+												<li><a href="#">Quản lý CV </a></li>
+												<li><a href="#">Mẫu CV </a></li>
+												<li><a href="#">Hướng dẫn viết CV theo ngành nghề</a></li>
+											</ul></li>
+										<li><a href="#">Công ty <i class="ti-angle-down"></i></a>
+											<ul class="submenu">
+												<li><a href="#">Danh sách công ty</a></li>
+												<li><a href="#">Top nhà tuyển dụng</a></li>
+											</ul></li>
+										<li><a href="#">Hỗ trợ</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-3 d-none d-lg-block">
+							<div class="Appointment">
+								<%
+								CandidateSessionItem candidateSession = (CandidateSessionItem) session.getAttribute("candidateSession");
+								if (candidateSession == null) {
+								%>
+								<div class="phone_num d-none d-xl-block">
+									<a href="CandidateLoginServlet">Log
+										in</a>
+								</div>
 
-      </div>
-    </div>
-  </div>
+								<div class="phone_num d-none d-xl-block ml-2">
+									<a href="CandidateSignUpServlet">Sign
+										up</a>
+								</div>
+								<%
+								} else {
+								%>
+								<div class="d-flex align-items-center">
+									<span style="color: white; margin-right: 10px;">Welcome,</span>
+									<div class="thumb">
+										<img src="<%=candidateSession.getAvatar()%>" alt=""
+											width="40px" height="40px" class="rounded-circle">
+									</div>
+									<span
+										style="font-weight: bold; font-size: 20px; margin-left: 5px; margin-right: 15px; color: white;"><%=candidateSession.getName()%></span>
+								</div>
+								<%
+								}
+								%>
+								<div class="d-none d-lg-block">
+									<a href="AnotherLoginServlet" class="btn btn-secondary">Người
+										dùng khác</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-12">
+						<div class="mobile_menu d-block d-lg-none"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	</div>
 </header>
 <!-- header-end -->
 <%--<!doctype html>--%>
