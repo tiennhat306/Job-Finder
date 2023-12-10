@@ -15,28 +15,17 @@
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
-<link rel="stylesheet"
-	href="../candidate/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="../candidate/css/owl.carousel.min.css">
-<link rel="stylesheet"
-	href="../candidate/css/magnific-popup.css">
-<link rel="stylesheet"
-	href="../candidate/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="../candidate/css/themify-icons.css">
-<link rel="stylesheet"
-	href="../candidate/css/nice-select.css">
-<link rel="stylesheet"
-	href="../candidate/css/flaticon.css">
-<link rel="stylesheet"
-	href="../candidate/css/gijgo.css">
-<link rel="stylesheet"
-	href="../candidate/css/animate.min.css">
-<link rel="stylesheet"
-	href="../candidate/css/slicknav.css">
-<link rel="stylesheet"
-	href="../candidate/css/style.css">
+<link rel="stylesheet" href="../candidate/css/bootstrap.min.css">
+<link rel="stylesheet" href="../candidate/css/owl.carousel.min.css">
+<link rel="stylesheet" href="../candidate/css/magnific-popup.css">
+<link rel="stylesheet" href="../candidate/css/font-awesome.min.css">
+<link rel="stylesheet" href="../candidate/css/themify-icons.css">
+<link rel="stylesheet" href="../candidate/css/nice-select.css">
+<link rel="stylesheet" href="../candidate/css/flaticon.css">
+<link rel="stylesheet" href="../candidate/css/gijgo.css">
+<link rel="stylesheet" href="../candidate/css/animate.min.css">
+<link rel="stylesheet" href="../candidate/css/slicknav.css">
+<link rel="stylesheet" href="../candidate/css/style.css">
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -47,7 +36,7 @@
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>Software Engineer</h3>
+						<h3 id="jobTitle"></h3>
 					</div>
 				</div>
 			</div>
@@ -66,16 +55,21 @@
 									<img src="img/svg_icon/1.svg" alt="">
 								</div>
 								<div class="jobs_conetent">
-									<a href="#"><h4>Kỹ sư phần mềm</h4></a>
+									<a href="#"><h4 id="jobBrand"></h4></a>
 									<div class="links_locat d-flex align-items-center">
 										<div class="location">
-											<p>
-												<i class="fa fa-map-marker"></i>Công ty Cổ phần Dalton
+											<p id="companyName">
+												<i class="fa fa-map-marker"></i>
 											</p>
 										</div>
 										<div class="location">
-											<p>
-												<i class="fa fa-clock-o"></i> Đà Nẵng
+											<p id="city">
+												<i class="fa fa-clock-o"></i>
+											</p>
+										</div>
+										<div class="location">
+											<p id="address">
+												<i class="fa fa-map-marker"></i>
 											</p>
 										</div>
 									</div>
@@ -92,39 +86,15 @@
 					<div class="descript_wrap white-bg">
 						<div class="single_wrap">
 							<h4>Sơ lược công ty</h4>
-							<p>There are many variations of passages of Lorem Ipsum
-								available, but the majority have suffered alteration in some
-								form, by injected humour, or randomised words which don't look
-								even slightly believable. If you are going to use a passage of
-								Lorem Ipsum, you need to be sure there isn't anything
-								embarrassing.</p>
-							<p>Variations of passages of lorem Ipsum available, but the
-								majority have suffered alteration in some form, by injected
-								humour, or randomised words which don't look even slightly
-								believable. If you are going to use a passage of Lorem Ipsum,
-								you need to be sure there isn't anything embarrassing.</p>
+							<p id="company-description"></p>
 						</div>
 						<div class="single_wrap">
 							<h4>Mô tả công việc</h4>
-							<ul>
-								<li>The applicants should have experience in the following
-									areas.</li>
-								<li>Have sound knowledge of commercial activities.</li>
-								<li>Leadership, analytical, and problem-solving abilities.</li>
-								<li>Should have vast knowledge in IAS/ IFRS, Company Act,
-									Income Tax, VAT.</li>
-							</ul>
+							<p id="job-description"></p>
 						</div>
 						<div class="single_wrap">
 							<h4>Kinh nghiệm, kỹ năng chi tiết</h4>
-							<ul>
-								<li>The applicants should have experience in the following
-									areas.</li>
-								<li>Have sound knowledge of commercial activities.</li>
-								<li>Leadership, analytical, and problem-solving abilities.</li>
-								<li>Should have vast knowledge in IAS/ IFRS, Company Act,
-									Income Tax, VAT.</li>
-							</ul>
+							<p id="experience-detail"></p>
 						</div>
 						<div class="single_wrap">
 							<h4>Phúc lợi công việc</h4>
@@ -197,8 +167,8 @@
 								<li>Ngày đăng: <span>12 Nov, 2019</span></li>
 								<li>Số lượng: <span>5</span></li>
 								<li>Mức lương: <span>50k - 120k/y</span></li>
-								<li>Loại công việc: <span> Full-time</span></li>
-								<li>Cấp bậc: <span> Full-time</span></li>
+								<li>Loại công việc: <span id="workType"></span></li>
+								<li>Cấp bậc: <span id="rank"></span></li>
 								<li>Học vấn: <span> Full-time</span></li>
 								<li>Mức kinh nghiệm: <span> Full-time</span></li>
 							</ul>
@@ -221,11 +191,11 @@
 						<div class="job_content">
 							<ul>
 								<li>Tên liên hệ: <span>12 Nov, 2019</span></li>
-								<li>Địa chỉ: <span>50k - 120k/y</span></li>
 								<li>Nhận hồ sơ bằng ngôn ngữ: <span> Full-time</span></li>
+								<li>Số nhân viên: <span id="staffNumber"></span></li>
 								<li>Số điện thoại liên lạc: <span> Full-time</span></li>
 								<li>Email liên lạc: <span> Full-time</span></li>
-								<li>Website công ty: <span> Full-time</span></li>
+								<li>Website công ty: <span id="websiteCompany"> </span></li>
 							</ul>
 						</div>
 					</div>
@@ -233,50 +203,64 @@
 			</div>
 		</div>
 	</div>
-	<script
-		src="../candidate/js/vendor/modernizr-3.5.0.min.js"></script>
-	<script
-		src="../candidate/js/vendor/jquery-1.12.4.min.js"></script>
-	<script
-		src="../candidate/js/popper.min.js"></script>
-	<script
-		src="../candidate/js/bootstrap.min.js"></script>
-	<script
-		src="../candidate/js/owl.carousel.min.js"></script>
-	<script
-		src="../candidate/js/isotope.pkgd.min.js"></script>
+	<script src="../candidate/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="../candidate/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="../candidate/js/popper.min.js"></script>
+	<script src="../candidate/js/bootstrap.min.js"></script>
+	<script src="../candidate/js/owl.carousel.min.js"></script>
+	<script src="../candidate/js/isotope.pkgd.min.js"></script>
 	<script src="../candidate/js/ajax-form.js"></script>
-	<script
-		src="../candidate/js/waypoints.min.js"></script>
-	<script
-		src="../candidate/js/jquery.counterup.min.js"></script>
-	<script
-		src="../candidate/js/imagesloaded.pkgd.min.js"></script>
+	<script src="../candidate/js/waypoints.min.js"></script>
+	<script src="../candidate/js/jquery.counterup.min.js"></script>
+	<script src="../candidate/js/imagesloaded.pkgd.min.js"></script>
 	<script src="../candidate/js/scrollIt.js"></script>
 	<script src="../candidate/js/jquery.scrollUp.min.js"></script>
 	<script src="../candidate/js/wow.min.js"></script>
-	<script
-		src="../candidate/js/nice-select.min.js"></script>
-	<script
-		src="../candidate/js/jquery.slicknav.min.js"></script>
-	<script
-		src="../candidate/js/jquery.magnific-popup.min.js"></script>
+	<script src="../candidate/js/nice-select.min.js"></script>
+	<script src="../candidate/js/jquery.slicknav.min.js"></script>
+	<script src="../candidate/js/jquery.magnific-popup.min.js"></script>
 	<script src="../candidate/js/plugins.js"></script>
 	<script src="../candidate/js/gijgo.min.js"></script>
 
 	<!--contact js-->
 	<script src="../candidate/js/contact.js"></script>
-	<script
-		src="../candidate/js/jquery.ajaxchimp.min.js"></script>
-	<script
-		src="../candidate/js/jquery.form.js"></script>
-	<script
-		src="../candidate/js/jquery.validate.min.js"></script>
-	<script
-		src="../candidate/js/mail-script.js"></script>
+	<script src="../candidate/js/jquery.ajaxchimp.min.js"></script>
+	<script src="../candidate/js/jquery.form.js"></script>
+	<script src="../candidate/js/jquery.validate.min.js"></script>
+	<script src="../candidate/js/mail-script.js"></script>
 
 
 	<script src="../candidate/js/main.js"></script>
 
+	<script>
+		// Check if user input exists in local storage for stage1
+		var userJobTitle = localStorage.getItem('stage1_userJobTitle');
+		var companyName = localStorage.getItem('stage1_companyName');
+		var descriptCompany = localStorage.getItem('stage1_descriptCompany');
+		var employeeNumber = localStorage.getItem('stage1_employeeNumber');
+		var website = localStorage.getItem('stage1_website');
+		
+		var city = localStorage.getItem('stage2_city');
+		var address = localStorage.getItem('stage2_address');
+		var jobDescription = localStorage.getItem('stage2_job-description');
+		var experienceDetail = localStorage.getItem('stage2_experience-detail');
+		var workType = localStorage.getItem('stage2_workType');
+		var rank = localStorage.getItem('stage2_rank');
+
+		document.getElementById('jobTitle').innerText = userJobTitle;
+		document.getElementById('jobBrand').innerText = userJobTitle;
+		document.getElementById('companyName').innerHTML = "<i class='fa fa-map-marker'></i>" + companyName;
+		document.getElementById('company-description').innerText = descriptCompany;
+		document.getElementById('websiteCompany').innerText = website;		
+		document.getElementById('staffNumber').innerText = employeeNumber;		
+		
+		document.getElementById('city').innerHTML = "<i class='fa fa-clock-o'></i>" + city;
+		document.getElementById('address').innerHTML = "<i class='fa fa-clock-o'></i>" + address;	
+		document.getElementById('job-description').innerText = jobDescription;		
+		document.getElementById('experience-detail').innerText = experienceDetail;		
+		document.getElementById('workType').innerText = workType;		
+		document.getElementById('rank').innerText = rank;		
+		
+	</script>
 </body>
 </html>

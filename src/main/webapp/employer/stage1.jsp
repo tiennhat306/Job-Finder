@@ -57,7 +57,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<label for="position">Chức danh</label> <input type="text"
-									name="title" id="position" class="position"
+									name="title" id="title" class="position"
 									placeholder="Nhập công việc muốn tìm kiếm ứng viên" required>
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="company">Tên công ty</label> <input type="text"
-								name="companyName" id="company"
+								name="companyName" id="companyName"
 								placeholder="Nhập tên công ty của bạn" required>
 						</div>
 						<div class="col-md-12">
@@ -105,12 +105,30 @@
 						<div class="col-md-12">
 							<input type="submit" name="buttonSaveStage1" value="Lưu và thoát">
 							<input type="button" value="Tiếp tục"
-								onclick="redirectToStage2()">
+								onclick="updateJobTitle(); redirectToStage2();">
 						</div>
 					</div>
 				</form>
 			</div>
 		</section>
 	</main>
+	
+	<script>
+    function updateJobTitle() {
+    	// Retrieve values from form inputs
+    	var userInput = document.getElementById('title').value;
+    	var companyName = document.getElementById('companyName').value;
+    	var descriptCompany = document.getElementById('summary').value;
+    	var employeeNumber = document.getElementById('employeeNumber').value;
+    	var website = document.getElementById('Website').value;
+
+    	// Store values in localStorage
+    	localStorage.setItem('stage1_userJobTitle', userInput);
+    	localStorage.setItem('stage1_companyName', companyName);
+    	localStorage.setItem('stage1_descriptCompany', descriptCompany);
+    	localStorage.setItem('stage1_employeeNumber', employeeNumber);
+    	localStorage.setItem('stage1_website', website); 
+    }
+</script>
 </body>
 </html>
