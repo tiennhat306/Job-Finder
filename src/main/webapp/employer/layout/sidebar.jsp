@@ -44,15 +44,15 @@
       <div id="sidebar-menu" class="active">
         <ul class="metismenu in" id="side-menu">
           <li class="menu-item">
-            <a href="/nurse">
-              <i class="fas fa-file-medical"></i>
-              <span> Đơn đặt khám </span>
+            <a href="EmployerHomepageServlet">
+              <i class="fas fa-suitcase"></i>
+              <span> Quản lý công việc </span>
             </a>
           </li>
           <li>
             <a href="/nurse/customers">
-              <i class="fas fa-user-check"></i>
-              <span> Khách hàng </span>
+                <i class="fas fa-file-alt"></i>
+              <span> Quản lý CV </span>
             </a>
           </li>
         </ul>
