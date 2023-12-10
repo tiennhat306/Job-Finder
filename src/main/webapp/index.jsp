@@ -5,8 +5,11 @@
     <title>Tuyển dụng, tìm việc 24h</title>
 </head>
 <body>
-    <%
-        response.sendRedirect("CandidateHomepageServlet");
-    %>
+<h1><%= "Hello World!" %>
+</h1>
+<br/>
+<a href="CVManagementServlet">cvManagement</a>
+<a href="JobListServlet">jobList</a>
+<a href="CandidateHomepageServlet">candidate homepage</a>
 </body>
 </html>
