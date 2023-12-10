@@ -37,78 +37,7 @@
 
 <body>
     <!-- header-start -->
-    <header>
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container-fluid ">
-                    <div class="header_bottom_border">
-                        <div class="row align-items-center">
-                            <div class="col-xl-3 col-lg-2">
-                                <div class="logo">
-                                    <a href="CandidateHomepageServlet">
-                                        <img src="candidate/img/logo.png" alt="" style="max-height: 80px">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-7">
-                                <div class="main-menu  d-none d-lg-block">
-                                    <nav>
-                                        <ul id="navigation">
-                                            <li><a href="CandidateHomepageServlet">Trang chủ</a></li>
-                                            <li><a href="jobs.html">Tìm việc làm</a></li>
-                                            <li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="#">Quản lý CV </a></li>
-                                                    <li><a href="#">Mẫu CV </a></li>
-                                                    <li><a href="#">Hướng dẫn viết CV theo ngành nghề</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Công ty <i class="ti-angle-down"></i></a>
-                                                <ul class="submenu">
-                                                    <li><a href="#">Danh sách công ty</a></li>
-                                                    <li><a href="#">Top nhà tuyển dụng</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Hỗ trợ</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
-                                <div class="Appointment">
-                                    <%
-                                        CandidateSessionItem candidateSession = (CandidateSessionItem) session.getAttribute("candidateSession");
-                                        if (candidateSession == null) {
-                                    %>
-                                        <div class="phone_num d-none d-xl-block">
-                                            <a href="CandidateLoginServlet">Log in</a>
-                                        </div>
-                                    <%} else {%>
-                                        <div class="d-flex align-items-center">
-                                            <span style="color: white">Welcome,</span>
-                                            <div class="thumb" style="margin-left: 10px; margin-right: 5px">
-                                                <img src="<%=candidateSession.getAvatar()%>" alt="" width="40px" height="40px">
-                                            </div>
-                                            <span style="font-weight: bold; font-size: 20px; margin-right: 15px; color: white"><%=candidateSession.getName()%></span>
-                                        </div>
-                                    <%
-                                        }
-                                    %>
-                                    <div class="d-none d-lg-block">
-                                        <a class="boxed-btn3" href="AnotherLoginServlet">Người dùng khác</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </header>
+    <jsp:include page="layout/topbar.jsp"></jsp:include>
     <!-- header-end -->
 
     <!-- slider_area_start -->
@@ -386,7 +315,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section_title text-center mb-40">
-                        <h3>Testimonial</h3>
+                        <h3>Lời khuyên</h3>
                     </div>
                 </div>
                 <div class="col-xl-12">
@@ -402,8 +331,8 @@
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                            <span>- Micky Mouse</span>
+                                            <p>"Người làm việc chăm chỉ sẽ đánh bại người tài năng khi người tài năng không làm việc chăm chỉ.</p>
+                                            <span>- Doanh nhân A</span>
                                         </div>
                                     </div>
                                 </div>
@@ -414,14 +343,14 @@
                                 <div class="col-lg-11">
                                     <div class="single_testmonial d-flex align-items-center">
                                         <div class="thumb">
-                                            <img src="candidate/img/testmonial/author.png" alt="">
+                                            <img src="candidate/img/candiateds/7.png" alt=""  style="width: 228px; height: 228px;">
                                             <div class="quote_icon">
                                                 <i class=" Flaticon flaticon-quote"></i>
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                            <span>- Micky Mouse</span>
+                                            <p>"Khi gặp khó khăn thất bại trong công việc đừng bao giờ nghĩ đến từ “Chấp nhận” mà là phải “Vượt qua”</p>
+                                            <span>- Nữ Doanh nhân B</span>
                                         </div>
                                     </div>
                                 </div>
@@ -432,14 +361,14 @@
                                 <div class="col-lg-11">
                                     <div class="single_testmonial d-flex align-items-center">
                                         <div class="thumb">
-                                            <img src="candidate/img/testmonial/author.png" alt="">
+                                            <img src="candidate/img/candiateds/10.png" alt="" style="width: 228px; height: 228px;">
                                             <div class="quote_icon">
                                                 <i class="Flaticon flaticon-quote"></i>
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <p>"Working in conjunction with humanitarian aid agencies, we have supported programmes to help alleviate human suffering through animal welfare when people might depend on livestock as their only source of income or food.</p>
-                                            <span>- Micky Mouse</span>
+                                            <p>"Hãy làm những việc bình thường bằng lòng say mê phi thường thành công sẽ đến với bạn.</p>
+                                            <span>- Nhà khởi nghiệp trẻ C</span>
                                         </div>
                                     </div>
                                 </div>
@@ -454,107 +383,7 @@
 
 
     <!-- footer start -->
-    <footer class="footer">
-        <div class="footer_top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-3 col-md-6 col-lg-3">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                            <div class="footer_logo">
-                                <a href="#">
-                                    <img src="candidate/img/logo.png" alt="" style="max-height: 80px">
-                                </a>
-                            </div>
-                            <p>
-                                finloan@support.com <br>
-                                +10 873 672 6782 <br>
-                                600/D, Green road, NewYork
-                            </p>
-                            <div class="socail_links">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-md-6 col-lg-2">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1.1s" data-wow-delay=".4s">
-                            <h3 class="footer_title">
-                                Company
-                            </h3>
-                            <ul>
-                                <li><a href="#">About </a></li>
-                                <li><a href="#"> Pricing</a></li>
-                                <li><a href="#">Carrier Tips</a></li>
-                                <li><a href="#">FAQ</a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-lg-3">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1.2s" data-wow-delay=".5s">
-                            <h3 class="footer_title">
-                                Category
-                            </h3>
-                            <ul>
-                                <li><a href="#">Design & Art</a></li>
-                                <li><a href="#">Engineering</a></li>
-                                <li><a href="#">Sales & Marketing</a></li>
-                                <li><a href="#">Finance</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-md-6 col-lg-4">
-                        <div class="footer_widget wow fadeInUp" data-wow-duration="1.3s" data-wow-delay=".6s">
-                            <h3 class="footer_title">
-                                Subscribe
-                            </h3>
-                            <form action="#" class="newsletter_form">
-                                <input type="text" placeholder="Enter your mail">
-                                <button type="submit">Subscribe</button>
-                            </form>
-                            <p class="newsletter_text">Esteem spirit temper too say adieus who direct esteem esteems
-                                luckily.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copy-right_text wow fadeInUp" data-wow-duration="1.4s" data-wow-delay=".3s">
-            <div class="container">
-                <div class="footer_border"></div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <p class="copy_right text-center">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <jsp:include page="layout/footer.jsp"></jsp:include>
     <!--/ footer end  -->
 
     <!-- link that opens popup -->
