@@ -10,6 +10,7 @@
 <br/>
 <a href="CVManagementServlet">cvManagement</a>
 <a href="JobListServlet">jobList</a>
+<a href="PostNewJobServlet">post a job</a>
 <a href="CandidateHomepageServlet">candidate homepage</a>
 </body>
 </html>
