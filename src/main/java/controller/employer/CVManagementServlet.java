@@ -1,4 +1,4 @@
-package controller;
+package controller.employer;
 
 import DTO.CVComboboxItem;
 import DTO.CVDataItem;
@@ -15,9 +15,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/cvManagementServlet")
-public class cvManagementServlet extends HttpServlet {
-    public cvManagementServlet() {
+@WebServlet("/CVManagementServlet")
+public class CVManagementServlet extends HttpServlet {
+    public CVManagementServlet() {
         super();
     }
 

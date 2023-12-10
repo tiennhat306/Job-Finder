@@ -408,7 +408,7 @@
                                 <div class="text-left col-4">
                                     <% if (CVStatus.getByValue(list.get(i).getStatus()) == CVStatus.KIEM_TRA_HO_SO) { %>
                                     <i class="fa-solid fa-pen-to-square" style="color: blue;"></i>
-                                    <a href="detailCVServlet?cvid=<%= list.get(i).getCvid() %>" style="color: blue;">Cập nhật</a>
+                                    <a href="DetailCVServlet?cvid=<%= list.get(i).getCvid() %>" style="color: blue;">Cập nhật</a>
                                     <% } else { %>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                     Cập nhật
