@@ -1,6 +1,7 @@
 package model.bo;
 
 import DTO.JobBoardItem;
+import DTO.MyJobBoardItem;
 import model.dao.JobBoardDAO;
 
 import java.util.ArrayList;
@@ -22,5 +23,41 @@ public class JobBoardBO {
 
     public ArrayList<JobBoardItem> getAllJobBoard(int offset) {
         return jobBoardDAO.getAllJobBoard(10, offset, "");
+    }
+
+    public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId, String search, int page, int status) {
+        return jobBoardDAO.getMyJobBoardList(employerId, search, page, status);
+    }
+
+    public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId, int page, int status) {
+        return jobBoardDAO.getMyJobBoardList(employerId, "", page, status);
+    }
+
+    public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId, String search, int status) {
+        return jobBoardDAO.getMyJobBoardList(employerId, search, 1, status);
+    }
+
+    public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId, int status) {
+        return jobBoardDAO.getMyJobBoardList(employerId, "", 1, status);
+    }
+
+    public int countMyTodayJobBoard(int employerId) {
+        return jobBoardDAO.countMyTodayJobBoard(employerId);
+    }
+
+    public int countMyLastMonthJobBoard(int employerId) {
+        return jobBoardDAO.countMyLastMonthJobBoard(employerId);
+    }
+
+    public int countMyCurrentMonthJobBoard(int employerId) {
+        return jobBoardDAO.countMyCurrentMonthJobBoard(employerId);
+    }
+
+    public int countMyJobBoard(int employerId, String search, int status) {
+        return jobBoardDAO.countMyJobBoard(employerId, search, status);
+    }
+
+    public boolean removeJobboard(int jobboardId) {
+        return jobBoardDAO.removeJobboard(jobboardId);
     }
 }

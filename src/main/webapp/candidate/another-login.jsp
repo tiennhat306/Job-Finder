@@ -111,6 +111,11 @@
 <%--                                     <label for="password">Mật khẩu</label>--%>
                                  <input class="form-control" type="password" required="" id="password" name="password" placeholder="Nhập mật khẩu của bạn">
                              </div>
+                            <div class="input-group mb-3 ">
+                                <a href="EmployerRegisterServlet">
+                                    Chưa có tài khoản tuyển dụng, đăng ký?
+                                </a>
+                            </div>
                          </div>
                          <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn mb-3"
                                  type="submit" onclick="submitForm('EmployerLoginServlet')">Người tuyển dụng</button>
