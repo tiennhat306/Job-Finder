@@ -5,13 +5,16 @@ import java.sql.DriverManager;
 
 public class DBHelper {
     public static Connection getConnection() {
-        Connection conn = null;
+        Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jobfinder", "root", "");
+            String url = "jdbc:mysql://localhost:3306/jobfinder";
+            String user = "root";
+            String password = "";
+            connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return conn;
+        return connection;
     }
 }
