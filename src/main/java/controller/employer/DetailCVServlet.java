@@ -1,4 +1,4 @@
-package controller;
+package controller.employer;
 
 import DTO.CVDetailItem;
 import jakarta.servlet.ServletException;
@@ -10,9 +10,9 @@ import model.bo.JobApplicationBO;
 
 import java.io.IOException;
 
-@WebServlet(name = "detailCVServlet", value = "/detailCVServlet")
-public class detailCVServlet extends HttpServlet {
-    public detailCVServlet() {
+@WebServlet(name = "DetailCVServlet", value = "/DetailCVServlet")
+public class DetailCVServlet extends HttpServlet {
+    public DetailCVServlet() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class detailCVServlet extends HttpServlet {
         System.out.println(status);
         JobApplicationBO jobApplicationBO = new JobApplicationBO();
         jobApplicationBO.updateCV(cvid, status);
-        resp.sendRedirect("cvManagementServlet");
+        resp.sendRedirect("CVManagementServlet");
         return;
     }
 }

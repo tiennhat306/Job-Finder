@@ -23,7 +23,7 @@
     %>
     <section class="dashboard">
         <div class="form_infomation">
-            <form action="detailCVServlet" method="post">
+            <form action="DetailCVServlet" method="post">
                 <div class="col-md-12">
                     <label for="nameJob">Tên công việc</label>
                     <input type="text" name="nameJob" id="nameJob" value="<%= detail.getTitle() %>" readonly>

@@ -1,4 +1,4 @@
-package controller;
+package controller.employer;
 
 import DTO.JobListInfoItem;
 import jakarta.servlet.ServletException;
@@ -11,9 +11,9 @@ import model.bo.JobBoardBO;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "jobListServlet", value = "/jobListServlet")
-public class jobListServlet extends HttpServlet {
-    public jobListServlet() {
+@WebServlet(name = "JobListServlet", value = "/JobListServlet")
+public class JobListServlet extends HttpServlet {
+    public JobListServlet() {
         super();
     }
 
