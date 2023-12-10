@@ -8,6 +8,7 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="cvManagementServlet">Hello Servlet</a>
+<a href="cvManagementServlet">cvManagement</a>
+<a href="jobListServlet">jobList</a>
 </body>
 </html>
