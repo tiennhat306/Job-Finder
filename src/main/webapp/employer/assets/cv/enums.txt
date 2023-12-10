@@ -1,0 +1,42 @@
+enum:
+quy mô tuyển dụng:
+1: ít hơn 10
+2: 10 - 24
+3: 25 - 99
+4: 100 - 499
+5: trên 500
+
+loại công việc:
+1: toàn thời gian
+2: bán thời gian
+3: hợp đồng
+
+lương:
+1: khoảng từ ... đến ...
+2: từ ... triệu
+3: tối đa ... triệu
+4: thỏa thuận
+
+cấp bậc:
+1: Sinh viên/ Thực tập sinh
+2: Mới đi làm
+3: Nhân viên
+4: Kỹ sư
+5: quản lý
+
+trình độ học vấn:
+1: THPT
+2: Chứng chỉ
+3: trung cấp
+4: cao đẳng
+5: cử nhân
+6: kỹ sư
+7: thạc sĩ
+8: tiến sĩ
+
+mức kinh nghiệm:
+0 - 1 năm kinh nghiệm
+1 - 2 năm kinh nghiệm
+2 - 5 năm kinh nghiệm
+5 - 10 năm kinh nghiệm
+Hơn 10 năm kinh nghiệm
