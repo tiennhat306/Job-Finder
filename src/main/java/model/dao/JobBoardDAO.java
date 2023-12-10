@@ -2,6 +2,7 @@ package model.dao;
 
 import DBHelper.DBHelper;
 import DTO.JobBoardItem;
+import DTO.MyJobBoardItem;
 import model.bean.JobBoard;
 import DTO.CVComboboxItem;
 import DTO.CVDataItem;
@@ -163,13 +164,14 @@ public class JobBoardDAO {
 		try (Connection connection = DBHelper.getConnection()) {
 			ArrayList<JobBoardItem> jobBoardList = new ArrayList<>();
 
-//            String sql = "select jb.id, jb.title, jb.company_name, jb.salary_type, jb.salary_from, jb.salary_to, e.logo, c.name as city_name from jobboard jb join employer e on jb.employer_id = e.id join city c on jb.city_id = c.id join career ca on jb.career_id = ca.id where jb.status = 2 and jb.posting_date <= now() and jb.expiration_date >= now() and (jb.title like ? or e.company_name like ? or c.name like ? or ca.name like ?) order by jb.posting_date desc, jb.views desc limit ?, ?";
-			String sql = "SELECT jb.id, jb.title, jb.company_name, jb.salary_type, jb.salary_from, jb.salary_to, e.logo, c.name AS city_name "
-					+ "FROM jobboard jb " + "JOIN employer e ON jb.employer_id = e.id "
-					+ "JOIN city c ON jb.city_id = c.id "
-					+ "WHERE jb.status = 2 AND jb.posting_date <= now() AND jb.expiration_date >= now() AND (jb.title LIKE ? OR e.company_name LIKE ? OR c.name LIKE ?) "
-					+ "AND jb.id IN (SELECT jobboard_id FROM careergroup WHERE career_id IN (SELECT id FROM career WHERE name LIKE ?)) "
-					+ "ORDER BY jb.posting_date DESC, jb.views DESC " + "LIMIT ?, ?";
+            String sql = "SELECT jb.id, jb.title, jb.company_name, jb.salary_type, jb.salary_from, jb.salary_to, e.logo, c.name AS city_name " +
+                    "FROM jobboard jb " +
+                    "JOIN employer e ON jb.employer_id = e.id " +
+                    "JOIN city c ON jb.city_id = c.id " +
+                    "WHERE jb.status = 3 AND jb.posting_date <= now() AND jb.expiration_date >= now() AND (jb.title LIKE ? OR e.company_name LIKE ? OR c.name LIKE ?) " +
+                    "AND jb.id IN (SELECT jobboard_id FROM careergroup WHERE career_id IN (SELECT id FROM career WHERE name LIKE ?)) " +
+                    "ORDER BY jb.posting_date DESC, jb.views DESC " +
+                    "LIMIT ?, ?";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + search + "%");
@@ -268,45 +270,134 @@ public class JobBoardDAO {
 		}
 	}
 
-//	public void updateJobPartial(int jobboardId, String title, String code, String companyName, int companySize,
-//			String companyDescription, String website, int cityId, String address, String jobType, String rank,
-//			int salaryType, double salaryFrom, double salaryTo, String ageType, int genderType, String jobDescription,
-//			int qualification, int yearsOfExperience, String requirements) {
-//
-//		try (Connection connection = DBHelper.getConnection()) {
-//			String sql = "UPDATE jobboard SET title=?, code=?, company_name=?, company_size=?, "
-//					+ "company_description=?, website=?, city_id=?, address=?, job_type=?, rank=?, "
-//					+ "salary_type=?, salary_from=?, salary_to=?, age_type=?, gender_type=?, job_description=?, "
-//					+ "qualification=?, years_of_experience=?, requirements=? WHERE id=?";
-//
-//			try (PreparedStatement pst = connection.prepareStatement(sql)) {
-//				pst.setString(1, title);
-//				pst.setString(2, code);
-//				pst.setString(3, companyName);
-//				pst.setInt(4, companySize);
-//				pst.setString(5, companyDescription);
-//				pst.setString(6, website);
-//				pst.setInt(7, cityId);
-//				pst.setString(8, address);
-//				pst.setString(9, jobType);
-//				pst.setString(10, rank);
-//				pst.setInt(11, salaryType);
-//				pst.setDouble(12, salaryFrom);
-//				pst.setDouble(13, salaryTo);
-//				pst.setString(14, ageType);
-//				pst.setInt(15, genderType);
-//				pst.setString(16, jobDescription);
-//				pst.setInt(17, qualification);
-//				pst.setInt(18, yearsOfExperience);
-//				pst.setString(19, requirements);
-//
-//// Set the jobboard ID in the last parameter of the SQL query
-//				pst.setInt(20, jobboardId);
-//
-//				pst.executeUpdate();
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
+    public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId , String search, int page, int status) {
+        try(Connection connection = DBHelper.getConnection()){
+            int limit = 10;
+            if(page <= 0 || limit <= 0) return null;
+            ArrayList<MyJobBoardItem> myJobBoardList = new ArrayList<>();
+
+            String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                    "FROM jobboard jb " +
+                    "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                    "WHERE jb.employer_id = ? AND jb.title LIKE ?  " + (status == 0 ? "" : "AND jb.status = ? ") +
+                    "GROUP BY jb.id " +
+                    "ORDER BY jb.posting_date DESC " +
+                    "LIMIT ?, ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, employerId);
+            preparedStatement.setString(2, "%" + search + "%");
+            if(status != 0) preparedStatement.setInt(3, status);
+            preparedStatement.setInt(status == 0 ? 3 : 4, (page - 1) * limit);
+            preparedStatement.setInt(status == 0 ? 4 : 5, limit);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                MyJobBoardItem myJobBoard = new MyJobBoardItem();
+                myJobBoard.setId(resultSet.getInt("id"));
+                myJobBoard.setTitle(resultSet.getString("title"));
+                myJobBoard.setStatus(resultSet.getInt("status"));
+                myJobBoard.setNoOfApplicants(resultSet.getInt("no_of_applicants"));
+                myJobBoard.setViews(resultSet.getInt("views"));
+
+                Date postingDate = resultSet.getDate("posting_date");
+                Date expirationDate = resultSet.getDate("expiration_date");
+                myJobBoard.setPostingDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(postingDate));
+                myJobBoard.setExpirationDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(expirationDate));
+
+                myJobBoardList.add(myJobBoard);
+            }
+
+            return myJobBoardList;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int countMyTodayJobBoard(int employerId) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date = CURDATE()";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, employerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countMyLastMonthJobBoard(int employerId) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date BETWEEN DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) AND DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 DAY)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, employerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countMyCurrentMonthJobBoard(int employerId) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date BETWEEN DATE_FORMAT(NOW(),'%Y-%m-01') AND NOW()";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, employerId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countMyJobBoard(int employerId, String search, int status) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(jb.id) AS count " +
+                    "FROM jobboard jb " +
+                    "WHERE jb.employer_id = ? AND jb.title LIKE ? " + (status == 0 ? "" : "AND jb.status = ? ");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, employerId);
+            preparedStatement.setString(2, "%" + search + "%");
+            if(status != 0) preparedStatement.setInt(3, status);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean removeJobboard(int jobboardId) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "DELETE FROM jobboard WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, jobboardId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
