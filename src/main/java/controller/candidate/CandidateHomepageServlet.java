@@ -32,7 +32,7 @@ public class CandidateHomepageServlet extends HttpServlet {
         request.setAttribute("topEmployerList", topEmployerList);
 
         ArrayList<JobBoardItem> jobBoardList = null;
-        jobBoardList = new JobBoardBO().getAllJobBoard(0);
+        jobBoardList = new JobBoardBO().getAllJobBoardItem(0);
         request.setAttribute("jobBoardList", jobBoardList);
         RequestDispatcher rd = request.getRequestDispatcher("candidate/index.jsp");
         rd.forward(request, response);

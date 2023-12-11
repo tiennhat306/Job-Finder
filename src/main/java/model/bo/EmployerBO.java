@@ -1,5 +1,6 @@
 package model.bo;
 
+import DTO.EmployerItem;
 import DTO.EmployerSessionItem;
 import DTO.TopEmployerItem;
 import model.dao.EmployerDAO;
@@ -23,5 +24,13 @@ public class EmployerBO {
 
     public EmployerSessionItem validateEmployer(String username, String password){
         return employerDAO.validateEmployer(username, password);
+    }
+
+    public ArrayList<EmployerItem> getAllEmployer(String search, int page) {
+        return employerDAO.getAllEmployer(search, page);
+    }
+
+    public int countEmployer(String search) {
+        return employerDAO.countEmployer(search);
     }
 }

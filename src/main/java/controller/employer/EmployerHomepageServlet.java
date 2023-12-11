@@ -19,6 +19,15 @@ public class EmployerHomepageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EmployerSessionItem employerSessionItem = (EmployerSessionItem) request.getSession().getAttribute("employerSession");
+        int employerId;
+        if(employerSessionItem == null){
+            response.sendRedirect(request.getContextPath() + "/EmployerLoginServlet");
+            return;
+        } else {
+            employerId = employerSessionItem.getId();
+        }
+
         String search = request.getParameter("search");
         int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
         int status = request.getParameter("status") == null ? 0 : Integer.parseInt(request.getParameter("status"));
@@ -31,8 +40,7 @@ public class EmployerHomepageServlet extends HttpServlet {
         if(status < 0 || status > 5){
             status = 0;
         }
-        EmployerSessionItem employerSessionItem = (EmployerSessionItem) request.getSession().getAttribute("employerSession");
-        int employerId = employerSessionItem.getId();
+
         ArrayList<MyJobBoardItem> myJobBoardList = new JobBoardBO().getMyJobBoardList(employerId, search, page, status);
         request.setAttribute("myJobBoardList", myJobBoardList);
 

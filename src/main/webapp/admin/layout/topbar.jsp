@@ -68,9 +68,9 @@
 
   <!-- LOGO -->
   <div class="logo-box">
-    <a href="/nurse" class="logo text-center">
+    <a href="CandidateHomepageServlet" class="logo text-center">
 			<span class="logo-lg">
-				<img src="employer/assets/images/horizontal-logo.png" alt="" height="32" />
+				<img src="candidate/img/logo.png" alt="" height="32" />
 			</span>
     </a>
   </div>

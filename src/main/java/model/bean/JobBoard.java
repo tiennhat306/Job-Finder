@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class JobBoard {
@@ -36,6 +37,9 @@ public class JobBoard {
     private int status;
     private int views;
     private int employerId;
+    private int updatedBy;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     public JobBoard() {
     }
@@ -338,5 +342,29 @@ public class JobBoard {
 
     public void setEmployerId(int employerId) {
         this.employerId = employerId;
+    }
+
+    public int getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(int updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
