@@ -21,6 +21,9 @@ public class EmployerBO {
     public ArrayList<TopEmployerItem> getTopEmployer(int offset) {
         return employerDAO.getTopEmployer(10, offset, "");
     }
+    public ArrayList<TopEmployerItem> getTopEmployer() {
+        return employerDAO.getTopEmployer();
+    }
 
     public EmployerSessionItem validateEmployer(String username, String password){
         return employerDAO.validateEmployer(username, password);

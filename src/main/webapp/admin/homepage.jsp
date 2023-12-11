@@ -295,6 +295,7 @@
 <%--                    <th>ID</th>--%>
                     <th>Trạng thái</th>
                     <th>Công việc</th>
+                    <th>Công ty</th>
                     <th>Đơn ứng tuyển</th>
                     <th>Lượt xem</th>
                     <th>Ngày bắt đầu</th>
@@ -322,6 +323,7 @@
                     <td class="text-success">Hết hạn</td>
                     <% } %>
                     <td><%= jobBoard.getTitle() %></td>
+                    <td><%= jobBoard.getCompanyName() %></td>
                     <td><%= jobBoard.getNoOfApplicants() %></td>
                     <td><%= jobBoard.getViews() %></td>
                     <td><%= jobBoard.getPostingDate() %></td>

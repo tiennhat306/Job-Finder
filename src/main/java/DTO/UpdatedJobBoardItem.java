@@ -3,6 +3,7 @@ package DTO;
 public class UpdatedJobBoardItem {
     private int id;
     private String title;
+    private String companyName;
     private int status;
     private int noOfApplicants;
     private int views;
@@ -13,9 +14,10 @@ public class UpdatedJobBoardItem {
     public UpdatedJobBoardItem() {
     }
 
-    public UpdatedJobBoardItem(int id, String title, int status, int noOfApplicants, int views, String postingDate, String expirationDate, String updatedPerson) {
+    public UpdatedJobBoardItem(int id, String title, String companyName, int status, int noOfApplicants, int views, String postingDate, String expirationDate, String updatedPerson) {
         this.id = id;
         this.title = title;
+        this.companyName = companyName;
         this.status = status;
         this.noOfApplicants = noOfApplicants;
         this.views = views;
@@ -38,6 +40,14 @@ public class UpdatedJobBoardItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public int getStatus() {
