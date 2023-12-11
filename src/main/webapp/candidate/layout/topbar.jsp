@@ -53,7 +53,12 @@
 								} else {
 								%>
 								<div class="d-flex align-items-center">
-									<span style="color: white; margin-right: 10px;">Welcome,</span>
+									<div class="phone_num d-none d-xl-block">
+										<a href="CandidateLogoutServlet">
+											<i class="fe-log-out"></i>
+											<span>Đăng xuất</span>
+										</a>
+									</div>
 									<div class="thumb">
 										<img src="<%=candidateSession.getAvatar()%>" alt=""
 											width="40px" height="40px" class="rounded-circle">
