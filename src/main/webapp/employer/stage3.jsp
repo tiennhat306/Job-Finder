@@ -7,6 +7,7 @@
     <title>Dalton</title>
     <link href="assets/css/stage.css" rel="stylesheet"
 	type="text/css" />
+	<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
     <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 	rel="stylesheet" type="text/css" />
@@ -69,36 +70,10 @@
         }
     </style>
     <script>
-        var welfareCounter = 1;
-
-        function addWelfare() {
-            var welfareContainer = document.getElementById('welfareContainer');
-            var newWelfare = document.createElement('div');
-            newWelfare.className = 'col-md-12';
-            newWelfare.innerHTML = '<label for="prizeBonus" class="welfare-label">Phúc lợi ' + welfareCounter + '</label>' +
-                                   '<div class="deleteIcon">' +
-                                       '<input type="text" name="prizeBonus" class="welfare-input">' +
-                                       '<button class="button_Delete" onclick="deleteWelfare(this)">' +
-                                           '<i class="fas fa-trash-alt"></i>' +
-                                       '</button>' +
-                                   '</div>';
-            welfareCounter++;
-            welfareContainer.appendChild(newWelfare);
-        }
-
-        function deleteWelfare(button) {
-            var welfareContainer = document.getElementById('welfareContainer');
-            var deleteIcon = button.parentElement.parentElement;
-
-            if (deleteIcon) {
-                welfareContainer.removeChild(deleteIcon);
-            }
-        }
-
-        function redirectToStage4() {
-            window.location.href = "${pageContext.request.contextPath}/employer/stage4.jsp";
-        }
-    </script>
+	function redirectToStage4() {
+		window.location.href = "${pageContext.request.contextPath}/employer/stage4.jsp";
+	}
+</script>
 </head>
 
 <body>
@@ -140,7 +115,7 @@
                 </div>
             </div>
             <div class="form_infomation">
-                <form action="#">
+                <form action="PostNewJobServlet" method="post" onsubmit="return fillPrize();">
                     <div class="row">
                         <h3>Phúc lợi công việc</h3>
                         <div class="col-md-6 welfare-container" id="welfareContainer">
@@ -152,13 +127,61 @@
                     </button>
                     <div class="row">
                       <div class="col-md-12">
-                        <input type="button" value="Lưu và thoát">
-                        <input type="button" value="Tiếp tục" onclick="redirectToStage4()">
+                        <input type="submit" name="buttonSaveStage3" value="Tiếp tục">
                       </div>
                     </div>
                 </form>
             </div>
         </section>
     </main>
+    <script>
+    var welfareCounter = 1; // Initialize counter
+
+    function deleteWelfare(element) {
+        // Remove the parent div when the delete button is clicked
+        element.parentElement.parentElement.remove();
+    }
+
+    function fillPrize() {
+        // Retrieve values from form inputs
+        var welfareElements = document.querySelectorAll('.welfare-input');
+        var selectedOptions = [];
+
+        // Iterate through welfare elements and store values in an array
+        welfareElements.forEach(function (element) {
+            selectedOptions.push(element.value);
+        });
+
+        // Store values in localStorage (if needed)
+        localStorage.setItem('stage3_prizeBonus', JSON.stringify(selectedOptions));
+
+        // Append the values to a hidden input field in the form
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'welfareBenefits'; // Use an appropriate name for your attribute
+        hiddenInput.value = JSON.stringify(selectedOptions);
+
+        // Append the hidden input to the form
+        document.querySelector('form').appendChild(hiddenInput);
+
+        // Continue with form submission
+        return true;
+    }
+    
+    function addWelfare() {
+        var welfareContainer = document.getElementById('welfareContainer');
+        var newWelfare = document.createElement('div');
+        newWelfare.className = 'col-md-12';
+        newWelfare.innerHTML = '<label for="prizeBonus" class="welfare-label">Phúc lợi ' + welfareCounter + '</label>' +
+            '<div class="deleteIcon">' +
+            '<input type="text" name="prizeBonus" class="welfare-input">' +
+            '<button class="button_Delete" onclick="deleteWelfare(this)">' +
+            '<i class="fas fa-trash-alt"></i>' +
+            '</button>' +
+            '</div>';
+        welfareCounter++;
+        welfareContainer.appendChild(newWelfare);
+    }
+</script>
 </body>
 </html>

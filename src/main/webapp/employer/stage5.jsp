@@ -7,6 +7,7 @@
     <title>Dalton</title>
     <link href="assets/css/stage.css" rel="stylesheet"
 	type="text/css" />
+	<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .form_time {
@@ -59,7 +60,7 @@
                 </div>
             </div>
             <div class="form_infomation">
-                <form action="#">
+                <form action="">
                     <label for="company">Thời gian</label>
                     <div class="form_time">
                         <div class="col-md-3-salary">
@@ -75,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="company">Ngày đăng</label>
-                            <input type="date" name="company" id="company" placeholder="Nhập tên công ty của bạn" required>
+                            <input type="date" name="postingDate" id="postingDate" required>
                         </div>
                     </div>
                     <label for="company">Ưu tiên hiển thị</label>
@@ -125,13 +126,22 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        <input type="button" value="Lưu và thoát">
-                        <input type="button" value="Tiếp tục" onclick="redirectToStage6()">
+                        <input type="button" value="Tiếp tục" name="buttonSaveStage5" onclick="redirectToStage6(); fillJob();">
                       </div>
                     </div>
                 </form>
             </div>
         </section>
     </main>
+    
+    <script>
+		function fillJob() {
+			var contactEmail = document.getElementById('postingDate').value;
+
+			// Store values in localStorage
+			localStorage.setItem('stage5_postingDate', contactEmail);
+
+		}
+	</script>
 </body>
 </html>
