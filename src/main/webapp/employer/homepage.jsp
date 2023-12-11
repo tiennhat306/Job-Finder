@@ -199,16 +199,28 @@
           <!-- end col -->
           <div class="col-xl-4 col-md-6">
             <div class="card-box">
-              <h4 class="header-title mt-0 mb-2">Tuyển dụng trong tháng</h4>
-              <div class="widget-chart-1 row">
-                <div class="widget-detail-1 text-center col-12">
-                  <h2 class="font-weight-normal pt-2 mb-1 text-primary" id="current-month-jobboard">
+              <h4 class="header-title mt-0 mb-3">Tuyển dụng trong tháng</h4>
+              <div class="widget-box-2">
+                <div class="widget-detail-2 text-right">
                     <%
                         int currentMonthJobBoard = (int) request.getAttribute("currentMonthJobBoard");
+                        double differencePercent = (double) (currentMonthJobBoard - lastMonthJobBoard) / lastMonthJobBoard * 100;
                     %>
+                    <% if (differencePercent > 0) { %>
+                    <span class="badge badge-success badge-pill float-left mt-3"
+                    ><%= differencePercent %>
+						<i class="mdi mdi-trending-up"></i>
+					</span>
+                    <% } else { %>
+                    <span class="badge badge-danger badge-pill float-left mt-3">
+						<%= differencePercent * -1 %>
+						<i class="mdi mdi-trending-down"></i>
+					</span>
+                    <% } %>
+                  <h2 class="font-weight-normal pt-2 mb-1 text-primary" id="current-month-jobboard">
                     <%= currentMonthJobBoard %>
                   </h2>
-                  <p class="text-muted mb-1">Đơn đặt</p>
+                  <p class="text-muted mb-1">Bài tuyển dụng</p>
                 </div>
               </div>
             </div>
@@ -245,9 +257,9 @@
                         %>
                         <option value="0" selected>Tất cả</option>
                         <option value="1" <% if (selectedStatus == 1) { %> selected <% } %>>Chờ xử lý</option>
-                        <option value="2" <% if (selectedStatus == 2) { %> selected <% } %>>Đang chờ đăng</option>
-                        <option value="3" <% if (selectedStatus == 3) { %> selected <% } %>>Kích hoạt</option>
-                        <option value="4" <% if (selectedStatus == 4) { %> selected <% } %>>Từ chối</option>
+                        <option value="2" <% if (selectedStatus == 2) { %> selected <% } %>>Được duệt</option>
+                        <option value="3" <% if (selectedStatus == 3) { %> selected <% } %>>Từ chối</option>
+                        <option value="4" <% if (selectedStatus == 4) { %> selected <% } %>>Chờ đăng bài</option>
                         <option value="5" <% if (selectedStatus == 5) { %> selected <% } %>>Hết hạn</option>
                       </select>
                     </div>
@@ -311,11 +323,11 @@
                     <% if (myJobBoard.getStatus() == 1 ) { %>
                     <td class="text-secondary">Chờ xử lý</td>
                     <% } else if (myJobBoard.getStatus() == 2 ) { %>
-                    <td style="color: rgb(196, 196, 114)">Đang chờ đăng</td>
+                    <td class="text-primary">Được duyệt</td>
                     <% } else if (myJobBoard.getStatus() == 3 ) { %>
-                    <td class="text-primary">Kích hoạt</td>
-                    <% } else if (myJobBoard.getStatus() == 4 ) { %>
                     <td class="text-danger">Từ chối</td>
+                    <% } else if (myJobBoard.getStatus() == 4 ) { %>
+                    <td style="color: rgb(196, 196, 114)">Chờ đăng bài</td>
                     <% } else if (myJobBoard.getStatus() == 5) { %>
                     <td class="text-success">Hết hạn</td>
                     <% } %>

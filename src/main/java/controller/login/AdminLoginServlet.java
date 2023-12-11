@@ -13,13 +13,12 @@ import java.io.IOException;
 public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("AnotherLoginServlet");
+        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/AnotherLoginServlet");
         rd.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("AdminLoginServlet doPost");
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
 

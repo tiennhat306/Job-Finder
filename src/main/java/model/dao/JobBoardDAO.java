@@ -1,13 +1,7 @@
 package model.dao;
 
 import DBHelper.DBHelper;
-import DTO.JobBoardItem;
-import DTO.MyJobBoardItem;
-import model.bean.JobBoard;
-import DTO.CVComboboxItem;
-import DTO.CVDataItem;
-import DTO.CVInfoItem;
-import DTO.JobListInfoItem;
+import DTO.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -152,7 +146,7 @@ public class JobBoardDAO {
         return list;
     }
 
-    public ArrayList<JobBoardItem> getAllJobBoard(int noOfRecords, int offset, String search) {
+    public ArrayList<JobBoardItem> getAllJobBoardItem(int noOfRecords, int offset, String search) {
         try(Connection connection = DBHelper.getConnection()){
             ArrayList<JobBoardItem> jobBoardList = new ArrayList<>();
 
@@ -161,7 +155,7 @@ public class JobBoardDAO {
                     "FROM jobboard jb " +
                     "JOIN employer e ON jb.employer_id = e.id " +
                     "JOIN city c ON jb.city_id = c.id " +
-                    "WHERE jb.status = 3 AND jb.posting_date <= now() AND jb.expiration_date >= now() AND (jb.title LIKE ? OR e.company_name LIKE ? OR c.name LIKE ?) " +
+                    "WHERE jb.status = 2 AND jb.posting_date <= now() AND jb.expiration_date >= now() AND (jb.title LIKE ? OR e.company_name LIKE ? OR c.name LIKE ?) " +
                     "AND jb.id IN (SELECT jobboard_id FROM careergroup WHERE career_id IN (SELECT id FROM career WHERE name LIKE ?)) " +
                     "ORDER BY jb.posting_date DESC, jb.views DESC " +
                     "LIMIT ?, ?";
@@ -216,21 +210,53 @@ public class JobBoardDAO {
             int limit = 10;
             if(page <= 0 || limit <= 0) return null;
             ArrayList<MyJobBoardItem> myJobBoardList = new ArrayList<>();
+            PreparedStatement preparedStatement = null;
 
-            String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, COUNT(ja.id) AS no_of_applicants, jb.views " +
-                    "FROM jobboard jb " +
-                    "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
-                    "WHERE jb.employer_id = ? AND jb.title LIKE ?  " + (status == 0 ? "" : "AND jb.status = ? ") +
-                    "GROUP BY jb.id " +
-                    "ORDER BY jb.posting_date DESC " +
-                    "LIMIT ?, ?";
+            if(status < 4){
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ?  " + (status == 0 ? "" : "AND jb.status = ? ") +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, employerId);
-            preparedStatement.setString(2, "%" + search + "%");
-            if(status != 0) preparedStatement.setInt(3, status);
-            preparedStatement.setInt(status == 0 ? 3 : 4, (page - 1) * limit);
-            preparedStatement.setInt(status == 0 ? 4 : 5, limit);
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+                if(status != 0) preparedStatement.setInt(3, status);
+                preparedStatement.setInt(status == 0 ? 3 : 4, (page - 1) * limit);
+                preparedStatement.setInt(status == 0 ? 4 : 5, limit);
+            } else if (status == 4) { // real status = 2 but posting date > now()
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ?  " +
+                        "AND jb.status = 2 AND jb.posting_date > now() " +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+                preparedStatement.setInt(3, (page - 1) * limit);
+                preparedStatement.setInt(4, limit);
+            } else if (status == 5) { // real status = 2 but expiration date < now()
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ?  " +
+                        "AND jb.status = 2 AND jb.expiration_date < now() " +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+                preparedStatement.setInt(3, (page - 1) * limit);
+                preparedStatement.setInt(4, limit);
+            }
+
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -247,6 +273,14 @@ public class JobBoardDAO {
                 myJobBoard.setPostingDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(postingDate));
                 myJobBoard.setExpirationDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(expirationDate));
 
+                if(myJobBoard.getStatus() == 2){
+                    if(postingDate.after(new Date())){
+                        myJobBoard.setStatus(4);
+                    } else if (expirationDate.before(new Date())){
+                        myJobBoard.setStatus(5);
+                    }
+                }
+
                 myJobBoardList.add(myJobBoard);
             }
 
@@ -259,7 +293,9 @@ public class JobBoardDAO {
 
     public int countMyTodayJobBoard(int employerId) {
         try(Connection connection = DBHelper.getConnection()){
-            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date = CURDATE()";
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date <= now() AND expiration_date >= now()"
+                    + " AND status = 2";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, employerId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -275,7 +311,13 @@ public class JobBoardDAO {
 
     public int countMyLastMonthJobBoard(int employerId) {
         try(Connection connection = DBHelper.getConnection()){
-            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date BETWEEN DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) AND DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 DAY)";
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? " +
+                    "AND ((posting_date >= DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) " +
+                    "AND posting_date <= DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 DAY)) " +
+                    "OR (expiration_date >= DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) " +
+                    "AND expiration_date <= DATE_SUB(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 DAY))) " +
+                    "AND status = 2";
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, employerId);
 
@@ -292,7 +334,12 @@ public class JobBoardDAO {
 
     public int countMyCurrentMonthJobBoard(int employerId) {
         try(Connection connection = DBHelper.getConnection()){
-            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? AND posting_date BETWEEN DATE_FORMAT(NOW(),'%Y-%m-01') AND NOW()";
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE employer_id = ? " +
+                    "AND ((posting_date >= DATE_FORMAT(NOW(),'%Y-%m-01') " +
+                    "AND posting_date <= DATE_ADD(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) - INTERVAL 1 DAY)" +
+                    " OR (expiration_date >= DATE_FORMAT(NOW(),'%Y-%m-01') " +
+                    "AND expiration_date <= DATE_ADD(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) - INTERVAL 1 DAY)) " +
+                    "AND status = 2";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, employerId);
 
@@ -309,14 +356,35 @@ public class JobBoardDAO {
 
     public int countMyJobBoard(int employerId, String search, int status) {
         try(Connection connection = DBHelper.getConnection()){
-            String sql = "SELECT COUNT(jb.id) AS count " +
-                    "FROM jobboard jb " +
-                    "WHERE jb.employer_id = ? AND jb.title LIKE ? " + (status == 0 ? "" : "AND jb.status = ? ");
+            PreparedStatement preparedStatement = null;
+            if(status < 4){
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ? " + (status == 0 ? "" : "AND jb.status = ? ");
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, employerId);
-            preparedStatement.setString(2, "%" + search + "%");
-            if(status != 0) preparedStatement.setInt(3, status);
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+                if(status != 0) preparedStatement.setInt(3, status);
+            } else if (status == 4) {
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ? " +
+                        "AND jb.status = 2 AND jb.posting_date > now()";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+            } else if (status == 5) {
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.employer_id = ? AND jb.title LIKE ? " +
+                        "AND jb.status = 2 AND jb.expiration_date < now()";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, employerId);
+                preparedStatement.setString(2, "%" + search + "%");
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -334,6 +402,199 @@ public class JobBoardDAO {
             String sql = "DELETE FROM jobboard WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, jobboardId);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public ArrayList<UpdatedJobBoardItem> getAllJobBoard(String search, int page, int status) {
+        try(Connection connection = DBHelper.getConnection()){
+            int limit = 10;
+            if(page <= 0 || limit <= 0) return null;
+            ArrayList<UpdatedJobBoardItem> jobBoardList = new ArrayList<>();
+
+            PreparedStatement preparedStatement = null;
+            if(status < 4){
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, a.name as updated_person, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN admin a ON jb.updated_by = a.id " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.title LIKE ?  " + (status == 0 ? "" : "AND jb.status = ? ") +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+                if(status != 0) preparedStatement.setInt(2, status);
+                preparedStatement.setInt(status == 0 ? 2 : 3, (page - 1) * limit);
+                preparedStatement.setInt(status == 0 ? 3 : 4, limit);
+            } else if (status == 4) { // real status = 2 but posting date > now()
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, a.name as updated_person, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN admin a ON jb.updated_by = a.id " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.title LIKE ?  " +
+                        "AND jb.status = 2 AND jb.posting_date > now() " +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+                preparedStatement.setInt(2, (page - 1) * limit);
+                preparedStatement.setInt(3, limit);
+            } else if (status == 5) { // real status = 2 but expiration date < now()
+                String sql = "SELECT jb.id, jb.title, jb.status, jb.posting_date, jb.expiration_date, a.name as updated_person, COUNT(ja.id) AS no_of_applicants, jb.views " +
+                        "FROM jobboard jb " +
+                        "LEFT JOIN admin a ON jb.updated_by = a.id " +
+                        "LEFT JOIN jobapplication ja ON jb.id = ja.jobboard_id " +
+                        "WHERE jb.title LIKE ?  " +
+                        "AND jb.status = 2 AND jb.expiration_date < now() " +
+                        "GROUP BY jb.id " +
+                        "ORDER BY jb.posting_date DESC " +
+                        "LIMIT ?, ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+                preparedStatement.setInt(2, (page - 1) * limit);
+                preparedStatement.setInt(3, limit);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                UpdatedJobBoardItem jobBoard = new UpdatedJobBoardItem();
+                jobBoard.setId(resultSet.getInt("id"));
+                jobBoard.setTitle(resultSet.getString("title"));
+                jobBoard.setStatus(resultSet.getInt("status"));
+                jobBoard.setNoOfApplicants(resultSet.getInt("no_of_applicants"));
+                jobBoard.setViews(resultSet.getInt("views"));
+
+                Date postingDate = resultSet.getDate("posting_date");
+                Date expirationDate = resultSet.getDate("expiration_date");
+                jobBoard.setPostingDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(postingDate));
+                jobBoard.setExpirationDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(expirationDate));
+
+                jobBoard.setUpdatedPerson(resultSet.getString("updated_person"));
+
+                if(jobBoard.getStatus() == 2){
+                    if(postingDate.after(new Date())){
+                        jobBoard.setStatus(4);
+                    } else if (expirationDate.before(new Date())){
+                        jobBoard.setStatus(5);
+                    }
+                }
+
+                jobBoardList.add(jobBoard);
+            }
+
+            return jobBoardList;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int countJobBoard(String search, int status) {
+        try(Connection connection = DBHelper.getConnection()){
+            PreparedStatement preparedStatement = null;
+            if(status < 4) {
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.title LIKE ? " + (status == 0 ? "" : "AND jb.status = ? ");
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+                if(status != 0) preparedStatement.setInt(2, status);
+            } else if (status == 4) {
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.title LIKE ? " +
+                        "AND jb.status = 2 AND jb.posting_date > now()";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+            } else if (status == 5) {
+                String sql = "SELECT COUNT(jb.id) AS count " +
+                        "FROM jobboard jb " +
+                        "WHERE jb.title LIKE ? " +
+                        "AND jb.status = 2 AND jb.expiration_date < now()";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, "%" + search + "%");
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countTodayJobBoard() {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE posting_date <= now() AND expiration_date >= now() AND status = 2";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countPendingJobBoard() {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE status = 1";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countCurrentMonthJobBoard() {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "SELECT COUNT(id) AS count FROM jobboard " +
+                    "WHERE ((posting_date >= DATE_FORMAT(NOW(),'%Y-%m-01') " +
+                    "AND posting_date <= DATE_ADD(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) - INTERVAL 1 DAY) " +
+                    "OR (expiration_date >= DATE_FORMAT(NOW(),'%Y-%m-01') " +
+                    "AND expiration_date <= DATE_ADD(DATE_FORMAT(NOW(),'%Y-%m-01'), INTERVAL 1 MONTH) - INTERVAL 1 DAY)) " +
+                    "AND status = 2";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean updateJobBoardStatus(int jobBoardId, int adminId, int status) {
+        try(Connection connection = DBHelper.getConnection()){
+            String sql = "UPDATE jobboard SET status = ?, updated_by = ? WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, status);
+            preparedStatement.setInt(2, adminId);
+            preparedStatement.setInt(3, jobBoardId);
             int result = preparedStatement.executeUpdate();
             return result > 0;
         } catch (SQLException e ) {

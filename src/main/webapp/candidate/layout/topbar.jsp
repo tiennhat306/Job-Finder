@@ -7,7 +7,7 @@
 			<div class="container-fluid ">
 				<div class="header_bottom_border">
 					<div class="row align-items-center">
-						<div class="col-xl-3 col-lg-2">
+						<div class="col-xl-2 col-lg-2">
 							<div class="logo">
 								<a href="CandidateHomepageServlet"> <img
 									src="candidate/img/logo.png" alt="" style="max-height: 80px">
@@ -36,20 +36,18 @@
 								</nav>
 							</div>
 						</div>
-						<div class="col-xl-3 col-lg-3 d-none d-lg-block">
+						<div class="col-xl-4 col-lg-4 d-none d-lg-block">
 							<div class="Appointment">
 								<%
 								CandidateSessionItem candidateSession = (CandidateSessionItem) session.getAttribute("candidateSession");
 								if (candidateSession == null) {
 								%>
 								<div class="phone_num d-none d-xl-block">
-									<a href="CandidateLoginServlet">Log
-										in</a>
+									<a href="CandidateLoginServlet">Log in</a>
 								</div>
 
 								<div class="phone_num d-none d-xl-block ml-2">
-									<a href="CandidateSignUpServlet">Sign
-										up</a>
+									<a href="CandidateSignUpServlet">Sign up</a>
 								</div>
 								<%
 								} else {
@@ -67,7 +65,7 @@
 								}
 								%>
 								<div class="d-none d-lg-block">
-									<a href="AnotherLoginServlet" class="btn btn-secondary">Người
+									<a href="AnotherLoginServlet" class="boxed-btn3">Người
 										dùng khác</a>
 								</div>
 							</div>
