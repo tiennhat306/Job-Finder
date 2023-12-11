@@ -200,7 +200,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="brouse_job text-right">
-                        <a href="jobs.html" class="boxed-btn4">Xem tất cả</a>
+                        <a href="#" class="boxed-btn4">Xem tất cả</a>
                     </div>
                 </div>
             </div>
