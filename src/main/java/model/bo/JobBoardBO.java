@@ -25,6 +25,9 @@ public class JobBoardBO {
         return jobBoardDAO.pagingJob(index);
     }
 
+    public ArrayList<JobBoardItem> getAllJobBoardItem() {
+        return jobBoardDAO.getAllJobBoardItem();
+    }
     public ArrayList<JobBoardItem> getAllJobBoardItem(int noOfRecords, int offset, String search) {
         return jobBoardDAO.getAllJobBoardItem(noOfRecords, offset, search);
     }

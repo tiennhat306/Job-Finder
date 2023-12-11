@@ -12,6 +12,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployerDAO {
+
+    public ArrayList<TopEmployerItem> getTopEmployer() {
+        try(Connection connection = DBHelper.getConnection()) {
+            String sql = "SELECT e.id, e.company_name, e.logo, c.name as city_name, COUNT(j.id) AS no_of_job, SUM(j.views) AS views\n" +
+                    "FROM employer e\n" +
+                    "         JOIN jobboard j ON e.id = j.employer_id\n" +
+                    "         JOIN city c ON e.city_id = c.id\n" +
+                    "GROUP BY e.id\n" +
+                    "ORDER BY views DESC, no_of_job DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<TopEmployerItem> topEmployerItems = new ArrayList<>();
+            while (resultSet.next()) {
+                TopEmployerItem topEmployerItem = new TopEmployerItem();
+                topEmployerItem.setId(resultSet.getInt("id"));
+                topEmployerItem.setCompanyName(resultSet.getString("company_name"));
+                topEmployerItem.setLogo(resultSet.getString("logo"));
+                topEmployerItem.setCityName(resultSet.getString("city_name"));
+                topEmployerItem.setNoOfJob(resultSet.getInt("no_of_job"));
+                topEmployerItem.setViews(resultSet.getInt("views"));
+                topEmployerItems.add(topEmployerItem);
+            }
+            return topEmployerItems;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public ArrayList<TopEmployerItem> getTopEmployer(int noOfRecords, int offset, String search) {
         try(Connection connection = DBHelper.getConnection()) {
             String sql = "SELECT e.id, e.company_name, e.logo, c.name as city_name, COUNT(j.id) AS no_of_job, SUM(j.views) AS views\n" +
