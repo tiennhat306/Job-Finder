@@ -1,11 +1,6 @@
 package model.bo;
 
-import DTO.CVComboboxItem;
-import DTO.CVDataItem;
-import DTO.CVInfoItem;
-import DTO.JobListInfoItem;
-import DTO.JobBoardItem;
-import DTO.MyJobBoardItem;
+import DTO.*;
 import model.dao.JobBoardDAO;
 
 import java.sql.Date;
@@ -30,16 +25,16 @@ public class JobBoardBO {
         return jobBoardDAO.pagingJob(index);
     }
 
-    public ArrayList<JobBoardItem> getAllJobBoard(int noOfRecords, int offset, String search) {
-        return jobBoardDAO.getAllJobBoard(noOfRecords, offset, search);
+    public ArrayList<JobBoardItem> getAllJobBoardItem(int noOfRecords, int offset, String search) {
+        return jobBoardDAO.getAllJobBoardItem(noOfRecords, offset, search);
     }
 
-    public ArrayList<JobBoardItem> getAllJobBoard(int offset, String search) {
-        return jobBoardDAO.getAllJobBoard(10, offset, search);
+    public ArrayList<JobBoardItem> getAllJobBoardItem(int offset, String search) {
+        return jobBoardDAO.getAllJobBoardItem(10, offset, search);
     }
 
-    public ArrayList<JobBoardItem> getAllJobBoard(int offset) {
-        return jobBoardDAO.getAllJobBoard(10, offset, "");
+    public ArrayList<JobBoardItem> getAllJobBoardItem(int offset) {
+        return jobBoardDAO.getAllJobBoardItem(10, offset, "");
     }
     
     public void createJob(String title, String code, String companyName, int companySize, String companyDescription,
@@ -86,5 +81,29 @@ public class JobBoardBO {
 
     public boolean removeJobboard(int jobboardId) {
         return jobBoardDAO.removeJobboard(jobboardId);
+    }
+
+    public ArrayList<UpdatedJobBoardItem> getAllJobBoard(String search, int page, int status) {
+        return jobBoardDAO.getAllJobBoard(search, page, status);
+    }
+
+    public int countJobBoard(String search, int status) {
+        return jobBoardDAO.countJobBoard(search, status);
+    }
+
+    public int countTodayJobBoard() {
+        return jobBoardDAO.countTodayJobBoard();
+    }
+
+    public int countPendingJobBoard() {
+        return jobBoardDAO.countPendingJobBoard();
+    }
+
+    public int countCurrentMonthJobBoard() {
+        return jobBoardDAO.countCurrentMonthJobBoard();
+    }
+
+    public boolean updateJobBoardStatus(int jobBoardId, int adminId, int status) {
+        return jobBoardDAO.updateJobBoardStatus(jobBoardId, adminId, status);
     }
 }
