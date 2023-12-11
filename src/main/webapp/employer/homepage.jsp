@@ -241,8 +241,8 @@
               </div>
 
               <form id="form-filter" method="GET" class="form-inline">
-                <div class="row" id="jobboard-management" data-id="<%= employer.getId() %>">
-                  <div class="form-group">
+                <div class="row col-sm-12 col-xl-12 form-group">
+                  <div class="form-group col-sm-4 col-xl-4">
                     <div class="col-md-6">
                       <label class="d-block" for="status-filter">Trạng thái</label>
                     </div>
@@ -265,8 +265,8 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <div class="col-md-1 mb-1 ml-0 pl-0 mb-1 ml-auto form-group">
+                  <div class="form-group col-sm-5 col-xl-5">
+                    <div class="col-md-1 mb-1 ml-0 pl-0 mb-1 form-group">
                       <div class="form-group app-search-box">
                         <div class="input-group">
                           <%
@@ -296,6 +296,14 @@
                       </div>
                     </div>
                   </div>
+
+                    <div class="form-group col-sm-3">
+                        <div class="mb-2">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fe-plus-circle"></i> Thêm mới
+                            </a>
+                        </div>
+                    </div>
                 </div>
               </form>
 
