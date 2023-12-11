@@ -98,12 +98,7 @@
 						</div>
 						<div class="single_wrap">
 							<h4>Phúc lợi công việc</h4>
-							<p>There are many variations of passages of Lorem Ipsum
-								available, but the majority have suffered alteration in some
-								form, by injected humour, or randomised words which don't look
-								even slightly believable. If you are going to use a passage of
-								Lorem Ipsum, you need to be sure there isn't anything
-								embarrassing.</p>
+							<p id="prize-bonus"></p>
 						</div>
 					</div>
 					<div class="apply_job_form white-bg">
@@ -164,13 +159,13 @@
 						</div>
 						<div class="job_content">
 							<ul>
-								<li>Ngày đăng: <span>12 Nov, 2019</span></li>
-								<li>Số lượng: <span>5</span></li>
-								<li>Mức lương: <span>50k - 120k/y</span></li>
+								<li>Ngày đăng: <span id="postingDate"></span></li>
+								<li>Số lượng tuyển dụng: <span id="requireNumber"></span></li>
+								<li>Mức lương: <span id="salary"></span></li>
 								<li>Loại công việc: <span id="workType"></span></li>
 								<li>Cấp bậc: <span id="rank"></span></li>
-								<li>Học vấn: <span> Full-time</span></li>
-								<li>Mức kinh nghiệm: <span> Full-time</span></li>
+								<li>Học vấn: <span id="qualification"></span></li>
+								<li>Mức kinh nghiệm: <span id="yearOfExperience"></span></li>
 							</ul>
 						</div>
 					</div>
@@ -190,11 +185,11 @@
 						</div>
 						<div class="job_content">
 							<ul>
-								<li>Tên liên hệ: <span>12 Nov, 2019</span></li>
-								<li>Nhận hồ sơ bằng ngôn ngữ: <span> Full-time</span></li>
+								<li>Tên liên hệ: <span id="contactName"></span></li>
+								<li>Nhận hồ sơ bằng ngôn ngữ: <span id="contactLanguage"></span></li>
 								<li>Số nhân viên: <span id="staffNumber"></span></li>
-								<li>Số điện thoại liên lạc: <span> Full-time</span></li>
-								<li>Email liên lạc: <span> Full-time</span></li>
+								<li>Số điện thoại liên lạc: <span id="contactNumber"></span></li>
+								<li>Email liên lạc: <span id="contactEmail"></span></li>
 								<li>Website công ty: <span id="websiteCompany"> </span></li>
 							</ul>
 						</div>
@@ -246,6 +241,21 @@
 		var experienceDetail = localStorage.getItem('stage2_experience-detail');
 		var workType = localStorage.getItem('stage2_workType');
 		var rank = localStorage.getItem('stage2_rank');
+		var yearOfExperience = localStorage.getItem('stage2_yearOfExperience');
+		var qualification = localStorage.getItem('stage2_qualification');
+		var requireNumber = localStorage.getItem('stage2_requireNumber');
+		var salaryFrom = localStorage.getItem('stage2_salaryFrom');
+		var salaryTo = localStorage.getItem('stage2_salaryTo');
+		
+		var prize_bonus = localStorage.getItem('stage3_prizeBonus');
+		var prizeBonusElement = document.getElementById('prize-bonus');
+		
+		var contactLanguage = localStorage.getItem('stage4_contactLanguage');
+		var contactName = localStorage.getItem('stage4_contactName');
+		var contactNumber = localStorage.getItem('stage4_contactNumber');
+		var contactEmail = localStorage.getItem('stage4_contactEmail');
+		
+		var postingDate = localStorage.getItem('stage5_postingDate');
 
 		document.getElementById('jobTitle').innerText = userJobTitle;
 		document.getElementById('jobBrand').innerText = userJobTitle;
@@ -259,8 +269,28 @@
 		document.getElementById('job-description').innerText = jobDescription;		
 		document.getElementById('experience-detail').innerText = experienceDetail;		
 		document.getElementById('workType').innerText = workType;		
-		document.getElementById('rank').innerText = rank;		
+		document.getElementById('rank').innerText = rank;	
+		document.getElementById('requireNumber').innerText = requireNumber;		
+		document.getElementById('qualification').innerText = qualification;		
+		document.getElementById('yearOfExperience').innerText = yearOfExperience;		
+		document.getElementById('salary').innerText = salaryFrom + ' - ' + salaryTo;	
 		
+		prize_bonus = JSON.parse(prize_bonus);
+		prize_bonus.forEach(function (bonus) {
+		    // Create a new div element for each bonus
+		    var bonusDiv = document.createElement('p');
+		    bonusDiv.innerText = "- " + bonus;
+
+		    // Append the new div to the prizeBonusElement
+		    prizeBonusElement.appendChild(bonusDiv);
+		});
+		
+		document.getElementById('contactName').innerText = contactName;		
+		document.getElementById('contactLanguage').innerText = contactLanguage;		
+		document.getElementById('contactNumber').innerText = contactNumber;		
+		document.getElementById('contactEmail').innerText = contactEmail;	
+		
+		document.getElementById('postingDate').innerText = postingDate;	
 	</script>
 </body>
 </html>

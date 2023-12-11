@@ -10,6 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
 <link href="assets/css/stage.css" rel="stylesheet" type="text/css" />
+<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 	rel="stylesheet" type="text/css" />
@@ -53,8 +54,19 @@
 				</div>
 			</div>
 			<div class="form_infomation">
-				<form action="" method="post">
+				<form action="PostNewJobServlet" method="post" onsubmit="return fillJob();">
 					<h3>Mô tả công việc</h3>
+					<div class="col-md-6">
+						<div class="input-group-append">
+							<label for="company">Ngành nghề</label> <select name="JobID"
+								id="JobID" required>
+								<option value="4">Bán hàng / Kinh doanh</option>
+								<option value="1">Bảo trì / Sửa chữa</option>
+								<option value="3">CNTT-Phần cứng / Mạng</option>
+								<option value="2">CNTT-Phần mềm</option>
+							</select>
+						</div>
+					</div>
 					<div class="form_position">
 						<div class="col-md-12">
 							<label for="company">Tỉnh/thành phố</label> <select name="cityID"
@@ -76,35 +88,34 @@
 						<div class="col-md-6">
 							<label for="employeeNumber">Loại công việc</label> <select
 								name="job_type" id="job_type" required>
-								<option value="Nhân viên toàn thời gian">Nhân viên toàn
+								<option value="1">Nhân viên toàn
 									thời gian</option>
-								<option value="Nhân viên toàn thời gian tạm thời">Nhân
+								<option value="2">Nhân
 									viên toàn thời gian tạm thời</option>
-								<option value="Nhân viên bán thời gian">Nhân viên bán
+								<option value="3">Nhân viên bán
 									thời gian</option>
-								<option value="Nhân viên bán thời gian tạm
-									thời">Nhân
+								<option value="4">Nhân
 									viên bán thời gian tạm thời</option>
-								<option value="Nhân viên hợp đồng">Nhân viên hợp đồng</option>
-								<option value="Khác">Khác</option>
+								<option value="5">Nhân viên hợp đồng</option>
+								<option value="6">Khác</option>
 								<!-- Add more options as needed -->
 							</select>
 						</div>
 						<div class="col-md-6">
 							<label for="employeeNumber">Cấp bậc</label> <select name="rank"
 								id="rank" required>
-								<option value="Sinh viên/Thực tập sinh">Sinh viên/Thực
+								<option value="1">Sinh viên/Thực
 									tập sinh</option>
-								<option value="Mới đi làm">Mới đi làm</option>
-								<option value="Nhân viên">Nhân viên</option>
-								<option value="Kỹ thuật viên/Kỹ sư">Kỹ thuật viên/Kỹ sư</option>
-								<option value="Trưởng nhóm/Giám sát">Trưởng nhóm/Giám
+								<option value="2">Mới đi làm</option>
+								<option value="3">Nhân viên</option>
+								<option value="4">Kỹ thuật viên/Kỹ sư</option>
+								<option value="5">Trưởng nhóm/Giám
 									sát</option>
-								<option value="Quản lý/Trưởng phòng">Quản lý/Trưởng
+								<option value="6">Quản lý/Trưởng
 									phòng</option>
-								<option value="Giám đốc">Giám đốc</option>
-								<option value="Quản lý cấp cao">Quản lý cấp cao</option>
-								<option value="Điều hành cấp cao">Điều hành cấp cao</option>
+								<option value="7">Giám đốc</option>
+								<option value="8">Quản lý cấp cao</option>
+								<option value="9">Điều hành cấp cao</option>
 								<!-- Add more options as needed -->
 							</select>
 						</div>
@@ -134,23 +145,30 @@
 						<div class="form_position">
 							<div class="col-md-6">
 								<div class="input-group-append">
-									<input type="text" name="salary_from" class="form-control"
+									<input type="text" name="salary_from" id="salary_from" class="form-control"
 										placeholder="Số tiền">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group-append">
-									<input type="text" name="salary_to" class="form-control"
+									<input type="text" name="salary_to" id="salary_to" class="form-control"
 										placeholder="Số tiền">
 								</div>
 							</div>
 						</div>
-
-						<div class="col-md-6">
-							<label for="company">Tuổi</label> <input type="text"
-								name="age_type" id="company" placeholder="Nhập tuổi của bạn"
-								required>
+						<div class="form_position">
+							<div class="col-md-6">
+								<label for="company">Tuổi</label> <input type="text"
+									name="age_type" id="company" placeholder="Nhập tuổi của bạn"
+									required>
+							</div>
+							<div class="col-md-6">
+								<label for="company">Số lượng cần tuyển</label> <input type="text"
+									name="requireNumber" id="requireNumber" placeholder="Nhập số lượng cần tuyển"
+									required>
+							</div>
 						</div>
+
 						<div class="col-md-6">
 							<label for="employeeNumber">Giới tính</label> <select
 								name="gender_type" id="employeeNumber" required>
@@ -169,7 +187,7 @@
 						<h3>Kinh nghiệm/Kỹ năng</h3>
 						<div class="col-md-6">
 							<label for="employeeNumber">Trình độ học vấn</label> <select
-								name="qualification" id="employeeNumber" required>
+								name="qualification" id="qualification" required>
 								<option value="1">Kỹ sư</option>
 								<option value="2">Cử nhân</option>
 								<option value="3">Khác</option>
@@ -178,7 +196,7 @@
 						</div>
 						<div class="col-md-6">
 							<label for="employeeNumber">Mức kinh nghiệm</label> <input
-								type="text" name="yearOfExperience" class="form-control"
+								type="text" name="yearOfExperience" id="yearOfExperience" class="form-control"
 								placeholder="Số năm kinh nghiệm">
 							<!-- Add more options as needed -->
 							</select>
@@ -191,10 +209,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<input type="submit" name="buttonSaveStage2" value="Lưu và thoát">
-
-							<input type="button" value="Tiếp tục"
-								onclick="fillJob(); redirectToStage3();">
+							<input type="submit" name="buttonSaveStage2" value="Tiếp tục">
 						</div>
 					</div>
 				</form>
@@ -208,20 +223,31 @@
 			var selectedOption = document.getElementById('cityID');
 			var cityText = selectedOption.options[selectedOption.selectedIndex].text;
 			var address = document.getElementById('address').value;
-			var job_type = document.getElementById('job_type').value;
-			var rank = document.getElementById('rank').value;
+			var job_type = document.getElementById('job_type');
+			var newJobType = job_type.options[job_type.selectedIndex].text;
+			var rank = document.getElementById('rank');
+			var newRank = rank.options[rank.selectedIndex].text;
 			var job_description = document.getElementById('summary').value;
 			var requirements = document.getElementById('requirements').value;
-
-			
+			var yearOfExperience = document.getElementById('yearOfExperience').value;
+			var qualification = document.getElementById('qualification');
+			var qualifiAfter = qualification.options[qualification.selectedIndex].text;
+			var requireNumber = document.getElementById('requireNumber').value;
+			var salaryFrom = document.getElementById('salary_from').value;
+			var salaryTo = document.getElementById('salary_to').value;
+	
 			// Store values in localStorage
 			localStorage.setItem('stage2_city', cityText);
 			localStorage.setItem('stage2_address', address);
-			localStorage.setItem('stage2_workType', job_type);
+			localStorage.setItem('stage2_workType', newJobType);
 			localStorage.setItem('stage2_job-description', job_description);
 			localStorage.setItem('stage2_experience-detail', requirements);
-			localStorage.setItem('stage2_rank', rank);
-			
+			localStorage.setItem('stage2_rank', newRank);
+			localStorage.setItem('stage2_yearOfExperience', yearOfExperience);
+			localStorage.setItem('stage2_qualification', qualifiAfter);
+			localStorage.setItem('stage2_requireNumber', requireNumber);
+			localStorage.setItem('stage2_salaryFrom', salaryFrom);
+			localStorage.setItem('stage2_salaryTo', salaryTo);
 		}
 	</script>
 </body>

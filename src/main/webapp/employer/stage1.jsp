@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="form_infomation">
-				<form action="PostNewJobServlet" method="post">
+				<form action="PostNewJobServlet" method="post" onsubmit="return updateJobTitle();">
 					<div class="form_position">
 						<div class="row">
 							<div class="col-md-12">
@@ -103,9 +103,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<input type="submit" name="buttonSaveStage1" value="Lưu và thoát">
-							<input type="button" value="Tiếp tục"
-								onclick="updateJobTitle(); redirectToStage2();">
+							<input type="submit" name="buttonSaveStage1" value="Tiếp tục">
 						</div>
 					</div>
 				</form>

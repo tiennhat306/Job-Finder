@@ -266,10 +266,10 @@ public class JobBoardDAO {
 			double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
 			int qualification, int yearsOfExperience, String requirements, String benefits, String contactAddress,
 			String contactEmail, String contactNumber, String contactName, java.sql.Date postingDate,
-			java.sql.Date expirationDate, int status, int views, int employerId, String logo) {
+			java.sql.Date expirationDate, int status, int views, int employerId) {
 
 		try (Connection connection = DBHelper.getConnection()) {
-			String sql = "INSERT INTO jobboard (title, code, company_name, company_size, company_description, website, city_id, address, job_type, `rank`, salary_type, salary_from, salary_to, age_type, age_from, age_to, gender_type, job_description, quantity, qualification, years_of_experience, requirements, benefits, contact_address, contact_email, contact_number, contact_name, posting_date, expiration_date, status, views, employer_id, logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO jobboard (title, code, company_name, company_size, company_description, website, city_id, address, job_type, `rank`, salary_type, salary_from, salary_to, age_type, age_from, age_to, gender_type, job_description, quantity, qualification, years_of_experience, requirements, benefits, contact_address, contact_email, contact_number, contact_name, posting_date, expiration_date, status, views, employer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement pst = connection.prepareStatement(sql);
 
@@ -305,7 +305,6 @@ public class JobBoardDAO {
 			pst.setInt(30, status);
 			pst.setInt(31, views);
 			pst.setInt(32, employerId);
-			pst.setString(33, logo);
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
