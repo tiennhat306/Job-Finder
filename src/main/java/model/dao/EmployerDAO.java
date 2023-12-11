@@ -1,6 +1,7 @@
 package model.dao;
 
 import DBHelper.DBHelper;
+import DTO.EmployerItem;
 import DTO.EmployerSessionItem;
 import DTO.TopEmployerItem;
 
@@ -63,6 +64,56 @@ public class EmployerDAO {
         } catch (SQLException e ) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public ArrayList<EmployerItem> getAllEmployer(String search, int page) {
+        int limit = 10;
+        try(Connection connection = DBHelper.getConnection()) {
+            String sql = "SELECT e.id, e.company_name, e.address, e.contact_number, c.name as city_name\n" +
+                    "FROM employer e\n" +
+                    "         JOIN city c ON e.city_id = c.id\n" +
+                    "WHERE e.company_name LIKE ?\n" +
+                    "ORDER BY e.id\n" +
+                    "LIMIT ? OFFSET ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + search + "%");
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, (page - 1) * limit);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<EmployerItem> employerItems = new ArrayList<>();
+            while (resultSet.next()) {
+                EmployerItem employerItem = new EmployerItem();
+                employerItem.setId(resultSet.getInt("id"));
+                employerItem.setCompanyName(resultSet.getString("company_name"));
+                employerItem.setCompanyAddress(resultSet.getString("address") +", "+ resultSet.getString("city_name"));
+                employerItem.setContactNumber(resultSet.getString("contact_number"));
+                employerItems.add(employerItem);
+            }
+            return employerItems;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int countEmployer(String search) {
+        try(Connection connection = DBHelper.getConnection()) {
+            // count all employer why join city?
+            String sql = "SELECT COUNT(e.id) AS total\n" +
+                    "FROM employer e\n" +
+                    "WHERE e.company_name LIKE ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + search + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }
