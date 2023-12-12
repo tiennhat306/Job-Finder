@@ -31,12 +31,12 @@ public class JobListServlet extends HttpServlet {
         if (searchText == null || searchText.isEmpty()) {
             searchText = "";
         }
-        int location_id = 0, career_id = 0, jobtype_id = 0;
+        int location_id = 0, jobtype_id = 0;
         if (location != null) {
             location_id = Integer.parseInt(location);
         }
-        if (career != null) {
-            career_id = Integer.parseInt(career);
+        if (career == null || career.isEmpty()) {
+            career = "";
         }
         if (jobtype != null) {
             jobtype_id = Integer.parseInt(jobtype);
@@ -47,12 +47,12 @@ public class JobListServlet extends HttpServlet {
         }
         int index = Integer.parseInt(indexPage);
         JobBoardBO jobBoardBO = new JobBoardBO();
-        int count = jobBoardBO.getTotalJobList(searchText, location_id, career_id, jobtype_id);
+        int count = jobBoardBO.getTotalJobList(searchText, location_id, career, jobtype_id);
         int endPage = count / 5;
         if (count % 5 != 0) ++endPage;
         req.setAttribute("numJob", count);
         req.setAttribute("endPage", endPage);
-        List<Integer> listJBID = jobBoardBO.pagingJob(index, searchText, location_id, career_id, jobtype_id);
+        List<Integer> listJBID = jobBoardBO.pagingJob(index, searchText, location_id, career, jobtype_id);
         List<JobListInfoItem> list = new ArrayList<>();
         for (int i = 0; i < listJBID.size(); ++i) {
             JobListInfoItem temp = jobBoardBO.getDetailInfoByEmployerID(listJBID.get(i));
@@ -70,7 +70,7 @@ public class JobListServlet extends HttpServlet {
 
         req.setAttribute("searchText", searchText);
         req.setAttribute("location_id", location_id);
-        req.setAttribute("career_id", career_id);
+        req.setAttribute("career_id", career);
         req.setAttribute("jobtype_id", jobtype_id);
         req.getRequestDispatcher("candidate/jobList.jsp").forward(req, resp);
         return;

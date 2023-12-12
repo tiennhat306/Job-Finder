@@ -18,11 +18,11 @@ public class JobBoardBO {
     public List<CVDataItem> getDataCV(int id, int status, int range, Date postDay) {
         return jobBoardDAO.getDataCV(id, status, range, postDay);
     }
-    public int getTotalJobList(String searchText, int location_id, int career_id, int jobtype_id) {
-        return jobBoardDAO.getTotalJobList(searchText, location_id, career_id, jobtype_id);
+    public int getTotalJobList(String searchText, int location_id, String career, int jobtype_id) {
+        return jobBoardDAO.getTotalJobList(searchText, location_id, career, jobtype_id);
     }
-    public List<Integer> pagingJob(int index, String searchText, int location_id, int career_id, int jobtype_id) {
-        return jobBoardDAO.pagingJob(index, searchText, location_id, career_id, jobtype_id);
+    public List<Integer> pagingJob(int index, String searchText, int location_id, String career, int jobtype_id) {
+        return jobBoardDAO.pagingJob(index, searchText, location_id, career, jobtype_id);
     }
 
     public JobListInfoItem getDetailInfoByEmployerID(int id) {
