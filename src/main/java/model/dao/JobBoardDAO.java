@@ -465,9 +465,9 @@ public class JobBoardDAO {
                 myJobBoard.setExpirationDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(expirationDate));
 
                 if(myJobBoard.getStatus() == 2){
-                    if(postingDate.after(new Date())){
+                    if(postingDate.after(new java.util.Date())){
                         myJobBoard.setStatus(4);
-                    } else if (expirationDate.before(new Date())){
+                    } else if (expirationDate.before(new java.util.Date())){
                         myJobBoard.setStatus(5);
                     }
                 }
@@ -675,9 +675,9 @@ public class JobBoardDAO {
                 jobBoard.setUpdatedPerson(resultSet.getString("updated_person"));
 
                 if(jobBoard.getStatus() == 2){
-                    if(postingDate.after(new Date())){
+                    if(postingDate.after(new java.util.Date())){
                         jobBoard.setStatus(4);
-                    } else if (expirationDate.before(new Date())){
+                    } else if (expirationDate.before(new java.util.Date())){
                         jobBoard.setStatus(5);
                     }
                 }
