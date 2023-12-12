@@ -50,7 +50,7 @@
             </a>
           </li>
           <li>
-            <a href="/nurse/customers">
+            <a href="CVManagementServlet">
                 <i class="fas fa-file-alt"></i>
               <span> Quản lý CV </span>
             </a>
