@@ -14,7 +14,7 @@ import java.io.IOException;
 public class EmployerLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("AnotherLoginServlet");
+        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/AnotherLoginServlet");
         rd.forward(request, response);
     }
 

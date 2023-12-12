@@ -1,18 +1,19 @@
 package controller.admin;
 
 import DTO.AdminSessionItem;
-import DTO.MyJobBoardItem;
+import DTO.EmployerItem;
 import DTO.UpdatedJobBoardItem;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.bo.EmployerBO;
 import model.bo.JobBoardBO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AdminHomepageServlet", value = "/AdminHomepageServlet")
-public class AdminHomepageServlet extends HttpServlet {
+@WebServlet(name = "EmployerViewServlet", value = "/EmployerViewServlet")
+public class EmployerViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -28,35 +29,24 @@ public class AdminHomepageServlet extends HttpServlet {
 
         String search = request.getParameter("search");
         int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-        int status = request.getParameter("status") == null ? 0 : Integer.parseInt(request.getParameter("status"));
         if (page < 1) {
             page = 1;
         }
         if(search == null){
             search = "";
         }
-        if(status < 0 || status > 5){
-            status = 0;
-        }
-        ArrayList<UpdatedJobBoardItem> jobBoardList = new JobBoardBO().getAllJobBoard(search, page, status);
-        request.setAttribute("jobBoardList", jobBoardList);
 
-        int totalRecords = new JobBoardBO().countJobBoard(search, status);
-        int totalPages = (int) Math.ceil(totalRecords * 1.0 / 10);
+        ArrayList<EmployerItem> employerList = new EmployerBO().getAllEmployer(search, page);
+        request.setAttribute("employerList", employerList);
 
-        int todayJobBoard = new JobBoardBO().countTodayJobBoard();
-        int pendingJobBoard = new JobBoardBO().countPendingJobBoard();
-        int currentMonthJobBoard = new JobBoardBO().countCurrentMonthJobBoard();
-        request.setAttribute("todayJobBoard", todayJobBoard);
-        request.setAttribute("pendingJobBoard", pendingJobBoard);
-        request.setAttribute("currentMonthJobBoard", currentMonthJobBoard);
+        int totalRecords = new EmployerBO().countEmployer(search);
+        int totalPages = (int) Math.ceil(totalRecords * 1.0 / 1);
 
         request.setAttribute("search", search);
         request.setAttribute("current", page);
         request.setAttribute("pages", totalPages);
-        request.setAttribute("selectedStatus", status);
 
-        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/admin/homepage.jsp");
+        RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/admin/employer.jsp");
         rd.forward(request, response);
     }
 }

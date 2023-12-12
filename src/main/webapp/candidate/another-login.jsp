@@ -72,8 +72,8 @@
                      </p>
                      <div class="quote-wrapper">
                         <div class="quotes">
-                           <b>Tại sao chọn CareerLink.vn?</b>
-                           Là nhà cung cấp hàng đầu các dịch vụ tuyển dụng trực tuyến tại Việt Nam, CareerLink.vn có hơn 100,000 người tìm việc mỗi ngày. Đăng công việc trên CareerLink.vn là cách hiệu quả nhất để nhận hồ sơ phù hợp từ người tìm việc.
+                           <b>Tại sao chọn Job Finder?</b>
+                           Là nhà cung cấp hàng đầu các dịch vụ tuyển dụng trực tuyến tại Việt Nam, Job Finder có hơn 100,000 người tìm việc mỗi ngày. Đăng công việc trên CareerLink.vn là cách hiệu quả nhất để nhận hồ sơ phù hợp từ người tìm việc.
                         </div>
                      </div>
                      <p>
@@ -111,6 +111,11 @@
 <%--                                     <label for="password">Mật khẩu</label>--%>
                                  <input class="form-control" type="password" required="" id="password" name="password" placeholder="Nhập mật khẩu của bạn">
                              </div>
+                            <div class="input-group mb-3 ">
+                                <a href="EmployerRegisterServlet">
+                                    Chưa có tài khoản tuyển dụng, đăng ký?
+                                </a>
+                            </div>
                          </div>
                          <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn mb-3"
                                  type="submit" onclick="submitForm('EmployerLoginServlet')">Người tuyển dụng</button>

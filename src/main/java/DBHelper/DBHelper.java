@@ -10,7 +10,7 @@ public class DBHelper {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/jobfinder";
             String user = "root";
-            String password = "donghq";
+            String password = "vothedat123";
             connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
