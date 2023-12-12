@@ -9,6 +9,10 @@ public class JobListInfoItem {
     private Date exp_date;
     private String logo;
 
+    public JobListInfoItem() {
+
+    }
+
     public JobListInfoItem(String title, String address, String type, Date exp_date, String logo) {
         this.title = title;
         this.address = address;

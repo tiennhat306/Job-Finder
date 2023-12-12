@@ -19,7 +19,7 @@
 								<nav>
 									<ul id="navigation">
 										<li><a href="CandidateHomepageServlet">Trang chủ</a></li>
-										<li><a href="jobs.html">Tìm việc làm</a></li>
+										<li><a href="JobListServlet">Tìm việc làm</a></li>
 										<li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
 											<ul class="submenu">
 												<li><a href="#">Quản lý CV </a></li>

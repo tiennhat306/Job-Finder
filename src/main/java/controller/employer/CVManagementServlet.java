@@ -23,7 +23,6 @@ public class CVManagementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("def");
         JobBoardBO jobBoardBO = new JobBoardBO();
         List<CVComboboxItem> listTitle = jobBoardBO.getTitleByEmployerId(1);
         List<CVInfoItem> listCvInfo = new ArrayList<CVInfoItem>();
@@ -31,7 +30,6 @@ public class CVManagementServlet extends HttpServlet {
         String str_id = req.getParameter("id");
         String str_type = req.getParameter("status");
         String str_range = req.getParameter("received");
-        System.out.println(str_id);
         if (str_id == null) {
             if (listTitle.size() != 0) {
                 listCvInfo = jobBoardBO.getInfoByJBId(listTitle.get(0).getId());
@@ -45,9 +43,10 @@ public class CVManagementServlet extends HttpServlet {
             if (str_type != null) status = Integer.parseInt(str_type);
             if (str_range != null) range = Integer.parseInt(str_range);
             listCvInfo = jobBoardBO.getInfoByJBId(id);
-            Date postDay = listCvInfo.get(listCvInfo.size() - 1).getPublishDay();
-            System.out.println(postDay);
-            listCvData = jobBoardBO.getDataCV(id, status, range, postDay);
+            if (listCvInfo.size() != 0) {
+                Date postDay = listCvInfo.get(listCvInfo.size() - 1).getPublishDay();
+                listCvData = jobBoardBO.getDataCV(id, status, range, postDay);
+            }
         }
         req.setAttribute("listTitle", listTitle);
         req.setAttribute("listCvInfo", listCvInfo);

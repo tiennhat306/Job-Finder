@@ -9,10 +9,8 @@ import DTO.CVInfoItem;
 import DTO.JobListInfoItem;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class JobBoardDAO {
     private Connection conn = DBHelper.getConnection();
@@ -83,8 +81,7 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date((postDay.getTime())));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = calendar.getTime();
-                System.out.println(endDate);
+                Date endDate = (Date) calendar.getTime();
                 preStmt.setDate(3, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(4, new java.sql.Date(endDate.getTime()));
             } else if (type == 2) {
@@ -94,8 +91,7 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date(postDay.getTime()));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = calendar.getTime();
-                System.out.println(endDate);
+                Date endDate = (Date) calendar.getTime();
                 preStmt.setDate(2, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(3, new java.sql.Date(endDate.getTime()));
             }
@@ -113,42 +109,93 @@ public class JobBoardDAO {
         return list;
     }
 
-    public int getTotalJobList() {
-        String sql = "SELECT count(*) FROM jobboard";
+    public int getTotalJobList(String searchText, int location_id, int career_id, int jobtype_id) {
+        String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
+                "FROM careergroup\n" +
+                "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
+                "JOIN career ON careergroup.career_id = career.id\n" +
+                "JOIN employer ON jobboard.employer_id = employer.id)\n" +
+                "select * from x where x.title LIKE ?";
+        if (location_id != 0) sql += " AND x.city_id = ?";
+        if (career_id != 0) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+        Set<Integer> set_id = new HashSet<>();
         try {
             preStmt = conn.prepareStatement(sql);
+            preStmt.setString(1, "%" + searchText + "%");
+            int parameterIndex = 2; // Parameter index for additional conditions
+            if (location_id != 0) {
+                preStmt.setInt(parameterIndex++, location_id);
+            }
+            if (career_id != 0) {
+                preStmt.setInt(parameterIndex++, career_id);
+            }
+            if (jobtype_id != 0) {
+                preStmt.setInt(parameterIndex, jobtype_id);
+            }
             ResultSet rs = preStmt.executeQuery();
             while (rs.next()) {
-                return rs.getInt(1);
+                set_id.add(rs.getInt("id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return set_id.size();
     }
-    public List<JobListInfoItem> pagingJob(int index) {
-        String sql = "SELECT jobboard.title, jobboard.address, jobboard.expiration_date, jobboard.job_type, employer.logo " +
-                "FROM jobboard JOIN employer ON jobboard.employer_id = employer.id ORDER BY jobboard.id LIMIT ?, 5";
-        List<JobListInfoItem> list = new ArrayList<JobListInfoItem>();
+    public List<Integer> pagingJob(int index, String searchText, int location_id, int career_id, int jobtype_id) {
+        String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
+                "FROM careergroup\n" +
+                "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
+                "JOIN career ON careergroup.career_id = career.id\n" +
+                "JOIN employer ON jobboard.employer_id = employer.id)\n" +
+                "select distinct x.id from x where x.title LIKE ?";
+        if (location_id != 0) sql += " AND x.city_id = ?";
+        if (career_id != 0) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+        sql += " order by x.id limit ?, 5";
+        List<Integer> list = new ArrayList<>();
         try {
             preStmt = conn.prepareStatement(sql);
-            preStmt.setInt(1, (index - 1) * 5);
+            preStmt.setString(1, "%" + searchText + "%");
+            int parameterIndex = 2;
+            if (location_id != 0) preStmt.setInt(parameterIndex++, location_id);
+            if (career_id != 0) preStmt.setInt(parameterIndex++, career_id);
+            if (jobtype_id != 0) preStmt.setInt(parameterIndex++, jobtype_id);
+            preStmt.setInt(parameterIndex, (index - 1) * 5);
             ResultSet rs = preStmt.executeQuery();
             while (rs.next()) {
-                String name_type = "";
-                int job_type = rs.getInt("job_type");
-                if (job_type == 1) name_type = "Part-time";
-                else if (job_type == 2) name_type = "Full-time";
-                else name_type = "Hợp đồng";
-                System.out.println(1);
-                JobListInfoItem temp = new JobListInfoItem(rs.getString("title"), rs.getString("address"), name_type, rs.getDate("expiration_date"),
-                                                    rs.getString("logo"));
-                list.add(temp);
+                list.add(rs.getInt("id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public JobListInfoItem getDetailInfoByEmployerID(int id) {
+        String sql = "SELECT jobboard.title, jobboard.address, jobboard.expiration_date, jobboard.job_type, employer.logo "
+                + "FROM jobboard JOIN employer ON jobboard.employer_id = employer.id and jobboard.id = ?";
+        JobListInfoItem ret = new JobListInfoItem();
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setInt(1, id);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                String name_type = "";
+                int job_type = rs.getInt("job_type");
+                if (job_type == 1)
+                    name_type = "Part-time";
+                else if (job_type == 2)
+                    name_type = "Full-time";
+                else
+                    name_type = "Hợp đồng";
+                ret = new JobListInfoItem(rs.getString("title"), rs.getString("address"), name_type,
+                        rs.getDate("expiration_date"), rs.getString("logo"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     public ArrayList<JobBoardItem> getAllJobBoard(int noOfRecords, int offset, String search) {

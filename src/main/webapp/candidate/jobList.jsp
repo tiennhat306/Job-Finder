@@ -1,6 +1,9 @@
 <%@ page import="DTO.JobListInfoItem" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.bean.City" %>
+<%@ page import="model.bean.Career" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -122,80 +125,68 @@
             <div class="col-lg-3">
                 <div class="job_filter white-bg">
                     <div class="form_inner white-bg">
-                        <h3>Filter</h3>
-                        <form action="#">
+                        <h3>Tìm kiếm</h3>
+                        <form action="JobListServlet">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="single_field">
-                                        <input type="text" placeholder="Search keyword">
+                                        <input type="text" name="searchText" placeholder="Nhập từ khóa tìm kiếm">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Location">Location</option>
-                                            <option value="1">Rangpur</option>
-                                            <option value="2">Dhaka </option>
+                                        <select class="wide" name="location" id="status-location">
+                                            <option value="0" data-display="Địa điểm">Địa điểm</option>
+                                            <%
+                                                ArrayList<City> cities = (ArrayList<City>) request.getAttribute("listCity");
+                                                for (City city : cities) {
+                                                String selected = "";
+                                                int locationId = (int) request.getAttribute("location_id");
+                                                if (city.getId() == locationId) {
+                                                    selected = "selected";
+                                                }
+                                            %>
+                                            <option value="<%=city.getId()%>" <%=selected%>><%=city.getName()%></option>
+                                            <%}%>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Category">Category</option>
-                                            <option value="1">Category 1</option>
-                                            <option value="2">Category 2 </option>
+                                        <select class="wide" name="career" id="status-career">
+                                            <option value="0" data-display="Ngành nghề">Ngành nghề</option>
+                                            <%
+                                                ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("listCareer");
+                                                for (Career career : careerList) {
+                                                String selected = "";
+                                                String careerId = request.getAttribute("career_id").toString();
+                                                if (career.getId().equals(careerId)) {
+                                                    selected = "selected";
+                                                }
+                                            %>
+                                            <option value="<%=career.getId()%>" <%=selected%>><%=career.getName()%></option>
+                                            <%}%>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Experience">Experience</option>
-                                            <option value="1">Experience 1</option>
-                                            <option value="2">Experience 2 </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Job type">Job type</option>
-                                            <option value="1">full time 1</option>
-                                            <option value="2">part time 2 </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Qualification">Qualification</option>
-                                            <option value="1">Qualification 1</option>
-                                            <option value="2">Qualification 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide">
-                                            <option data-display="Gender">Gender</option>
-                                            <option value="1">male</option>
-                                            <option value="2">female</option>
+                                        <select class="wide" name="job_type" id="status-jobtype">
+                                            <option value="0" data-display="Loại công việc">Loại công việc</option>
+                                            <%
+                                                int jobTypeId = (int) request.getAttribute("jobtype_id");
+                                            %>
+                                            <option value="1" <%= (jobTypeId == 1) ? "selected" : "" %>>Bán thời gian</option>
+                                            <option value="2" <%= (jobTypeId == 2) ? "selected" : "" %>>Toàn thời gian</option>
+                                            <option value="3" <%= (jobTypeId == 3) ? "selected" : "" %>>Hợp đồng</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <div class="reset_btn">
+                                <button  class="boxed-btn3 w-100" type="submit">Tìm kiếm</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="range_wrap">
-                        <label for="amount">Price range:</label>
-                        <div id="slider-range"></div>
-                        <p>
-                            <input type="text" id="amount" readonly style="border:0; color:#7A838B; font-size: 14px; font-weight:400;">
-                        </p>
-                    </div>
-                    <div class="reset_btn">
-                        <button  class="boxed-btn3 w-100" type="submit">Reset</button>
                     </div>
                 </div>
             </div>
@@ -205,16 +196,6 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <h4>Danh sách công việc</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="serch_cat d-flex justify-content-end">
-                                    <select>
-                                        <option data-display="Most Recent">Most Recent</option>
-                                        <option value="1">Marketer</option>
-                                        <option value="2">Wordpress </option>
-                                        <option value="4">Designer</option>
-                                    </select>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -246,11 +227,14 @@
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        <a class="heart_mark" href="#"> <i class="fa fa-heart"></i> </a>
                                         <a href="job_details.html" class="boxed-btn3">Đăng ký ngay</a>
                                     </div>
+                                    <%
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                        String date = dateFormat.format(list.get(i).getExp_date());
+                                    %>
                                     <div class="date">
-                                        <p>Ngày hết hạn: <%= list.get(i).getExp_date() %></p>
+                                        <p>Ngày hết hạn: <%= date %></p>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +252,7 @@
                                         int cnt = (int) request.getAttribute("endPage");
                                         for (int i = 1; i <= cnt; ++i) {
                                     %>
-                                        <li><a href="jobListServlet?index=<%= i %>"><span><%= i %></span></a></li>
+                                        <li><a href="#" onclick="goToPage(<%= i %>)"><span><%= i %></span></a></li>
                                     <%
                                         }
                                     %>
@@ -286,108 +270,6 @@
 
 <!-- footer start -->
 <jsp:include page="layout/footer.jsp"></jsp:include>
-<%--<footer class="footer">--%>
-<%--    <div class="footer_top">--%>
-<%--        <div class="container">--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-xl-3 col-md-6 col-lg-3">--%>
-<%--                    <div class="footer_widget wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">--%>
-<%--                        <div class="footer_logo">--%>
-<%--                            <a href="#">--%>
-<%--                                <img src="candidate/img/logo.png" alt="">--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
-<%--                        <p>--%>
-<%--                            finloan@support.com <br>--%>
-<%--                            +10 873 672 6782 <br>--%>
-<%--                            600/D, Green road, NewYork--%>
-<%--                        </p>--%>
-<%--                        <div class="socail_links">--%>
-<%--                            <ul>--%>
-<%--                                <li>--%>
-<%--                                    <a href="#">--%>
-<%--                                        <i class="ti-facebook"></i>--%>
-<%--                                    </a>--%>
-<%--                                </li>--%>
-<%--                                <li>--%>
-<%--                                    <a href="#">--%>
-<%--                                        <i class="fa fa-google-plus"></i>--%>
-<%--                                    </a>--%>
-<%--                                </li>--%>
-<%--                                <li>--%>
-<%--                                    <a href="#">--%>
-<%--                                        <i class="fa fa-twitter"></i>--%>
-<%--                                    </a>--%>
-<%--                                </li>--%>
-<%--                                <li>--%>
-<%--                                    <a href="#">--%>
-<%--                                        <i class="fa fa-instagram"></i>--%>
-<%--                                    </a>--%>
-<%--                                </li>--%>
-<%--                            </ul>--%>
-<%--                        </div>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-xl-2 col-md-6 col-lg-2">--%>
-<%--                    <div class="footer_widget wow fadeInUp" data-wow-duration="1.1s" data-wow-delay=".4s">--%>
-<%--                        <h3 class="footer_title">--%>
-<%--                            Company--%>
-<%--                        </h3>--%>
-<%--                        <ul>--%>
-<%--                            <li><a href="#">About </a></li>--%>
-<%--                            <li><a href="#"> Pricing</a></li>--%>
-<%--                            <li><a href="#">Carrier Tips</a></li>--%>
-<%--                            <li><a href="#">FAQ</a></li>--%>
-<%--                        </ul>--%>
-
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-xl-3 col-md-6 col-lg-3">--%>
-<%--                    <div class="footer_widget wow fadeInUp" data-wow-duration="1.2s" data-wow-delay=".5s">--%>
-<%--                        <h3 class="footer_title">--%>
-<%--                            Category--%>
-<%--                        </h3>--%>
-<%--                        <ul>--%>
-<%--                            <li><a href="#">Design & Art</a></li>--%>
-<%--                            <li><a href="#">Engineering</a></li>--%>
-<%--                            <li><a href="#">Sales & Marketing</a></li>--%>
-<%--                            <li><a href="#">Finance</a></li>--%>
-<%--                        </ul>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="col-xl-4 col-md-6 col-lg-4">--%>
-<%--                    <div class="footer_widget wow fadeInUp" data-wow-duration="1.3s" data-wow-delay=".6s">--%>
-<%--                        <h3 class="footer_title">--%>
-<%--                            Subscribe--%>
-<%--                        </h3>--%>
-<%--                        <form action="#" class="newsletter_form">--%>
-<%--                            <input type="text" placeholder="Enter your mail">--%>
-<%--                            <button type="submit">Subscribe</button>--%>
-<%--                        </form>--%>
-<%--                        <p class="newsletter_text">Esteem spirit temper too say adieus who direct esteem esteems--%>
-<%--                            luckily.</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <div class="copy-right_text wow fadeInUp" data-wow-duration="1.4s" data-wow-delay=".3s">--%>
-<%--        <div class="container">--%>
-<%--            <div class="footer_border"></div>--%>
-<%--            <div class="row">--%>
-<%--                <div class="col-xl-12">--%>
-<%--                    <p class="copy_right text-center">--%>
-<%--                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->--%>
-<%--                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>--%>
-<%--                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</footer>--%>
-<!--/ footer end  -->
 
 <!-- link that opens popup -->
 <!-- JS here -->
@@ -425,19 +307,49 @@
 
 
 <script>
-    $( function() {
-        $( "#slider-range" ).slider({
-            range: true,
-            min: 0,
-            max: 24600,
-            values: [ 750, 24600 ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] +"/ Year" );
+    window.onload = function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var searchText = urlParams.get('searchText');
+        if (searchText) {
+            document.querySelector('input[name="searchText"]').value = searchText;
+        }
+    }
+    function goToPage(index) {
+        // Lấy URL hiện tại
+        var currentUrl = window.location.href;
+
+        // Tách các tham số truy vấn thành một mảng
+        var urlParts = currentUrl.split('?');
+        var baseUrl = urlParts[0];
+        var queryParams = urlParts[1] ? urlParts[1].split('&') : [];
+
+        // Tạo một mảng mới để lưu trữ các tham số truy vấn đã cập nhật
+        var updatedParams = [];
+
+        // Lặp qua các tham số truy vấn hiện tại
+        for (var i = 0; i < queryParams.length; i++) {
+            var param = queryParams[i];
+            var paramName = param.split('=')[0];
+
+            // Kiểm tra xem tham số truy vấn có phải là 'index' hay không
+            if (paramName === 'index') {
+                // Bỏ qua tham số truy vấn 'index' hiện tại
+                continue;
             }
-        });
-        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-            " - $" + $( "#slider-range" ).slider( "values", 1 ) + "/ Year");
-    } );
+
+            // Thêm tham số truy vấn khác vào mảng đã cập nhật
+            updatedParams.push(param);
+        }
+
+        // Thêm tham số truy vấn 'index' mới vào mảng đã cập nhật
+        updatedParams.push('index=' + index);
+
+        // Xây dựng URL mới bằng cách kết hợp baseUrl và các tham số truy vấn đã cập nhật
+        var newUrl = baseUrl + '?' + updatedParams.join('&');
+
+        // Chuyển hướng đến URL mới
+        window.location.href = newUrl;
+    }
 </script>
 </body>
 
