@@ -4,6 +4,7 @@
 <%@ page import="model.bean.City" %>
 <%@ page import="model.bean.Career" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="DTO.CandidateSessionItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -48,9 +49,9 @@
             <div class="container-fluid ">
                 <div class="header_bottom_border">
                     <div class="row align-items-center">
-                        <div class="col-xl-3 col-lg-2">
+                        <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="CandidateHomepageServlet">
                                     <img src="candidate/img/logo.png" alt="" style="max-height: 80px">
                                 </a>
                             </div>
@@ -60,7 +61,7 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="CandidateHomepageServlet">Trang chủ</a></li>
-                                        <li><a href="jobs.html">Tìm việc làm</a></li>
+                                        <li><a href="JobListServlet">Tìm việc làm</a></li>
                                         <li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
                                                 <li><a href="#">Quản lý CV </a></li>
@@ -79,13 +80,42 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                        <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                             <div class="Appointment">
+                                <%
+                                    CandidateSessionItem candidateSession = (CandidateSessionItem) session.getAttribute("candidateSession");
+                                    if (candidateSession == null) {
+                                %>
                                 <div class="phone_num d-none d-xl-block">
-                                    <a href="#">Log in</a>
+                                    <a href="CandidateLoginServlet">Log in</a>
                                 </div>
+
+                                <div class="phone_num d-none d-xl-block ml-2">
+                                    <a href="CandidateSignUpServlet">Sign up</a>
+                                </div>
+                                <%
+                                } else {
+                                %>
+                                <div class="d-flex align-items-center">
+                                    <div class="phone_num d-none d-xl-block">
+                                        <a href="CandidateLogoutServlet">
+                                            <i class="fe-log-out"></i>
+                                            <span>Đăng xuất</span>
+                                        </a>
+                                    </div>
+                                    <div class="thumb">
+                                        <img src="<%=candidateSession.getAvatar()%>" alt=""
+                                             width="40px" height="40px" class="rounded-circle">
+                                    </div>
+                                    <span
+                                            style="font-weight: bold; font-size: 20px; margin-left: 5px; margin-right: 15px; color: white;"><%=candidateSession.getName()%></span>
+                                </div>
+                                <%
+                                    }
+                                %>
                                 <div class="d-none d-lg-block">
-                                    <a class="boxed-btn3" href="#">Post a Job</a>
+                                    <a href="AnotherLoginServlet" class="boxed-btn3">Người
+                                        dùng khác</a>
                                 </div>
                             </div>
                         </div>
