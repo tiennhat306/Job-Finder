@@ -29,9 +29,7 @@ public class DetailCVServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int cvid = Integer.parseInt(req.getParameter("cvid"));
-        System.out.println(cvid);
-        int status = Integer.parseInt(req.getParameter("status"));
-        System.out.println(status);
+        int status = Integer.parseInt(req.getParameter("status-cv"));
         JobApplicationBO jobApplicationBO = new JobApplicationBO();
         jobApplicationBO.updateCV(cvid, status);
         resp.sendRedirect("CVManagementServlet");

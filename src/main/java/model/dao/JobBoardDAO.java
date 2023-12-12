@@ -108,7 +108,7 @@ public class JobBoardDAO {
 		return list;
 	}
 
-    public int getTotalJobList(String searchText, int location_id, int career_id, int jobtype_id) {
+    public int getTotalJobList(String searchText, int location_id, String career, int jobtype_id) {
         String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
                 "FROM careergroup\n" +
                 "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
@@ -116,8 +116,8 @@ public class JobBoardDAO {
                 "JOIN employer ON jobboard.employer_id = employer.id)\n" +
                 "select * from x where x.title LIKE ?";
         if (location_id != 0) sql += " AND x.city_id = ?";
-        if (career_id != 0) sql += " AND x.career_id = ?";
-        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+        if (!career.isEmpty()) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.job_type = ?";
         Set<Integer> set_id = new HashSet<>();
         try {
             preStmt = conn.prepareStatement(sql);
@@ -126,8 +126,8 @@ public class JobBoardDAO {
             if (location_id != 0) {
                 preStmt.setInt(parameterIndex++, location_id);
             }
-            if (career_id != 0) {
-                preStmt.setInt(parameterIndex++, career_id);
+            if (!career.isEmpty()) {
+                preStmt.setString(parameterIndex++, career);
             }
             if (jobtype_id != 0) {
                 preStmt.setInt(parameterIndex, jobtype_id);
@@ -141,7 +141,7 @@ public class JobBoardDAO {
         }
         return set_id.size();
     }
-    public List<Integer> pagingJob(int index, String searchText, int location_id, int career_id, int jobtype_id) {
+    public List<Integer> pagingJob(int index, String searchText, int location_id, String career, int jobtype_id) {
         String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
                 "FROM careergroup\n" +
                 "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
@@ -149,8 +149,8 @@ public class JobBoardDAO {
                 "JOIN employer ON jobboard.employer_id = employer.id)\n" +
                 "select distinct x.id from x where x.title LIKE ?";
         if (location_id != 0) sql += " AND x.city_id = ?";
-        if (career_id != 0) sql += " AND x.career_id = ?";
-        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+		if (!career.isEmpty()) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.job_type = ?";
         sql += " order by x.id limit ?, 5";
         List<Integer> list = new ArrayList<>();
         try {
@@ -158,7 +158,7 @@ public class JobBoardDAO {
             preStmt.setString(1, "%" + searchText + "%");
             int parameterIndex = 2;
             if (location_id != 0) preStmt.setInt(parameterIndex++, location_id);
-            if (career_id != 0) preStmt.setInt(parameterIndex++, career_id);
+            if (!career.isEmpty()) preStmt.setString(parameterIndex++, career);
             if (jobtype_id != 0) preStmt.setInt(parameterIndex++, jobtype_id);
             preStmt.setInt(parameterIndex, (index - 1) * 5);
             ResultSet rs = preStmt.executeQuery();

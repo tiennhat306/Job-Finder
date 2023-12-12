@@ -184,7 +184,7 @@
                                 <div class="col-lg-12">
                                     <div class="single_field">
                                         <select class="wide" name="career" id="status-career">
-                                            <option value="0" data-display="Ngành nghề">Ngành nghề</option>
+                                            <option value="" data-display="Ngành nghề">Ngành nghề</option>
                                             <%
                                                 ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("listCareer");
                                                 for (Career career : careerList) {
