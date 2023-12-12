@@ -4,10 +4,8 @@ import DBHelper.DBHelper;
 import DTO.*;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class JobBoardDAO {
 	private Connection conn = DBHelper.getConnection();
@@ -75,28 +73,26 @@ public class JobBoardDAO {
 			preStmt = conn.prepareStatement(sql);
 			preStmt.setInt(1, id);
 
-			if (type == 1) {
-				preStmt.setInt(2, status);
-				// Tính toán ngày bắt đầu và ngày kết thúc của khoảng thời gian
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(new Date((postDay.getTime())));
-				calendar.add(Calendar.DATE, range);
-				Date endDate = calendar.getTime();
-				System.out.println(endDate);
-				preStmt.setDate(3, new java.sql.Date(postDay.getTime()));
-				preStmt.setDate(4, new java.sql.Date(endDate.getTime()));
-			} else if (type == 2) {
-				preStmt.setInt(2, status);
-			} else if (type == 3) {
-				// Tính toán ngày bắt đầu và ngày kết thúc của khoảng thời gian
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(new Date(postDay.getTime()));
-				calendar.add(Calendar.DATE, range);
-				Date endDate = calendar.getTime();
-				System.out.println(endDate);
-				preStmt.setDate(2, new java.sql.Date(postDay.getTime()));
-				preStmt.setDate(3, new java.sql.Date(endDate.getTime()));
-			}
+            if (type == 1) {
+                preStmt.setInt(2, status);
+                // Tính toán ngày bắt đầu và ngày kết thúc của khoảng thời gian
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date((postDay.getTime())));
+                calendar.add(Calendar.DATE, range);
+                Date endDate = (Date) calendar.getTime();
+                preStmt.setDate(3, new java.sql.Date(postDay.getTime()));
+                preStmt.setDate(4, new java.sql.Date(endDate.getTime()));
+            } else if (type == 2) {
+                preStmt.setInt(2, status);
+            } else if (type == 3) {
+                // Tính toán ngày bắt đầu và ngày kết thúc của khoảng thời gian
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date(postDay.getTime()));
+                calendar.add(Calendar.DATE, range);
+                Date endDate = (Date) calendar.getTime();
+                preStmt.setDate(2, new java.sql.Date(postDay.getTime()));
+                preStmt.setDate(3, new java.sql.Date(endDate.getTime()));
+            }
 
 			ResultSet rs = preStmt.executeQuery();
 			while (rs.next()) {
@@ -112,6 +108,94 @@ public class JobBoardDAO {
 		return list;
 	}
 
+    public int getTotalJobList(String searchText, int location_id, int career_id, int jobtype_id) {
+        String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
+                "FROM careergroup\n" +
+                "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
+                "JOIN career ON careergroup.career_id = career.id\n" +
+                "JOIN employer ON jobboard.employer_id = employer.id)\n" +
+                "select * from x where x.title LIKE ?";
+        if (location_id != 0) sql += " AND x.city_id = ?";
+        if (career_id != 0) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+        Set<Integer> set_id = new HashSet<>();
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setString(1, "%" + searchText + "%");
+            int parameterIndex = 2; // Parameter index for additional conditions
+            if (location_id != 0) {
+                preStmt.setInt(parameterIndex++, location_id);
+            }
+            if (career_id != 0) {
+                preStmt.setInt(parameterIndex++, career_id);
+            }
+            if (jobtype_id != 0) {
+                preStmt.setInt(parameterIndex, jobtype_id);
+            }
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                set_id.add(rs.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return set_id.size();
+    }
+    public List<Integer> pagingJob(int index, String searchText, int location_id, int career_id, int jobtype_id) {
+        String sql = "with x as (SELECT row_number() over (order by jobboard.id) as r, jobboard.id, jobboard.city_id, jobboard.address, jobboard.title, jobboard.expiration_date, jobboard.job_type, careergroup.career_id\n" +
+                "FROM careergroup\n" +
+                "JOIN jobboard ON careergroup.jobboard_id = jobboard.id\n" +
+                "JOIN career ON careergroup.career_id = career.id\n" +
+                "JOIN employer ON jobboard.employer_id = employer.id)\n" +
+                "select distinct x.id from x where x.title LIKE ?";
+        if (location_id != 0) sql += " AND x.city_id = ?";
+        if (career_id != 0) sql += " AND x.career_id = ?";
+        if (jobtype_id != 0) sql += " AND x.jobtype = ?";
+        sql += " order by x.id limit ?, 5";
+        List<Integer> list = new ArrayList<>();
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setString(1, "%" + searchText + "%");
+            int parameterIndex = 2;
+            if (location_id != 0) preStmt.setInt(parameterIndex++, location_id);
+            if (career_id != 0) preStmt.setInt(parameterIndex++, career_id);
+            if (jobtype_id != 0) preStmt.setInt(parameterIndex++, jobtype_id);
+            preStmt.setInt(parameterIndex, (index - 1) * 5);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public JobListInfoItem getDetailInfoByEmployerID(int id) {
+        String sql = "SELECT jobboard.title, jobboard.address, jobboard.expiration_date, jobboard.job_type, employer.logo "
+                + "FROM jobboard JOIN employer ON jobboard.employer_id = employer.id and jobboard.id = ?";
+        JobListInfoItem ret = new JobListInfoItem();
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setInt(1, id);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                String name_type = "";
+                int job_type = rs.getInt("job_type");
+                if (job_type == 1)
+                    name_type = "Part-time";
+                else if (job_type == 2)
+                    name_type = "Full-time";
+                else
+                    name_type = "Hợp đồng";
+                ret = new JobListInfoItem(rs.getString("title"), rs.getString("address"), name_type,
+                        rs.getDate("expiration_date"), rs.getString("logo"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
 	public int getTotalJobList() {
 		String sql = "SELECT count(*) FROM jobboard";
 		try {
@@ -381,9 +465,9 @@ public class JobBoardDAO {
                 myJobBoard.setExpirationDate(new java.text.SimpleDateFormat("dd/MM/yyyy").format(expirationDate));
 
                 if(myJobBoard.getStatus() == 2){
-                    if(postingDate.after(new Date())){
+                    if(postingDate.after(new java.util.Date())){
                         myJobBoard.setStatus(4);
-                    } else if (expirationDate.before(new Date())){
+                    } else if (expirationDate.before(new java.util.Date())){
                         myJobBoard.setStatus(5);
                     }
                 }
@@ -591,9 +675,9 @@ public class JobBoardDAO {
                 jobBoard.setUpdatedPerson(resultSet.getString("updated_person"));
 
                 if(jobBoard.getStatus() == 2){
-                    if(postingDate.after(new Date())){
+                    if(postingDate.after(new java.util.Date())){
                         jobBoard.setStatus(4);
-                    } else if (expirationDate.before(new Date())){
+                    } else if (expirationDate.before(new java.util.Date())){
                         jobBoard.setStatus(5);
                     }
                 }
