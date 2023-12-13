@@ -49,6 +49,10 @@
 								<div class="phone_num d-none d-xl-block ml-2">
 									<a href="CandidateSignUpServlet">Sign up</a>
 								</div>
+								<div class="d-none d-lg-block">
+									<a href="AnotherLoginServlet" class="boxed-btn3">Người
+										dùng khác</a>
+								</div>
 								<%
 								} else {
 								%>
@@ -66,13 +70,12 @@
 									<span
 										style="font-weight: bold; font-size: 20px; margin-left: 5px; margin-right: 15px; color: white;"><%=candidateSession.getName()%></span>
 								</div>
+								<div class="d-none d-lg-block">
+									<a href="CVSendedListServlet" class="boxed-btn3">CV đã gửi</a>
+								</div>
 								<%
 								}
 								%>
-								<div class="d-none d-lg-block">
-									<a href="AnotherLoginServlet" class="boxed-btn3">Người
-										dùng khác</a>
-								</div>
 							</div>
 						</div>
 
