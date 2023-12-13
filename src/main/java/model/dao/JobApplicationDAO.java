@@ -1,11 +1,16 @@
 package model.dao;
 
 import DBHelper.DBHelper;
+import DTO.CVDataItem;
 import DTO.CVDetailItem;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class JobApplicationDAO {
     private Connection conn = DBHelper.getConnection();
@@ -37,5 +42,25 @@ public class JobApplicationDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public List<CVDataItem> getListCVCandidate(int candidate_id) {
+        String sql = "SELECT jobboard.title, jobapplication.name, jobapplication.phone_number, jobapplication.email, jobapplication.submission_date, jobapplication.status, jobapplication.id " +
+                "FROM jobboard JOIN jobapplication ON jobboard.id = jobapplication.jobboard_id " +
+                "JOIN candidate on candidate.id = jobapplication.candidate_id and candidate.id = ?";
+        List<CVDataItem> list = new ArrayList<CVDataItem>();
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setInt(1, candidate_id);
+            ResultSet rs = preStmt.executeQuery();
+            while (rs.next()) {
+                CVDataItem temp = new CVDataItem(rs.getString("title"), rs.getString("name"),
+                        rs.getString("phone_number"), rs.getString("email"), rs.getDate("submission_date"),
+                        rs.getInt("status"), rs.getInt("id"));
+                list.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
