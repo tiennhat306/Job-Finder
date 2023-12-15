@@ -12,7 +12,9 @@ import java.util.ArrayList;
 public class CityDAO {
     public ArrayList<City> getAllCity(){
         try(Connection connection = DBHelper.getConnection()) {
-            String sql = "select * from city";
+//            String sql = "select * from city";
+            // and asc by name
+            String sql = "select * from city order by name asc";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<City> cityList = new ArrayList<>();
