@@ -43,6 +43,23 @@ public class JobApplicationDAO {
             e.printStackTrace();
         }
     }
+    public void addCV(String name, int phone, String email, String cv, int jobBoardID, int status, Date submissionDate) {
+        String sql = "INSERT INTO jobapplication(name, phone, email, cv, job_board_id, status, submission_date) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        try {
+            preStmt = conn.prepareStatement(sql);
+            preStmt.setString(1, name);
+            preStmt.setInt(2, phone);
+            preStmt.setString(3, email);
+            preStmt.setString(4, cv);
+            preStmt.setInt(5, jobBoardID);
+            preStmt.setInt(6, status);
+            preStmt.setDate(7, submissionDate);
+            preStmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<CVDataItem> getListCVCandidate(int candidate_id) {
         String sql = "SELECT jobboard.title, jobapplication.name, jobapplication.phone_number, jobapplication.email, jobapplication.submission_date, jobapplication.status, jobapplication.id " +
                 "FROM jobboard JOIN jobapplication ON jobboard.id = jobapplication.jobboard_id " +

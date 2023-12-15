@@ -767,7 +767,7 @@ public class JobBoardDAO {
             return 0;
         }
     }
-
+    
     public int countPendingJobBoard() {
         try(Connection connection = DBHelper.getConnection()){
             String sql = "SELECT COUNT(id) AS count FROM jobboard WHERE status = 1";
@@ -818,6 +818,48 @@ public class JobBoardDAO {
             return false;
         }
     }
+    
+    public JobPostingItem findDataFromID(int id) {
+        try (Connection connection = DBHelper.getConnection()) {
+            String sql = "SELECT j.title, j.company_name, j.company_description, j.company_size, j.website, c.name AS city, j.address, "
+            		+ "j.job_description, j.requirements, j.job_type, j.rank, j.years_of_experience, j.qualification, j.salary_from, j.salary_to, j.benefits, "
+            		+ "j.contact_name, j.contact_number, j.contact_email, j.posting_date "
+            		+ "FROM jobboard j "
+            		+ "JOIN city c ON j.city_id = c.id "
+            		+ "WHERE j.id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new JobPostingItem(
+                        resultSet.getString("title"),
+                        resultSet.getString("company_name"),
+                        resultSet.getString("company_description"),
+                        resultSet.getInt("company_size"),
+                        resultSet.getString("website"),
+                        resultSet.getString("city"),
+                        resultSet.getString("address"),
+                        resultSet.getString("job_description"),
+                        resultSet.getString("requirements"),
+                        resultSet.getInt("job_type"),
+                        resultSet.getInt("rank"),
+                        resultSet.getInt("years_of_experience"),
+                        resultSet.getInt("qualification"),
+                        resultSet.getDouble("salary_from"),
+                        resultSet.getDouble("salary_to"),
+                        resultSet.getString("benefits"),
+                        resultSet.getString("contact_name"),
+                        resultSet.getString("contact_number"),
+                        resultSet.getString("contact_email"),
+                        resultSet.getDate("posting_date")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 	public JobBoard getJobBoardDetail(int id) {
 		return null;
