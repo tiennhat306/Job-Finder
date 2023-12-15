@@ -67,44 +67,49 @@
     <!-- catagory_area -->
     <div class="catagory_area">
         <div class="container">
-            <div class="row cat_search">
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <input type="text" placeholder="Nhập từ khóa tìm kiếm">
+            <form action="JobListServlet" method="post">
+                <div class="row cat_search">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <input name="searchText" type="text" placeholder="Nhập từ khóa tìm kiếm">
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide" >
-                            <option data-display="Tìm theo địa điểm">Địa điểm</option>
-                            <%
-                                ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
-                                for (City city : cities) {
-                            %>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <select class="wide" name="location">
+                                <option value="0" data-display="Tìm theo địa điểm">Địa điểm</option>
+                                <%
+                                    ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
+                                    for (City city : cities) {
+                                %>
                                 <option value="<%=city.getId()%>"><%=city.getName()%></option>
-                            <%}%>
-                          </select>
+                                <%}%>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide">
-                            <option data-display="Tìm theo ngành nghề">Ngành nghề</option>
-                            <%
-                                ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
-                                for (Career career : careerList) {
-                            %>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <select class="wide" name="career">
+                                <option value="" data-display="Tìm theo ngành nghề">Ngành nghề</option>
+                                <%
+                                    ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
+                                    for (Career career : careerList) {
+                                %>
                                 <option value="<%=career.getId()%>"><%=career.getName()%></option>
-                            <%}%>
-                          </select>
+                                <%}%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <div class="job_btn">
+                            <%--                        <a href="" class="boxed-btn3">Tìm kiếm</a>--%>
+                            <button class="boxed-btn3" type="submit">
+                                Tìm việc
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-12">
-                    <div class="job_btn">
-                        <a href="#" class="boxed-btn3">Tìm kiếm</a>
-                    </div>
-                </div>
-            </div>
+            </form>
 <%--            <div class="row">--%>
 <%--                <div class="col-lg-12">--%>
 <%--                    <div class="popular_search d-flex align-items-center">--%>

@@ -1,4 +1,4 @@
-package controller.employer;
+package controller.candidate;
 
 import DTO.JobListInfoItem;
 import jakarta.servlet.ServletException;
