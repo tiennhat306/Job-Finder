@@ -12,7 +12,7 @@ public class CandidateBO {
         return candidateDAO.validateCandidate(email, password);
     }
     
-    public void createAccount(String name,String username, String password, String phoneNumber, Boolean gender, Date birthday, Timestamp createdAt, Timestamp updatedAt) {
-    	candidateDAO.createAccount(name, username, password, phoneNumber, gender, birthday, createdAt, updatedAt);
+    public boolean createAccount(String name,String username, String password, String phoneNumber, Boolean gender, Date birthday, Timestamp createdAt, Timestamp updatedAt) {
+    	return candidateDAO.createAccount(name, username, password, phoneNumber, gender, birthday, createdAt, updatedAt);
     }
 }

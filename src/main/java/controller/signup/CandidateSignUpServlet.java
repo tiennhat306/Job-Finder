@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import DTO.CandidateSessionItem;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.bo.CandidateBO;
 
 @WebServlet(name = "CandidateSignUpServlet", value = "/CandidateSignUpServlet")
@@ -22,7 +24,6 @@ public class CandidateSignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
         if (request.getParameter("signUpCandidate") != null) {
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
@@ -37,10 +38,26 @@ public class CandidateSignUpServlet extends HttpServlet {
 			Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 			
 			CandidateBO candidateBO = new CandidateBO();
-			candidateBO.createAccount(name, email, password, phoneNumber, newGender, newBirthday, createdAt, updatedAt);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/candidate/login.jsp");
-			dispatcher.forward(request, response);
+			boolean result = candidateBO.createAccount(name, email, password, phoneNumber, newGender, newBirthday, createdAt, updatedAt);
+			if(result) {
+				CandidateSessionItem candidateSessionItem = (CandidateSessionItem) request.getSession().getAttribute("candidateSession");
+				if(candidateSessionItem != null){
+					request.getSession().removeAttribute("candidateSession");
+				}
+
+				CandidateSessionItem candidateSessionItemNew = candidateBO.validateCandidate(email, password);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("candidateSession", candidateSessionItemNew);
+
+				// call homepage servlet
+				response.sendRedirect(request.getContextPath() + "/CandidateHomepageServlet");
+			} else {
+				request.setAttribute("errorMessage", "Invalid email or password");
+				RequestDispatcher rd = request.getServletContext().getRequestDispatcher("/candidate/signUpCandidate.jsp");
+				rd.forward(request, response);
+			}
+
 		}
     }
 }
