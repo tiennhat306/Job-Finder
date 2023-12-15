@@ -236,8 +236,8 @@
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a>
-                                        <a href="job_details.html" class="boxed-btn3">Ứng tuyển</a>
+                                        <a class="heart_mark" href="employer/finalStage.jsp"> <i class="ti-heart"></i> </a>
+                                        <a href="employer/finalStage.jsp" class="boxed-btn3">Ứng tuyển</a>
                                     </div>
                                 </div>
                             </div>
