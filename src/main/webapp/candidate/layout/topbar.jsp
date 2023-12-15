@@ -43,11 +43,11 @@
 								if (candidateSession == null) {
 								%>
 								<div class="phone_num d-none d-xl-block">
-									<a href="CandidateLoginServlet">Log in</a>
+									<a href="CandidateLoginServlet">Đăng nhập</a>
 								</div>
 
 								<div class="phone_num d-none d-xl-block ml-2">
-									<a href="CandidateSignUpServlet">Sign up</a>
+									<a href="CandidateSignUpServlet">Đăng ký</a>
 								</div>
 								<div class="d-none d-lg-block">
 									<a href="AnotherLoginServlet" class="boxed-btn3">Người
@@ -64,8 +64,16 @@
 										</a>
 									</div>
 									<div class="thumb">
+										<% if (candidateSession.getAvatar() != null && !candidateSession.getAvatar().equals("")) { %>
 										<img src="<%=candidateSession.getAvatar()%>" alt=""
-											width="40px" height="40px" class="rounded-circle">
+											 width="40px" height="40px" class="rounded-circle">
+										<% } else { %>
+										<img src="https://api.dicebear.com/6.x/initials/svg?seed=<%= candidateSession.getName() %>" alt=""
+											 width="40px" height="40px" class="rounded-circle">
+
+										<% } %>
+
+
 									</div>
 									<span
 										style="font-weight: bold; font-size: 20px; margin-left: 5px; margin-right: 15px; color: white;"><%=candidateSession.getName()%></span>
