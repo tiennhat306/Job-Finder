@@ -1,41 +1,36 @@
 package enums;
 
 public enum ExperienceLevel {
-    LEVEL_1(0, 1, "0 - 1 năm kinh nghiệm"),
-    LEVEL_2(1, 2, "1 - 2 năm kinh nghiệm"),
-    LEVEL_3(2, 5, "2 - 5 năm kinh nghiệm"),
-    LEVEL_4(5, 10, "5 - 10 năm kinh nghiệm"),
-    LEVEL_5(10, Integer.MAX_VALUE, "Hơn 10 năm kinh nghiệm");
+    LEVEL_1(1, "0 - 1 năm kinh nghiệm"),
+    LEVEL_2(2, "1 - 2 năm kinh nghiệm"),
+    LEVEL_3(3, "2 - 5 năm kinh nghiệm"),
+    LEVEL_4(4, "5 - 10 năm kinh nghiệm"),
+    LEVEL_5(5, "Hơn 10 năm kinh nghiệm");
 
-    private final int minYears;
-    private final int maxYears;
+    private final int value;
     private final String description;
 
-    ExperienceLevel(int minYears, int maxYears, String description) {
-        this.minYears = minYears;
-        this.maxYears = maxYears;
+    ExperienceLevel(int value, String description) {
+        this.value = value;
         this.description = description;
     }
 
-    public int getMinYears() {
-        return minYears;
+    public int getValue() {
+        return value;
     }
 
-    public int getMaxYears() {
-        return maxYears;
-    }
 
     @Override
     public String toString() {
         return description;
     }
 
-    public static ExperienceLevel getByYearsOfExperience(int yearsOfExperience) {
+    public static ExperienceLevel getByYearsOfExperience(int value) {
         for (ExperienceLevel level : ExperienceLevel.values()) {
-            if (yearsOfExperience >= level.minYears && yearsOfExperience <= level.maxYears) {
+            if (level.value == value) {
                 return level;
             }
         }
-        throw new IllegalArgumentException("Invalid years of experience: " + yearsOfExperience);
+        throw new IllegalArgumentException("Invalid years of experience: " + value);
     }
 }

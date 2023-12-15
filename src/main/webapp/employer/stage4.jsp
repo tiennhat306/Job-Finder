@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalton</title>
+    <title>Thông tin liên hệ</title>
     <link href="assets/css/stage.css" rel="stylesheet"
 	type="text/css" />
 	<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
     <style>
         select[name="employeeLanguage"] {
             width: 40%;
@@ -78,7 +79,7 @@
                     </div>
                     <div class="icon">
                         <a href="/FindJobNew/stage5.html">5</a>
-                        <p>Lịch đăng và thanh toán</p>
+                        <p>Lịch đăng</p>
                     </div>
                     <div class="icon">
                         <a href="">6</a>
@@ -89,35 +90,21 @@
             <div class="form_infomation">
                 <form action="PostNewJobServlet" method="post" onsubmit="return fillJob();">
                     <h2>Thông tin liên hệ</h2>
-                    <label for="company">Nhận hồ sơ ứng viên bằng ngôn ngữ</label>
-                    <div class="form_position">
-                        <select name="employeeLanguage" id="employeeLanguage" required>
-                            <option value="Tiếng Anh" selected="selected">Tiếng Anh</option>
-                            <option value="Tiếng Việt">Tiếng Việt</option>
-                            <option value="Tiếng Nhật">Tiếng Nhật</option>
-                            <option value="Tiếng Trung">Tiếng Trung</option>
-                        </select>
-                        
-                        <div class="checkbox_wrapper">
-                            <input type="checkbox" name="tick_Language" id="tick_Language" required>
-                            <label for="tick_Language">Chỉ nhận hồ sơ theo ngôn ngữ đã chọn</label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="summary">Mô tả</label>
-                            <textarea name="summary" id="summary" rows="10" placeholder=""></textarea>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="company">Tên liên hệ</label>
+                            <label>Tên liên hệ</label>
                             <input type="text" name="contact_name" id="contact_name" placeholder="Nhập tên liên hệ của bạn" required>
                         </div>
                         <div class="col-md-12">
-                            <label for="company">Điện thoại liên lạc</label>
+                            <label>Địa chỉ liên hệ</label>
+                            <input type="text" name="contact_address" id="contact_address" placeholder="Nhập địa chỉ liên hệ của bạn" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Điện thoại liên lạc</label>
                             <input type="text" name="contact_number" id="contact_number" placeholder="Nhập số điện thoại liên lạc của bạn" required>
                         </div>
                         <div class="col-md-12">
-                            <label for="company">Email liên hệ</label>
+                            <label>Email liên hệ</label>
                             <input type="text" name="contact-email" id="contact-email" placeholder="Nhập email của bạn" required>
                         </div>
                     </div>
@@ -134,14 +121,11 @@
     <script>
 		function fillJob() {
 			// Retrieve values from form inputs
-			var selectedOption = document.getElementById('employeeLanguage');
-			var cityText = selectedOption.options[selectedOption.selectedIndex].text;
 			var contactName = document.getElementById('contact_name').value;
 			var contactNumber = document.getElementById('contact_number').value;
 			var contactEmail = document.getElementById('contact-email').value;
 
 			// Store values in localStorage
-			localStorage.setItem('stage4_contactLanguage', cityText);
 			localStorage.setItem('stage4_contactName', contactName);
 			localStorage.setItem('stage4_contactNumber', contactNumber);
 			localStorage.setItem('stage4_contactEmail', contactEmail);
