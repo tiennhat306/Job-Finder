@@ -1,6 +1,7 @@
 package model.bo;
 
 import DTO.*;
+import model.bean.JobBoard;
 import model.dao.JobBoardDAO;
 
 import java.sql.Date;
@@ -18,11 +19,15 @@ public class JobBoardBO {
     public List<CVDataItem> getDataCV(int id, int status, int range, Date postDay) {
         return jobBoardDAO.getDataCV(id, status, range, postDay);
     }
-    public int getTotalJobList() {
-        return jobBoardDAO.getTotalJobList();
+    public int getTotalJobList(String searchText, int location_id, String career, int jobtype_id) {
+        return jobBoardDAO.getTotalJobList(searchText, location_id, career, jobtype_id);
     }
-    public List<JobListInfoItem> pagingJob(int index) {
-        return jobBoardDAO.pagingJob(index);
+    public List<Integer> pagingJob(int index, String searchText, int location_id, String career, int jobtype_id) {
+        return jobBoardDAO.pagingJob(index, searchText, location_id, career, jobtype_id);
+    }
+
+    public JobListInfoItem getDetailInfoByEmployerID(int id) {
+        return jobBoardDAO.getDetailInfoByEmployerID(id);
     }
 
     public ArrayList<JobBoardItem> getAllJobBoardItem() {
@@ -40,13 +45,13 @@ public class JobBoardBO {
         return jobBoardDAO.getAllJobBoardItem(10, offset, "");
     }
     
-    public void createJob(String title, String code, String companyName, int companySize, String companyDescription,
-			String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom,
-			double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
+    public int createJob(String title, String code, String companyName, int companySize, String companyDescription,
+			String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom, double salaryTo,
+            int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
 			int qualification, int yearsOfExperience, String requirements, String benefits, String contactAddress,
 			String contactEmail, String contactNumber, String contactName, java.sql.Date postingDate, java.sql.Date expirationDate,
-			int status, int views, int employerId, String logo) {
-    	jobBoardDAO.createJob(title, code, companyName, companySize, companyDescription, website, cityId, address, jobType, rank, salaryType, salaryFrom, salaryTo, ageType, ageFrom, ageTo, genderType, jobDescription, quantity, qualification, yearsOfExperience, requirements, benefits, contactAddress, contactEmail, contactNumber, contactName, postingDate, expirationDate, status, views, employerId, logo);
+			int status, int views, int employerId) {
+    	return jobBoardDAO.createJob(title, code, companyName, companySize, companyDescription, website, cityId, address, jobType, rank, salaryType, salaryFrom, salaryTo, ageType, ageFrom, ageTo, genderType, jobDescription, quantity, qualification, yearsOfExperience, requirements, benefits, contactAddress, contactEmail, contactNumber, contactName, postingDate, expirationDate, status, views, employerId);
 
     }
 
@@ -108,5 +113,9 @@ public class JobBoardBO {
 
     public boolean updateJobBoardStatus(int jobBoardId, int adminId, int status) {
         return jobBoardDAO.updateJobBoardStatus(jobBoardId, adminId, status);
+    }
+
+    public JobBoard getJobBoardDetail(int id) {
+        return jobBoardDAO.getJobBoardDetail(id);
     }
 }

@@ -1,4 +1,3 @@
-<%@ page import="DTO.EmployerSessionItem" %>
 <%@ page import="DTO.UpdatedJobBoardItem" %>
 <%@ page import="java.util.List" %>
 <%@ page import="DTO.AdminSessionItem" %>
@@ -12,7 +11,7 @@
   <title>
     Quản lý đơn đăng tuyển
   </title>
-  <link rel="shortcut icon" href="employer/assets/images/logo-title.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
   <link href="employer/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="employer/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
   <link href="employer/assets/css/app.min.css" rel="stylesheet" type="text/css" />
@@ -133,6 +132,13 @@
 </head>
 <body>
 <div id="wrapper">
+    <%
+        AdminSessionItem admin = (AdminSessionItem) session.getAttribute("adminSession");
+        if(admin == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
   <!-- Topbar Start -->
   <jsp:include page="layout/topbar.jsp"></jsp:include>
   <!-- end Topbar -->
@@ -140,13 +146,6 @@
   <!-- ========== Left Sidebar Start ========== -->
   <jsp:include page="layout/sidebar.jsp"></jsp:include>
   <!-- Left Sidebar End -->
-<%
-    AdminSessionItem admin = (AdminSessionItem) session.getAttribute("adminSession");
-    if(admin == null){
-        response.sendRedirect("/error.jsp");
-        return;
-    }
-%>
 
   <!-- ============================================================== -->
   <!-- Start Page Content here -->

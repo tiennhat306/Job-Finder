@@ -19,7 +19,7 @@
 								<nav>
 									<ul id="navigation">
 										<li><a href="CandidateHomepageServlet">Trang chủ</a></li>
-										<li><a href="jobs.html">Tìm việc làm</a></li>
+										<li><a href="JobListServlet">Tìm việc làm</a></li>
 										<li><a href="#">Hồ sơ & CV <i class="ti-angle-down"></i></a>
 											<ul class="submenu">
 												<li><a href="#">Quản lý CV </a></li>
@@ -43,11 +43,15 @@
 								if (candidateSession == null) {
 								%>
 								<div class="phone_num d-none d-xl-block">
-									<a href="CandidateLoginServlet">Log in</a>
+									<a href="CandidateLoginServlet">Đăng nhập</a>
 								</div>
 
 								<div class="phone_num d-none d-xl-block ml-2">
-									<a href="CandidateSignUpServlet">Sign up</a>
+									<a href="CandidateSignUpServlet">Đăng ký</a>
+								</div>
+								<div class="d-none d-lg-block">
+									<a href="AnotherLoginServlet" class="boxed-btn3">Người
+										dùng khác</a>
 								</div>
 								<%
 								} else {
@@ -60,19 +64,26 @@
 										</a>
 									</div>
 									<div class="thumb">
+										<% if (candidateSession.getAvatar() != null && !candidateSession.getAvatar().equals("")) { %>
 										<img src="<%=candidateSession.getAvatar()%>" alt=""
-											width="40px" height="40px" class="rounded-circle">
+											 width="40px" height="40px" class="rounded-circle">
+										<% } else { %>
+										<img src="https://api.dicebear.com/6.x/initials/svg?seed=<%= candidateSession.getName() %>" alt=""
+											 width="40px" height="40px" class="rounded-circle">
+
+										<% } %>
+
+
 									</div>
 									<span
 										style="font-weight: bold; font-size: 20px; margin-left: 5px; margin-right: 15px; color: white;"><%=candidateSession.getName()%></span>
 								</div>
+								<div class="d-none d-lg-block">
+									<a href="CVSendedListServlet" class="boxed-btn3">CV đã gửi</a>
+								</div>
 								<%
 								}
 								%>
-								<div class="d-none d-lg-block">
-									<a href="AnotherLoginServlet" class="boxed-btn3">Người
-										dùng khác</a>
-								</div>
 							</div>
 						</div>
 

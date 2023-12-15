@@ -5,6 +5,8 @@
 <%@ page import="model.bean.Career" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="DTO.CandidateSessionItem" %>
+<%@ page import="DTO.CVDataItem" %>
+<%@ page import="enums.CVStatus" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -12,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Danh sách việc làm</title>
+    <title>Danh sách CV</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -137,10 +139,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="bradcam_text">
-                    <%
-                        int numJob = (int) request.getAttribute("numJob");
-                    %>
-                    <h3><%= numJob %> công việc có sẵn</h3>
+                    <h3>Đơn xin việc đã gửi</h3>
                 </div>
             </div>
         </div>
@@ -151,148 +150,47 @@
 <!-- job_listing_area_start  -->
 <div class="job_listing_area plus_padding">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="job_filter white-bg">
-                    <div class="form_inner white-bg">
-                        <h3>Tìm kiếm</h3>
-                        <form action="JobListServlet">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <input type="text" name="searchText" placeholder="Nhập từ khóa tìm kiếm">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide" name="location" id="status-location">
-                                            <option value="0" data-display="Địa điểm">Địa điểm</option>
-                                            <%
-                                                ArrayList<City> cities = (ArrayList<City>) request.getAttribute("listCity");
-                                                for (City city : cities) {
-                                                String selected = "";
-                                                int locationId = (int) request.getAttribute("location_id");
-                                                if (city.getId() == locationId) {
-                                                    selected = "selected";
-                                                }
-                                            %>
-                                            <option value="<%=city.getId()%>" <%=selected%>><%=city.getName()%></option>
-                                            <%}%>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide" name="career" id="status-career">
-                                            <option value="" data-display="Ngành nghề">Ngành nghề</option>
-                                            <%
-                                                ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("listCareer");
-                                                for (Career career : careerList) {
-                                                String selected = "";
-                                                String careerId = request.getAttribute("career_id").toString();
-                                                if (career.getId().equals(careerId)) {
-                                                    selected = "selected";
-                                                }
-                                            %>
-                                            <option value="<%=career.getId()%>" <%=selected%>><%=career.getName()%></option>
-                                            <%}%>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="single_field">
-                                        <select class="wide" name="job_type" id="status-jobtype">
-                                            <option value="0" data-display="Loại công việc">Loại công việc</option>
-                                            <%
-                                                int jobTypeId = (int) request.getAttribute("jobtype_id");
-                                            %>
-                                            <option value="1" <%= (jobTypeId == 1) ? "selected" : "" %>>Bán thời gian</option>
-                                            <option value="2" <%= (jobTypeId == 2) ? "selected" : "" %>>Toàn thời gian</option>
-                                            <option value="3" <%= (jobTypeId == 3) ? "selected" : "" %>>Hợp đồng</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reset_btn">
-                                <button  class="boxed-btn3 w-100" type="submit">Tìm kiếm</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="recent_joblist_wrap">
-                    <div class="recent_joblist white-bg ">
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <h4>Danh sách công việc</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="job_lists m-0">
-                    <div class="row">
-                        <%
-                            List<JobListInfoItem> list = (ArrayList<JobListInfoItem>) request.getAttribute("jobList");
-                            for (int i = 0; i < list.size(); ++i) {
-                        %>
-                        <div class="col-lg-12 col-md-12">
-                            <div class="single_jobs white-bg d-flex justify-content-between">
-                                <div class="jobs_left d-flex align-items-center">
-                                    <div class="thumb">
-                                        <img src="<%= list.get(i).getLogo() %>" alt="">
-                                    </div>
-                                    <div class="jobs_conetent">
-                                        <a href="job_details.html"><h4><%= list.get(i).getTitle() %></h4></a>
-                                        <div class="links_locat d-flex align-items-center">
-                                            <div class="location">
-                                                <p> <i class="fa fa-map-marker"></i><%= list.get(i).getAddress() %></p>
-                                            </div>
-                                            <div class="location">
-                                                <p> <i class="fa fa-clock-o"></i><%= list.get(i).getType() %></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="jobs_right">
-                                    <div class="apply_now">
-                                        <a href="job_details.html" class="boxed-btn3">Đăng ký ngay</a>
-                                    </div>
-                                    <%
-                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                        String date = dateFormat.format(list.get(i).getExp_date());
-                                    %>
-                                    <div class="date">
-                                        <p>Ngày hết hạn: <%= date %></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="pagination_wrap">
-                                <ul>
-                                    <li><a href="#"> <i class="ti-angle-left"></i> </a></li>
-                                    <%
-                                        int cnt = (int) request.getAttribute("endPage");
-                                        for (int i = 1; i <= cnt; ++i) {
-                                    %>
-                                        <li><a href="#" onclick="goToPage(<%= i %>)"><span><%= i %></span></a></li>
-                                    <%
-                                        }
-                                    %>
-                                    <li><a href="#"> <i class="ti-angle-right"></i> </a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive">
+            <table id="jobboard-table" class="table table-bordered table-hover mb-0 text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Tên công việc</th>
+                    <th>Tên ứng viên</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Gửi lúc</th>
+                    <th>Trạng thái</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    List<CVDataItem> list = (ArrayList<CVDataItem>) request.getAttribute("listCVCandidate");
+                    if (list.size() != 0) {
+                %>
+                <% for (int i = 0; i < list.size(); ++i) { %>
+                <tr >
+                    <td><%= list.get(i).getTitle() %></td>
+                    <td><%= list.get(i).getNameCandidate() %></td>
+                    <td><%= list.get(i).getPhone() %></td>
+                    <td><%= list.get(i).getEmail() %></td>
+                    <td><%= new SimpleDateFormat("dd/MM/yyyy").format(list.get(i).getCreated_time()) %></td>
+                    <% if (CVStatus.getByValue(list.get(i).getStatus()) == CVStatus.KIEM_TRA_HO_SO) { %>
+                    <td class="text-secondary">Chờ xử lý</td>
+                    <% } else if (CVStatus.getByValue(list.get(i).getStatus()) == CVStatus.DA_DUYET) { %>
+                    <td class="text-primary">Đã duyệt</td>
+                    <% } else if (CVStatus.getByValue(list.get(i).getStatus()) == CVStatus.TU_CHOI) { %>
+                    <td class="text-danger">Từ chối</td>
+                    <% } %>
+                </tr>
+                <% } %> <% } else { %>
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <h4>Không có dữ liệu</h4>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -67,44 +67,49 @@
     <!-- catagory_area -->
     <div class="catagory_area">
         <div class="container">
-            <div class="row cat_search">
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <input type="text" placeholder="Nhập từ khóa tìm kiếm">
+            <form action="JobListServlet" method="post">
+                <div class="row cat_search">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <input name="searchText" type="text" placeholder="Nhập từ khóa tìm kiếm">
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide" >
-                            <option data-display="Tìm theo địa điểm">Địa điểm</option>
-                            <%
-                                ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
-                                for (City city : cities) {
-                            %>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <select class="wide" name="location">
+                                <option value="0" data-display="Tìm theo địa điểm">Địa điểm</option>
+                                <%
+                                    ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
+                                    for (City city : cities) {
+                                %>
                                 <option value="<%=city.getId()%>"><%=city.getName()%></option>
-                            <%}%>
-                          </select>
+                                <%}%>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="single_input">
-                        <select class="wide">
-                            <option data-display="Tìm theo ngành nghề">Ngành nghề</option>
-                            <%
-                                ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
-                                for (Career career : careerList) {
-                            %>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="single_input">
+                            <select class="wide" name="career">
+                                <option value="" data-display="Tìm theo ngành nghề">Ngành nghề</option>
+                                <%
+                                    ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
+                                    for (Career career : careerList) {
+                                %>
                                 <option value="<%=career.getId()%>"><%=career.getName()%></option>
-                            <%}%>
-                          </select>
+                                <%}%>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12">
+                        <div class="job_btn">
+                            <%--                        <a href="" class="boxed-btn3">Tìm kiếm</a>--%>
+                            <button class="boxed-btn3" type="submit">
+                                Tìm việc
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-12">
-                    <div class="job_btn">
-                        <a href="#" class="boxed-btn3">Tìm kiếm</a>
-                    </div>
-                </div>
-            </div>
+            </form>
 <%--            <div class="row">--%>
 <%--                <div class="col-lg-12">--%>
 <%--                    <div class="popular_search d-flex align-items-center">--%>
@@ -217,7 +222,7 @@
                                         <img src="<%=jobBoardItem.getLogo()%>" alt="">
                                     </div>
                                     <div class="jobs_conetent">
-                                        <a href="job_details.html"><h4><%=jobBoardItem.getTitle()%></h4></a>
+                                        <a href="job_details.jsp"><h4><%=jobBoardItem.getTitle()%></h4></a>
                                         <a href="#"><h5><%=jobBoardItem.getCompanyName()%></h5></a>
                                         <div class="links_locat d-flex align-items-center">
                                             <div class="location">
@@ -231,8 +236,8 @@
                                 </div>
                                 <div class="jobs_right">
                                     <div class="apply_now">
-                                        <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a>
-                                        <a href="job_details.html" class="boxed-btn3">Ứng tuyển</a>
+                                        <a class="heart_mark" href="employer/finalStage.jsp"> <i class="ti-heart"></i> </a>
+                                        <a href="employer/finalStage.jsp" class="boxed-btn3">Ứng tuyển</a>
                                     </div>
                                 </div>
                             </div>

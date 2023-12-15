@@ -35,7 +35,7 @@ public class CandidateDAO {
         }
     }
     
-    public void createAccount(String name,String username, String password, String phoneNumber, Boolean gender, Date birthday, Timestamp createdAt, Timestamp updatedAt) {
+    public boolean createAccount(String name,String username, String password, String phoneNumber, Boolean gender, Date birthday, Timestamp createdAt, Timestamp updatedAt) {
 		try(Connection connection = DBHelper.getConnection()) {
 			String sql = "INSERT INTO candidate(name, email, password, phone_number, gender, birthday, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pst = connection.prepareStatement(sql);
@@ -48,10 +48,12 @@ public class CandidateDAO {
 			pst.setDate(6, birthday);
 			pst.setTimestamp(7, createdAt);
 			pst.setTimestamp(8, updatedAt);
-			pst.executeUpdate();
+
+            return pst.executeUpdate() > 0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+            return false;
 		}
 	}
 

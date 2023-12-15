@@ -132,6 +132,14 @@
 </head>
 <body>
 <div id="wrapper">
+    <%
+        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+        if(employer == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
+
   <!-- Topbar Start -->
   <jsp:include page="layout/topbar.jsp"></jsp:include>
   <!-- end Topbar -->
@@ -139,13 +147,6 @@
   <!-- ========== Left Sidebar Start ========== -->
   <jsp:include page="layout/sidebar.jsp"></jsp:include>
   <!-- Left Sidebar End -->
-  <%
-    EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
-    if(employer == null){
-      response.sendRedirect("/error.jsp");
-      return;
-    }
-  %>
 
   <!-- ============================================================== -->
   <!-- Start Page Content here -->
@@ -299,7 +300,7 @@
 
                     <div class="form-group col-sm-3">
                         <div class="mb-2">
-                            <a href="#" class="btn btn-primary">
+                            <a href="PostNewJobServlet" class="btn btn-primary">
                                 <i class="fe-plus-circle"></i> Thêm mới
                             </a>
                         </div>
