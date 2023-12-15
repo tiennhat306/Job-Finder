@@ -11,11 +11,12 @@ public class JobApplication {
     private int jobBoardId;
     private int status;
     private Date submissionDate;
+    private int candidateId;
 
     public JobApplication() {
     }
 
-    public JobApplication(int id, String name, String phoneNumber, String email, String cv, int jobBoardId, int status, Date submissionDate) {
+    public JobApplication(int id, String name, String phoneNumber, String email, String cv, int jobBoardId, int status, Date submissionDate, int candidateId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -24,6 +25,7 @@ public class JobApplication {
         this.jobBoardId = jobBoardId;
         this.status = status;
         this.submissionDate = submissionDate;
+        this.candidateId = candidateId;
     }
 
     public int getId() {
@@ -88,5 +90,13 @@ public class JobApplication {
 
     public void setSubmissionDate(Date submissionDate) {
         this.submissionDate = submissionDate;
+    }
+
+    public int getCandidateId() {
+        return candidateId;
+    }
+
+    public void setCandidateId(int candidateId) {
+        this.candidateId = candidateId;
     }
 }
