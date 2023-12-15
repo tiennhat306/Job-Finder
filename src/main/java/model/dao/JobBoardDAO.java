@@ -247,7 +247,8 @@ public class JobBoardDAO {
 					"JOIN employer e ON jb.employer_id = e.id " +
 					"JOIN city c ON jb.city_id = c.id " +
 					"WHERE jb.status = 2 AND jb.posting_date <= now() AND jb.expiration_date >= now()" +
-					"ORDER BY jb.posting_date DESC, jb.views DESC ";
+					"ORDER BY jb.posting_date DESC, jb.views DESC " +
+					"LIMIT 10";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
