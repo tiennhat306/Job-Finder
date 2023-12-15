@@ -11,7 +11,7 @@
   <title>
     Quản lý đơn đăng tuyển
   </title>
-  <link rel="shortcut icon" href="employer/assets/images/logo-title.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
   <link href="employer/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
   <link href="employer/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
   <link href="employer/assets/css/app.min.css" rel="stylesheet" type="text/css" />

@@ -45,13 +45,13 @@ public class JobBoardBO {
         return jobBoardDAO.getAllJobBoardItem(10, offset, "");
     }
     
-    public void createJob(String title, String code, String companyName, int companySize, String companyDescription,
-			String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom,
-			double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
+    public int createJob(String title, String code, String companyName, int companySize, String companyDescription,
+			String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom, double salaryTo,
+            int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
 			int qualification, int yearsOfExperience, String requirements, String benefits, String contactAddress,
 			String contactEmail, String contactNumber, String contactName, java.sql.Date postingDate, java.sql.Date expirationDate,
 			int status, int views, int employerId) {
-    	jobBoardDAO.createJob(title, code, companyName, companySize, companyDescription, website, cityId, address, jobType, rank, salaryType, salaryFrom, salaryTo, ageType, ageFrom, ageTo, genderType, jobDescription, quantity, qualification, yearsOfExperience, requirements, benefits, contactAddress, contactEmail, contactNumber, contactName, postingDate, expirationDate, status, views, employerId);
+    	return jobBoardDAO.createJob(title, code, companyName, companySize, companyDescription, website, cityId, address, jobType, rank, salaryType, salaryFrom, salaryTo, ageType, ageFrom, ageTo, genderType, jobDescription, quantity, qualification, yearsOfExperience, requirements, benefits, contactAddress, contactEmail, contactNumber, contactName, postingDate, expirationDate, status, views, employerId);
 
     }
 

@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalton</title>
+    <title>Lịch đăng</title>
     <link href="assets/css/stage.css" rel="stylesheet"
 	type="text/css" />
 	<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
     <style>
         .form_time {
             display: flex;
@@ -59,7 +60,7 @@
                     </div>
                     <div class="icon active">
                         <a href="/FindJobNew/stage5.html">5</a>
-                        <p>Lịch đăng và thanh toán</p>
+                        <p>Lịch đăng</p>
                     </div>
                     <div class="icon">
                         <a href="">6</a>
@@ -68,73 +69,24 @@
                 </div>
             </div>
             <div class="form_infomation">
-                <form action="">
-                    <label for="company">Thời gian</label>
-                    <div class="form_time">
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="nhap" required>
-                            <label for="nhap">30 ngày</label>
-                        </div>
-                    
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">45 ngày</label>
+                <form action="PostNewJobServlet" method="post">
+                    <label>Thời gian</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Ngày đăng</label>
+                            <input type="date" name="postingDate" id="postingDate" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="company">Ngày đăng</label>
-                            <input type="date" name="postingDate" id="postingDate" required>
+                            <label>Ngày hết hạn</label>
+                            <input type="date" name="expirationDate" id="expirationDate" required>
                         </div>
                     </div>
-                    <label for="company">Ưu tiên hiển thị</label>
-                    <div class="form_time">
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="nhap" required>
-                            <label for="nhap">Có</label>
-                        </div>
-                    
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">Không</label>
-                        </div>
-                    </div>
-                    <label for="company">Cách hiển thị</label>
-                    <div class="form_time">
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="nhap" required>
-                            <label for="nhap">Bình thường</label>
-                        </div>
-                    
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">Đậm</label>
-                        </div>
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">Đỏ Đậm</label>
-                        </div>
-                    </div>
-                    <label for="company">Phương thức thanh toán</label>
-                    <div class="form_time">
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="nhap" required>
-                            <label for="nhap">Miễn phí</label>
-                        </div>
-                    
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">Tiền mặt</label>
-                        </div>
 
-                        <div class="col-md-3-salary">
-                            <input type="radio" name="company" id="hon" required>
-                            <label for="hon">Chuyển qua ngân hàng</label>
-                        </div>
-                    </div>
                     <div class="row">
                       <div class="col-md-12">
-                        <input type="button" value="Tiếp tục" name="buttonSaveStage5" onclick="redirectToStage6(); fillJob();">
+                        <input type="submit" value="Tạo" name="buttonSaveStage5">
                       </div>
                     </div>
                 </form>

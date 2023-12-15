@@ -9,7 +9,7 @@
 
 <head>
 <meta charset="utf-8" />
-<title>Adminto - Responsive Admin Dashboard Template</title>
+<title>Mô tả công việc</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
@@ -18,7 +18,7 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 	rel="stylesheet" type="text/css" />
-
+	<link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
 <script>
 	function redirectToStage3() {
 		window.location.href = "${pageContext.request.contextPath}/employer/stage3.jsp";
@@ -56,7 +56,7 @@
 					</div>
 					<div class="icon">
 						<a href="/FindJobNew/stage5.html">5</a>
-						<p>Lịch đăng và thanh toán</p>
+						<p>Lịch đăng</p>
 					</div>
 					<div class="icon">
 						<a href="">6</a>
@@ -69,7 +69,8 @@
 					<h3>Mô tả công việc</h3>
 					<div class="col-md-6">
 						<div class="input-group-append">
-							<label for="company">Ngành nghề</label> <select name="JobID"
+							<label>Ngành nghề</label>
+							<select name="JobID"
 								id="JobID" required>
 								<%
 									ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
@@ -82,7 +83,7 @@
 					</div>
 					<div class="form_position">
 						<div class="col-md-12">
-							<label for="company">Tỉnh/thành phố</label> <select name="cityID"
+							<label>Tỉnh/thành phố</label> <select name="cityID"
 								id="cityID" required>
 								<%
 									ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
@@ -93,15 +94,15 @@
 							</select>
 						</div>
 						<div class="col-md-12">
-							<label for="company">Địa chỉ</label> <input type="text"
+							<label >Địa chỉ</label> <input type="text"
 								name="address" id="address"
 								placeholder="Nhập địa chỉ công ty của bạn" required>
 						</div>
 					</div>
 
-					<div class="row">
+					<div class="col-md-12 form_position">
 						<div class="col-md-6">
-							<label for="employeeNumber">Loại công việc</label> <select
+							<label >Loại công việc</label> <select
 								name="job_type" id="job_type" required>
 								<option value="1">Nhân viên toàn thời gian</option>
 								<option value="2">Nhân viên bán thời gian</option>
@@ -110,109 +111,159 @@
 							</select>
 						</div>
 						<div class="col-md-6">
-							<label for="employeeNumber">Cấp bậc</label> <select name="rank"
+							<label>Cấp bậc</label> <select name="rank"
 								id="rank" required>
 								<option value="1">Sinh viên/Thực
 									tập sinh</option>
 								<option value="2">Mới đi làm</option>
 								<option value="3">Nhân viên</option>
 								<option value="4">Kỹ sư</option>
-								<option value="5">Trưởng nhóm/Giám
-									sát</option>
-								<option value="6">Quản lý/Trưởng
-									phòng</option>
-								<option value="7">Giám đốc</option>
-								<option value="8">Quản lý cấp cao</option>
-								<option value="9">Điều hành cấp cao</option>
+								<option value="5">Quản lý</option>
+								<option value="6">Cao hơn</option>
 								<!-- Add more options as needed -->
 							</select>
 						</div>
-						<label for="company">Lương</label>
-						<div class="SalaryStructure">
+					</div>
+					<div>
+
+						<label>Lương</label>
+						<div class="SalaryStructure col-md-12">
 							<div class="col-md-3-salary">
 								<input type="radio" name="salary_type" id="nhap" value="1"
-									required> <label for="nhap">Nhập</label>
+									   required> <label for="nhap">Nhập</label>
 							</div>
 
 							<div class="col-md-3-salary">
 								<input type="radio" name="salary_type" id="hon" value="2"
-									required> <label for="hon">Hơn</label>
+									   required> <label for="hon">Hơn</label>
 							</div>
 
 							<div class="col-md-3-salary">
 								<input type="radio" name="salary_type" id="thuongluong"
-									value="3" required> <label for="thuongluong">Thương
-									lượng</label>
+									   value="3" required> <label for="thuongluong">Thương
+								lượng</label>
 							</div>
 
 							<div class="col-md-3-salary">
 								<input type="radio" name="salary_type" id="canhtranh" value="4"
-									required> <label for="canhtranh">Cạnh tranh</label>
+									   required> <label for="canhtranh">Cạnh tranh</label>
 							</div>
 						</div>
-						<div class="form_position">
-							<div class="col-md-6">
-								<div class="input-group-append">
-									<input type="text" name="salary_from" id="salary_from" class="form-control"
-										placeholder="Số tiền">
+						<div>
+							<div class="col-md-12 form_position">
+								<div class="col-md-6">
+									<div class="input-group-append">
+										<input type="text" name="salary_from" id="salary_from" class="form-control"
+											   placeholder="Số tiền">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="input-group-append">
+										<input type="text" name="salary_to" id="salary_to" class="form-control"
+											   placeholder="Số tiền">
+									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="input-group-append">
-									<input type="text" name="salary_to" id="salary_to" class="form-control"
-										placeholder="Số tiền">
-								</div>
-							</div>
-						</div>
-						<div class="form_position">
-							<div class="col-md-6">
-								<label for="company">Tuổi</label> <input type="text"
-									name="age_type" id="company" placeholder="Nhập tuổi của bạn"
-									required>
-							</div>
-							<div class="col-md-6">
-								<label for="company">Số lượng cần tuyển</label> <input type="text"
-									name="requireNumber" id="requireNumber" placeholder="Nhập số lượng cần tuyển"
-									required>
-							</div>
-						</div>
-
-						<div class="col-md-6">
-							<label for="employeeNumber">Giới tính</label> <select
-								name="gender_type" id="employeeNumber" required>
-								<option value="1">Nam</option>
-								<option value="0">Nữ</option>
-								<!-- Add more options as needed -->
-							</select>
-						</div>
-						<div class="col-md-12">
-							<label for="summary">Mô tả công việc</label>
-							<textarea name="job_description" id="summary" rows="5"
-								placeholder="Mô tả công việc"></textarea>
 						</div>
 					</div>
-					<div class="row_experience">
-						<h3>Kinh nghiệm/Kỹ năng</h3>
-						<div class="col-md-6">
-							<label for="employeeNumber">Trình độ học vấn</label> <select
-								name="qualification" id="qualification" required>
-								<option value="1">Kỹ sư</option>
-								<option value="2">Cử nhân</option>
-								<option value="3">Khác</option>
+
+
+					<label>Tuổi</label>
+					<div class="SalaryStructure">
+						<div class="col-md-3-salary">
+							<input type="radio" name="age_type" id="batky" value="1"
+								   required> <label>Bất kỳ</label>
+						</div>
+
+						<div class="col-md-3-salary">
+							<input type="radio" name="age_type" id="lonhon" value="2"
+								   required> <label>Lớn hơn</label>
+						</div>
+
+						<div class="col-md-3-salary">
+							<input type="radio" name="age_type" id="behon"
+								   value="3" required> <label>Bé hơn</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 form_position">
+							<div class="col-md-6">
+								<div class="input-group-append">
+									<input type="text" name="salary_from" id="age_from" class="form-control"
+										   placeholder="Tuổi">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group-append">
+									<input type="text" name="salary_to" id="age_to" class="form-control"
+										   placeholder="Tuổi">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row col-md-12">
+						<div class="form_position col-md-12">
+
+							<div class="col-md-6">
+								<label>Số lượng cần tuyển</label> <input type="text"
+																		 name="requireNumber" id="requireNumber" placeholder="Nhập số lượng cần tuyển"
+																		 required>
+							</div>
+							<div class="col-md-6">
+								<label for="employeeNumber">Giới tính</label> <select
+									name="gender_type" id="employeeNumber" required>\
+								<option value="0">Bất kỳ</option>
+								<option value="1">Nam</option>
+								<option value="2">Nữ</option>
 								<!-- Add more options as needed -->
 							</select>
+							</div>
 						</div>
-						<div class="col-md-6">
-							<label for="employeeNumber">Mức kinh nghiệm</label> <input
-								type="text" name="yearOfExperience" id="yearOfExperience" class="form-control"
-								placeholder="Số năm kinh nghiệm">
-							<!-- Add more options as needed -->
-							</select>
-						</div>
+					</div>
+
+					<div class="col-md-12">
+						<label for="summary">Mô tả công việc</label>
+						<textarea name="job_description" id="summary" rows="5"
+								  placeholder="Mô tả công việc"></textarea>
+					</div>
+
+					<div class="row_experience">
 						<div class="col-md-12">
-							<label for="summary">Kinh nghiệm/Kỹ năng chi tiết</label>
-							<textarea name="requirements" id="requirements" rows="5"
-								placeholder="Nhập các yêu cầu kỹ năng chi tiết"></textarea>
+							<h3>Kinh nghiệm/Kỹ năng</h3>
+							<div class="form_position">
+								<div class="col-md-6">
+									<label>Trình độ học vấn</label>
+									<select
+											name="qualification" id="qualification" required>
+										<option value="1">THPT</option>
+										<option value="2">Chứng chỉ</option>
+										<option value="3">Trung cấp</option>
+										<option value="4">Cao đẳng</option>
+										<option value="5">Cử nhân</option>
+										<option value="6">Kỹ sư</option>
+										<option value="7">Thạc sĩ</option>
+										<option value="8">Tiến sĩ</option>
+										<!-- Add more options as needed -->
+									</select>
+								</div>
+								<div class="col-md-6">
+									<label>Mức kinh nghiệm</label>
+									<select name="yearOfExperience" id="yearOfExperience" required>
+										<option value="1">0 - 1 năm kinh nghiệm</option>
+										<option value="2">1 - 2 năm kinh nghiệm</option>
+										<option value="3">2 - 5 năm kinh nghiệm</option>
+										<option value="4">5 - 10 năm kinh nghiệm</option>
+										<option value="5">Hơn 10 năm kinh nghiệm</option>
+										<!-- Add more options as needed -->
+									</select>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<label for="summary">Kinh nghiệm/Kỹ năng chi tiết</label>
+								<textarea name="requirements" id="requirements" rows="5"
+										  placeholder="Nhập các yêu cầu kỹ năng chi tiết"></textarea>
+							</div>
 						</div>
 					</div>
 					<div class="row">

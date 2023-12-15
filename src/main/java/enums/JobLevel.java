@@ -5,7 +5,8 @@ public enum JobLevel {
     ENTRY_LEVEL(2, "Mới đi làm"),
     EMPLOYEE(3, "Nhân viên"),
     ENGINEER(4, "Kỹ sư"),
-    MANAGER(5, "Quản lý");
+    MANAGER(5, "Quản lý"),
+    OTHER(6, "Cao hơn");
 
     private final int value;
     private final String description;
