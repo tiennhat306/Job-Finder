@@ -2,6 +2,7 @@ package model.dao;
 
 import DBHelper.DBHelper;
 import DTO.*;
+import model.bean.JobBoard;
 
 import java.sql.*;
 import java.sql.Date;
@@ -79,7 +80,8 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date((postDay.getTime())));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = (Date) calendar.getTime();
+				java.util.Date utilDate = calendar.getTime();
+				java.sql.Date endDate = new java.sql.Date(utilDate.getTime());
                 preStmt.setDate(3, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(4, new java.sql.Date(endDate.getTime()));
             } else if (type == 2) {
@@ -89,7 +91,8 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date(postDay.getTime()));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = (Date) calendar.getTime();
+				java.util.Date utilDate = calendar.getTime();
+				java.sql.Date endDate = new java.sql.Date(utilDate.getTime());
                 preStmt.setDate(2, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(3, new java.sql.Date(endDate.getTime()));
             }
@@ -247,7 +250,8 @@ public class JobBoardDAO {
 					"JOIN employer e ON jb.employer_id = e.id " +
 					"JOIN city c ON jb.city_id = c.id " +
 					"WHERE jb.status = 2 AND jb.posting_date <= now() AND jb.expiration_date >= now()" +
-					"ORDER BY jb.posting_date DESC, jb.views DESC ";
+					"ORDER BY jb.posting_date DESC, jb.views DESC " +
+					"LIMIT 10";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -345,7 +349,7 @@ public class JobBoardDAO {
 		}
 	}
 
-	public void createJob(String title, String code, String companyName, int companySize, String companyDescription,
+	public int createJob(String title, String code, String companyName, int companySize, String companyDescription,
 			String website, int cityId, String address, int jobType, int rank, int salaryType, double salaryFrom,
 			double salaryTo, int ageType, int ageFrom, int ageTo, int genderType, String jobDescription, int quantity,
 			int qualification, int yearsOfExperience, String requirements, String benefits, String contactAddress,
@@ -353,9 +357,13 @@ public class JobBoardDAO {
 			java.sql.Date expirationDate, int status, int views, int employerId) {
 
 		try (Connection connection = DBHelper.getConnection()) {
-			String sql = "INSERT INTO jobboard (title, code, company_name, company_size, company_description, website, city_id, address, job_type, `rank`, salary_type, salary_from, salary_to, age_type, age_from, age_to, gender_type, job_description, quantity, qualification, years_of_experience, requirements, benefits, contact_address, contact_email, contact_number, contact_name, posting_date, expiration_date, status, views, employer_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO jobboard (title, code, company_name, company_size, company_description, website," +
+					" city_id, address, job_type, `rank`, salary_type, salary_from, salary_to, age_type, age_from, age_to," +
+					" gender_type, job_description, quantity, qualification, years_of_experience, requirements, benefits," +
+					" contact_address, contact_email, contact_number, contact_name, posting_date, expiration_date, status, views, employer_id) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			PreparedStatement pst = connection.prepareStatement(sql);
+			PreparedStatement pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, title);
 			pst.setString(2, code);
@@ -390,9 +398,22 @@ public class JobBoardDAO {
 			pst.setInt(31, views);
 			pst.setInt(32, employerId);
 
-			pst.executeUpdate();
+			boolean affectedRows = pst.executeUpdate() > 0;
+			if(affectedRows) {
+				try(ResultSet generatedKeys = pst.getGeneratedKeys()) {
+					if (generatedKeys.next()) {
+						System.out.println("ID: " + generatedKeys.getInt(1));
+						return generatedKeys.getInt(1);
+					}
+					else {
+						throw new SQLException("Creating job failed, no ID obtained.");
+					}
+				}
+			}
+			return -1;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return -1;
 		}
 	}
 
@@ -839,4 +860,8 @@ public class JobBoardDAO {
         return null;
     }
 
+
+	public JobBoard getJobBoardDetail(int id) {
+		return null;
+	}
 }

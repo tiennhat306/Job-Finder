@@ -1,17 +1,18 @@
+<%@ page import="DTO.EmployerSessionItem" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Job Board</title>
+<title>Xem chi tiết tuyển dụng</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
@@ -43,6 +44,13 @@
 </head>
 
 <body>
+	<%
+		EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+		if(employer == null){
+			response.sendRedirect("../ErrorServlet");
+			return;
+		}
+	%>
 	<!-- bradcam_area  -->
 	<div class="bradcam_area bradcam_bg_1">
 		<div class="container">

@@ -270,7 +270,6 @@
 		</div>
 	</div>
 	<!-- job_listing_area_end  -->
-
 	<!-- featured_candidates_area_start  -->
 	<div class="featured_candidates_area">
 		<div class="container">

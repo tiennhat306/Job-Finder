@@ -23,7 +23,7 @@ public class EmployerViewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminSessionItem adminSessionItem = (AdminSessionItem) request.getSession().getAttribute("adminSession");
         if(adminSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/AdminLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         }
 

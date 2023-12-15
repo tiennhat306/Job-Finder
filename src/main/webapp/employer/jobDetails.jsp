@@ -186,7 +186,7 @@
 								<li>Số lượng tuyển dụng: <span id="requireNumber"> 2
 								</span></li>
 								<li>Mức lương: <span id="salary"> <%=jobPostItem.getSalaryFrom()%>
-										- <%=jobPostItem.getSalaryTo()%>
+										- <%=jobPostItem.getSalaryTo() %> triệu
 								</span></li>
 								<li>Loại công việc: <span id="workType"> <%=JobType.getByValue(jobPostItem.getWorkType())%>
 								</span></li>

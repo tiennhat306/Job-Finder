@@ -25,8 +25,8 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="text-center">
-                            <a href="index.html">
-                                <span><img src="assets/images/logo-dark.png" alt="" height="22"></span>
+                            <a href="CandidateHomepageServlet">
+                                <span><img src="candidate/img/logo.png" alt="" height="22"></span>
                             </a>
                             <p class="text-muted mt-2 mb-4">Có lỗi xảy ra khi truy cập</p>
                         </div>
@@ -35,7 +35,7 @@
                             <div class="card-body p-4">
 
                                 <div class="text-center">
-                                    <h1 class="text-error"></h1>
+                                    <h1 class="text-error">Lỗi</h1>
                                     <h3 class="mt-3 mb-2">Không thể truy cập trang</h3>
                                     <p class="text-muted mb-3">Nếu đã cố gắng sửa lỗi nhưng không được? Hãy thử gọi hỗ trợ <a href="" class="text-dark"><b>0123456789</b></a></p>
 
@@ -57,10 +57,10 @@
     
 
         <!-- Vendor js -->
-        <script src="assets/js/vendor.min.js"></script>
+        <script src="employer/assets/js/vendor.min.js"></script>
 
         <!-- App js -->
-        <script src="assets/js/app.min.js"></script>
+        <script src="employer/assets/js/app.min.js"></script>
         
     </body>
 </html>

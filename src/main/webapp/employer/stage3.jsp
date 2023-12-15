@@ -1,16 +1,18 @@
+<%@ page import="DTO.EmployerSessionItem" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalton</title>
+    <title>Phúc lợi công việc</title>
     <link href="assets/css/stage.css" rel="stylesheet"
 	type="text/css" />
 	<link href="employer/assets/css/stage.css" rel="stylesheet" type="text/css" />
     <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 	rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
     <style>
         .col-md-6 {
               margin-bottom: 15px;
@@ -77,6 +79,13 @@
 </head>
 
 <body>
+    <%
+        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+        if(employer == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
     <header>
         <h1>Dalton</h1>
         <nav>
@@ -106,7 +115,7 @@
                     </div>
                     <div class="icon">
                         <a href="/FindJobNew/stage5.html">5</a>
-                        <p>Lịch đăng và thanh toán</p>
+                        <p>Lịch đăng</p>
                     </div>
                     <div class="icon">
                         <a href="">6</a>

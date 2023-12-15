@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thư xin việc đã nhận</title>
-    <link rel="shortcut icon" href="employer/assets/images/logo-title.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="candidate/img/logo_title.png">
     <link rel="stylesheet" href="employer/assets/css/bootstrap2.css">
     <link href="employer/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="employer/assets/css/toastr.min.css">
@@ -250,6 +250,13 @@
 </head>
 <body class="cv-employer">
 <div id="wrapper">
+    <%
+        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+        if(employer == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
     <!-- Topbar Start -->
     <jsp:include page="layout/topbar.jsp"></jsp:include>
     <!-- end Topbar -->
@@ -257,13 +264,7 @@
     <!-- ========== Left Sidebar Start ========== -->
     <jsp:include page="layout/sidebar.jsp"></jsp:include>
     <!-- Left Sidebar End -->
-    <%
-        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
-        if(employer == null){
-            response.sendRedirect("/error.jsp");
-            return;
-        }
-    %>
+
     <div class="content-page">
         <div class="content">
             <div class="cv-management flex-grow-1">
