@@ -22,6 +22,13 @@
 </head>
 <body>
 <div id="wrapper">
+    <%
+        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+        if(employer == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
     <!-- Topbar Start -->
     <jsp:include page="layout/topbar.jsp"></jsp:include>
     <!-- end Topbar -->
@@ -29,13 +36,7 @@
     <!-- ========== Left Sidebar Start ========== -->
     <jsp:include page="layout/sidebar.jsp"></jsp:include>
     <!-- Left Sidebar End -->
-    <%
-        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
-        if(employer == null){
-            response.sendRedirect("/error.jsp");
-            return;
-        }
-    %>
+
     <div class="content-page">
         <div class="content">
             <%

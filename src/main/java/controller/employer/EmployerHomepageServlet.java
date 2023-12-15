@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class EmployerHomepageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        
     	doPost(request, response);
     }
 
@@ -24,7 +22,7 @@ public class EmployerHomepageServlet extends HttpServlet {
         EmployerSessionItem employerSessionItem = (EmployerSessionItem) request.getSession().getAttribute("employerSession");
         int employerId;
         if(employerSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/EmployerLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         } else {
             employerId = employerSessionItem.getId();

@@ -1,3 +1,4 @@
+<%@ page import="DTO.EmployerSessionItem" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +23,13 @@
     </script>
 </head>
 <body>
+    <%
+        EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+        if(employer == null){
+            response.sendRedirect("../ErrorServlet");
+            return;
+        }
+    %>
     <header>
         <h1>Dalton</h1>
         <nav>

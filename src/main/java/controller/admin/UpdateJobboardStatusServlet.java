@@ -19,7 +19,7 @@ public class UpdateJobboardStatusServlet extends HttpServlet {
         int adminId;
         AdminSessionItem adminSessionItem = (AdminSessionItem) request.getSession().getAttribute("adminSession");
         if(adminSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/AdminLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         } else {
             adminId = adminSessionItem.getId();

@@ -1,6 +1,7 @@
 package model.bo;
 
 import DTO.*;
+import model.bean.JobBoard;
 import model.dao.JobBoardDAO;
 
 import java.sql.Date;
@@ -112,5 +113,9 @@ public class JobBoardBO {
 
     public boolean updateJobBoardStatus(int jobBoardId, int adminId, int status) {
         return jobBoardDAO.updateJobBoardStatus(jobBoardId, adminId, status);
+    }
+
+    public JobBoard getJobBoardDetail(int id) {
+        return jobBoardDAO.getJobBoardDetail(id);
     }
 }

@@ -16,7 +16,7 @@ public class AdminAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminSessionItem adminSessionItem = (AdminSessionItem) request.getSession().getAttribute("adminSession");
         if(adminSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/AdminLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         }
 
@@ -34,7 +34,7 @@ public class AdminAccountServlet extends HttpServlet {
 
         AdminSessionItem adminSessionItem = (AdminSessionItem) request.getSession().getAttribute("adminSession");
         if(adminSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/AdminLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         }
 
@@ -51,14 +51,7 @@ public class AdminAccountServlet extends HttpServlet {
         int genderInt = Integer.parseInt(gender);
         boolean genderBoolean = genderInt != 0;
 
-        System.out.println("name: " + name);
-        System.out.println("email: " + email);
-        System.out.println("phoneNumber: " + phoneNumber);
-        System.out.println("birthday: " + birthday);
-
-
         new AdminBO().updateAdminInfo(adminId, name, email, phoneNumber, birthdayDate, genderBoolean);
-
 
         String username = request.getParameter("username");
         if(username != null && !username.trim().isEmpty()){

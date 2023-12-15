@@ -230,6 +230,13 @@
 </head>
 <body>
 <div id="wrapper">
+  <%
+    AdminSessionItem admin = (AdminSessionItem) session.getAttribute("adminSession");
+    if(admin == null){
+      response.sendRedirect("../ErrorServlet");
+      return;
+    }
+  %>
   <!-- Topbar Start -->
   <jsp:include page="layout/topbar.jsp"></jsp:include>
   <!-- end Topbar -->
@@ -237,13 +244,6 @@
   <!-- ========== Left Sidebar Start ========== -->
   <jsp:include page="layout/sidebar.jsp"></jsp:include>
   <!-- Left Sidebar End -->
-<%
-    AdminSessionItem admin = (AdminSessionItem) session.getAttribute("adminSession");
-    if(admin == null){
-        response.sendRedirect("/error.jsp");
-        return;
-    }
-%>
 
   <!-- ============================================================== -->
   <!-- Start Page Content here -->
