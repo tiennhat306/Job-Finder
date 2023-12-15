@@ -27,6 +27,19 @@
 <link rel="stylesheet" href="../candidate/css/slicknav.css">
 <link rel="stylesheet" href="../candidate/css/style.css">
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+<script>
+	function handleFileSelect() {
+		var input = document.getElementById('inputGroupFile03');
+		var label = document.querySelector('.custom-file-label');
+
+		if (input.files.length > 0) {
+			label.innerText = input.files[0].name;
+		} else {
+			label.innerText = 'Upload CV';
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -103,7 +116,7 @@
 					</div>
 					<div class="apply_job_form white-bg">
 						<h4>Apply for the job</h4>
-						<form action="#">
+						<form action="UploadCVServlet" method="post">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="input_field">
@@ -130,7 +143,8 @@
 										<div class="custom-file">
 											<input type="file" class="custom-file-input"
 												id="inputGroupFile03"
-												aria-describedby="inputGroupFileAddon03"> <label
+												aria-describedby="inputGroupFileAddon03"
+												onchange="handleFileSelect()"> <label
 												class="custom-file-label" for="inputGroupFile03">Upload
 												CV</label>
 										</div>
@@ -234,7 +248,7 @@
 		var descriptCompany = localStorage.getItem('stage1_descriptCompany');
 		var employeeNumber = localStorage.getItem('stage1_employeeNumber');
 		var website = localStorage.getItem('stage1_website');
-		
+
 		var city = localStorage.getItem('stage2_city');
 		var address = localStorage.getItem('stage2_address');
 		var jobDescription = localStorage.getItem('stage2_job-description');
@@ -246,51 +260,66 @@
 		var requireNumber = localStorage.getItem('stage2_requireNumber');
 		var salaryFrom = localStorage.getItem('stage2_salaryFrom');
 		var salaryTo = localStorage.getItem('stage2_salaryTo');
-		
+
 		var prize_bonus = localStorage.getItem('stage3_prizeBonus');
 		var prizeBonusElement = document.getElementById('prize-bonus');
-		
+
 		var contactLanguage = localStorage.getItem('stage4_contactLanguage');
 		var contactName = localStorage.getItem('stage4_contactName');
 		var contactNumber = localStorage.getItem('stage4_contactNumber');
 		var contactEmail = localStorage.getItem('stage4_contactEmail');
-		
+
 		var postingDate = localStorage.getItem('stage5_postingDate');
 
 		document.getElementById('jobTitle').innerText = userJobTitle;
 		document.getElementById('jobBrand').innerText = userJobTitle;
-		document.getElementById('companyName').innerHTML = "<i class='fa fa-map-marker'></i>" + companyName;
+		document.getElementById('companyName').innerHTML = "<i class='fa fa-map-marker'></i>"
+				+ companyName;
 		document.getElementById('company-description').innerText = descriptCompany;
-		document.getElementById('websiteCompany').innerText = website;		
-		document.getElementById('staffNumber').innerText = employeeNumber;		
-		
-		document.getElementById('city').innerHTML = "<i class='fa fa-clock-o'></i>" + city;
-		document.getElementById('address').innerHTML = "<i class='fa fa-clock-o'></i>" + address;	
-		document.getElementById('job-description').innerText = jobDescription;		
-		document.getElementById('experience-detail').innerText = experienceDetail;		
-		document.getElementById('workType').innerText = workType;		
-		document.getElementById('rank').innerText = rank;	
-		document.getElementById('requireNumber').innerText = requireNumber;		
-		document.getElementById('qualification').innerText = qualification;		
-		document.getElementById('yearOfExperience').innerText = yearOfExperience;		
-		document.getElementById('salary').innerText = salaryFrom + ' - ' + salaryTo;	
-		
-		prize_bonus = JSON.parse(prize_bonus);
-		prize_bonus.forEach(function (bonus) {
-		    // Create a new div element for each bonus
-		    var bonusDiv = document.createElement('p');
-		    bonusDiv.innerText = "- " + bonus;
+		document.getElementById('websiteCompany').innerText = website;
+		document.getElementById('staffNumber').innerText = employeeNumber;
 
-		    // Append the new div to the prizeBonusElement
-		    prizeBonusElement.appendChild(bonusDiv);
+		document.getElementById('city').innerHTML = "<i class='fa fa-clock-o'></i>"
+				+ city;
+		document.getElementById('address').innerHTML = "<i class='fa fa-clock-o'></i>"
+				+ address;
+		document.getElementById('job-description').innerText = jobDescription;
+		document.getElementById('experience-detail').innerText = experienceDetail;
+		document.getElementById('workType').innerText = workType;
+		document.getElementById('rank').innerText = rank;
+		document.getElementById('requireNumber').innerText = requireNumber;
+		document.getElementById('qualification').innerText = qualification;
+		document.getElementById('yearOfExperience').innerText = yearOfExperience;
+		document.getElementById('salary').innerText = salaryFrom + ' - '
+				+ salaryTo;
+
+		prize_bonus = JSON.parse(prize_bonus);
+		prize_bonus.forEach(function(bonus) {
+			// Create a new div element for each bonus
+			var bonusDiv = document.createElement('p');
+			bonusDiv.innerText = "- " + bonus;
+
+			// Append the new div to the prizeBonusElement
+			prizeBonusElement.appendChild(bonusDiv);
 		});
+
+		document.getElementById('contactName').innerText = contactName;
+		document.getElementById('contactLanguage').innerText = contactLanguage;
+		document.getElementById('contactNumber').innerText = contactNumber;
+		document.getElementById('contactEmail').innerText = contactEmail;
+
+		document.getElementById('postingDate').innerText = postingDate;
 		
-		document.getElementById('contactName').innerText = contactName;		
-		document.getElementById('contactLanguage').innerText = contactLanguage;		
-		document.getElementById('contactNumber').innerText = contactNumber;		
-		document.getElementById('contactEmail').innerText = contactEmail;	
-		
-		document.getElementById('postingDate').innerText = postingDate;	
+		function handleFileSelect() {
+			var input = document.getElementById('inputGroupFile03');
+			var label = document.querySelector('.custom-file-label');
+
+			if (input.files.length > 0) {
+				label.innerText = input.files[0].name;
+			} else {
+				label.innerText = 'Upload CV';
+			}
+		}
 	</script>
 </body>
 </html>

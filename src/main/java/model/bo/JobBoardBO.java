@@ -51,7 +51,6 @@ public class JobBoardBO {
 			String contactEmail, String contactNumber, String contactName, java.sql.Date postingDate, java.sql.Date expirationDate,
 			int status, int views, int employerId) {
     	jobBoardDAO.createJob(title, code, companyName, companySize, companyDescription, website, cityId, address, jobType, rank, salaryType, salaryFrom, salaryTo, ageType, ageFrom, ageTo, genderType, jobDescription, quantity, qualification, yearsOfExperience, requirements, benefits, contactAddress, contactEmail, contactNumber, contactName, postingDate, expirationDate, status, views, employerId);
-
     }
 
     public ArrayList<MyJobBoardItem> getMyJobBoardList(int employerId, String search, int page, int status) {
@@ -112,5 +111,9 @@ public class JobBoardBO {
 
     public boolean updateJobBoardStatus(int jobBoardId, int adminId, int status) {
         return jobBoardDAO.updateJobBoardStatus(jobBoardId, adminId, status);
+    }
+    
+    public JobPostingItem findDataFromID(int id) {
+    	return jobBoardDAO.findDataFromID(id);
     }
 }
