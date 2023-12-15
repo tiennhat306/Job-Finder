@@ -222,7 +222,7 @@
                                         <img src="<%=jobBoardItem.getLogo()%>" alt="">
                                     </div>
                                     <div class="jobs_conetent">
-                                        <a href="job_details.html"><h4><%=jobBoardItem.getTitle()%></h4></a>
+                                        <a href="job_details.jsp"><h4><%=jobBoardItem.getTitle()%></h4></a>
                                         <a href="#"><h5><%=jobBoardItem.getCompanyName()%></h5></a>
                                         <div class="links_locat d-flex align-items-center">
                                             <div class="location">

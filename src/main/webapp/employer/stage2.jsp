@@ -1,4 +1,7 @@
 <%@ page import="DTO.EmployerSessionItem" %>
+<%@ page import="model.bean.Career" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.bean.City" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,10 +71,12 @@
 						<div class="input-group-append">
 							<label for="company">Ngành nghề</label> <select name="JobID"
 								id="JobID" required>
-								<option value="4">Bán hàng / Kinh doanh</option>
-								<option value="1">Bảo trì / Sửa chữa</option>
-								<option value="3">CNTT-Phần cứng / Mạng</option>
-								<option value="2">CNTT-Phần mềm</option>
+								<%
+									ArrayList<Career> careerList = (ArrayList<Career>) request.getAttribute("careerList");
+									for (Career career : careerList) {
+								%>
+								<option value="<%=career.getId()%>"><%=career.getName()%></option>
+								<%}%>
 							</select>
 						</div>
 					</div>
@@ -79,10 +84,12 @@
 						<div class="col-md-12">
 							<label for="company">Tỉnh/thành phố</label> <select name="cityID"
 								id="cityID" required>
-								<option value="4">Hà Nội</option>
-								<option value="1">Hồ Chí Minh</option>
-								<option value="3">Đà Nẵng</option>
-								<option value="2">Huế</option>
+								<%
+									ArrayList<City> cities = (ArrayList<City>) request.getAttribute("cityList");
+									for (City city : cities) {
+								%>
+								<option value="<%=city.getId()%>"><%=city.getName()%></option>
+								<%}%>
 							</select>
 						</div>
 						<div class="col-md-12">
@@ -96,16 +103,9 @@
 						<div class="col-md-6">
 							<label for="employeeNumber">Loại công việc</label> <select
 								name="job_type" id="job_type" required>
-								<option value="1">Nhân viên toàn
-									thời gian</option>
-								<option value="2">Nhân
-									viên toàn thời gian tạm thời</option>
-								<option value="3">Nhân viên bán
-									thời gian</option>
-								<option value="4">Nhân
-									viên bán thời gian tạm thời</option>
-								<option value="5">Nhân viên hợp đồng</option>
-								<option value="6">Khác</option>
+								<option value="1">Nhân viên toàn thời gian</option>
+								<option value="2">Nhân viên bán thời gian</option>
+								<option value="3">Nhân viên hợp đồng</option>
 								<!-- Add more options as needed -->
 							</select>
 						</div>
@@ -116,7 +116,7 @@
 									tập sinh</option>
 								<option value="2">Mới đi làm</option>
 								<option value="3">Nhân viên</option>
-								<option value="4">Kỹ thuật viên/Kỹ sư</option>
+								<option value="4">Kỹ sư</option>
 								<option value="5">Trưởng nhóm/Giám
 									sát</option>
 								<option value="6">Quản lý/Trưởng

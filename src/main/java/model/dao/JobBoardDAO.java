@@ -2,6 +2,7 @@ package model.dao;
 
 import DBHelper.DBHelper;
 import DTO.*;
+import model.bean.JobBoard;
 
 import java.sql.*;
 import java.sql.Date;
@@ -798,4 +799,8 @@ public class JobBoardDAO {
             return false;
         }
     }
+
+	public JobBoard getJobBoardDetail(int id) {
+		return null;
+	}
 }

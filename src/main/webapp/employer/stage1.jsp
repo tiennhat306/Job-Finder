@@ -64,9 +64,9 @@
 					<div class="form_position">
 						<div class="row">
 							<div class="col-md-12">
-								<label for="position">Chức danh</label> <input type="text"
+								<label for="position">Tiêu đề</label> <input type="text"
 									name="title" id="title" class="position"
-									placeholder="Nhập công việc muốn tìm kiếm ứng viên" required>
+									placeholder="Nhập tiêu đề công việc tìm kiếm ứng viên" required>
 							</div>
 						</div>
 						<div class="row">
@@ -80,7 +80,8 @@
 					<div class="row"></div>
 					<div class="row">
 						<div class="col-md-6">
-							<label for="company">Tên công ty</label> <input type="text"
+							<label for="companyName">Tên công ty</label>
+							<input type="text"
 								name="companyName" id="companyName"
 								placeholder="Nhập tên công ty của bạn" required>
 						</div>
