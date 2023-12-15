@@ -1,5 +1,6 @@
+<%@ page import="DTO.EmployerSessionItem" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -30,6 +31,13 @@
 </head>
 
 <body>
+	<%
+		EmployerSessionItem employer = (EmployerSessionItem) session.getAttribute("employerSession");
+		if(employer == null){
+			response.sendRedirect("../ErrorServlet");
+			return;
+		}
+	%>
 	<!-- bradcam_area  -->
 	<div class="bradcam_area bradcam_bg_1">
 		<div class="container">

@@ -19,7 +19,7 @@ public class RemoveJobboardServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EmployerSessionItem employerSessionItem = (EmployerSessionItem) request.getSession().getAttribute("employerSession");
         if(employerSessionItem == null){
-            response.sendRedirect(request.getContextPath() + "/EmployerLoginServlet");
+            response.sendRedirect(request.getContextPath() + "/ErrorServlet");
             return;
         }
 

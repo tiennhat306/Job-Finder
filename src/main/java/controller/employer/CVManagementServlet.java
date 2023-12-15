@@ -27,7 +27,7 @@ public class CVManagementServlet extends HttpServlet {
         EmployerSessionItem employerSessionItem = (EmployerSessionItem) req.getSession().getAttribute("employerSession");
         int employerId;
         if(employerSessionItem == null){
-            resp.sendRedirect(req.getContextPath() + "/EmployerLoginServlet");
+            resp.sendRedirect(req.getContextPath() + "/ErrorServlet");
             return;
         } else {
             employerId = employerSessionItem.getId();
