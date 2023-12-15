@@ -80,7 +80,8 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date((postDay.getTime())));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = (Date) calendar.getTime();
+				java.util.Date utilDate = calendar.getTime();
+				java.sql.Date endDate = new java.sql.Date(utilDate.getTime());
                 preStmt.setDate(3, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(4, new java.sql.Date(endDate.getTime()));
             } else if (type == 2) {
@@ -90,7 +91,8 @@ public class JobBoardDAO {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date(postDay.getTime()));
                 calendar.add(Calendar.DATE, range);
-                Date endDate = (Date) calendar.getTime();
+				java.util.Date utilDate = calendar.getTime();
+				java.sql.Date endDate = new java.sql.Date(utilDate.getTime());
                 preStmt.setDate(2, new java.sql.Date(postDay.getTime()));
                 preStmt.setDate(3, new java.sql.Date(endDate.getTime()));
             }
