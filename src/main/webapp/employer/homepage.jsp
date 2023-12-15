@@ -299,7 +299,7 @@
 
                     <div class="form-group col-sm-3">
                         <div class="mb-2">
-                            <a href="#" class="btn btn-primary">
+                            <a href="PostNewJobServlet" class="btn btn-primary">
                                 <i class="fe-plus-circle"></i> Thêm mới
                             </a>
                         </div>
