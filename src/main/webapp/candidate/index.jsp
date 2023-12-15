@@ -57,7 +57,7 @@
 								việc làm trực tuyến với sự chấp thuận nhanh chóng</p>
 							<div class="sldier_btn wow fadeInLeft" data-wow-duration="1s"
 								data-wow-delay=".5s">
-								<a href="#" class="boxed-btn3">Tìm kiếm việc làm</a>
+								<a href="JobListServlet" class="boxed-btn3">Tìm kiếm việc làm</a>
 							</div>
 						</div>
 					</div>
